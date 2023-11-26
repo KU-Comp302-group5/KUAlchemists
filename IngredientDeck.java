@@ -3,8 +3,8 @@ public class IngredientDeck {
     private null ingredients;
 
     public IngredientDeck(){
-        this.CardNum = 0
-        this.ingredients = null
+        this.CardNum = 0;
+        this.ingredients = null;
     }
 
     private void getTopCard() {

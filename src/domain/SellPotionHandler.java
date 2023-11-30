@@ -1,4 +1,4 @@
-package d1;
+package domain;
 
 public class SellPotionHandler {
 	

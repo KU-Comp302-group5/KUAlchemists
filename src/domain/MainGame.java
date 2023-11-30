@@ -51,11 +51,12 @@ public class MainGame {
 			System.out.println("What do you do? forage, transmute, or exit");
 			action = input.nextLine();
 			
-			if (action == "forage") {
+			if (action.equals("forage")) {
 				System.out.println("Foraging for ingredient!");
-				p1.forageIngredient(ingr_deck);
+				Ingredient ingr_temp = p1.forageIngredient(ingr_deck);
+				System.out.println(ingr_temp);
 			}
-		}
+			} while (! action.equals("exit"));
 		 
 
 	}

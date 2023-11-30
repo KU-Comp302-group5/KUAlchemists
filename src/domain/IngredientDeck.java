@@ -12,9 +12,10 @@ public class IngredientDeck {
 	}
 
 	public Ingredient getTopCard() {
-		int position = ingredients.size() - 1
+		int position = ingredients.size() - 1;
 		Ingredient ingr = ingredients.get(position);
 		ingredients.remove(position);
+		return ingr;
     }
 
     private void decreaseNumCards() {  

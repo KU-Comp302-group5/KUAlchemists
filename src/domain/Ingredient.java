@@ -14,6 +14,10 @@ public class Ingredient {
 		this.greenAspect = greenAspect;
 		this.blueAspect = blueAspect;
 	}
-    
+
+	@Override
+	public String toString() {
+		return "Ingredient [name=" + name + ", id=" + id + "]";
+	}
     
 }

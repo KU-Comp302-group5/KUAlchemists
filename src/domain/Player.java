@@ -31,10 +31,14 @@ public class Player {
 		this.sickness = sickness;
 	}
 	
-	public void forageIngredient(IngredientDeck deck) {
+	public Ingredient forageIngredient(IngredientDeck deck) {
 		Ingredient ingr1 = deck.getTopCard();
-		
-		
+		addIngredient(ingr1);
+		return ingr1;
+	}
+	
+	public void addIngredient(Ingredient ingr) {
+		this.ingredients.add(ingr);
 	}
 
 

@@ -1,4 +1,4 @@
-package buğra;
+package domain;
 
 public class UseArtifactHandler {
 

@@ -9,53 +9,94 @@ public class MainGame {
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to KUAlchemists!!!");
-		System.out.println("You need to create your player!");
-		System.out.println("Enter your player's name:");
+		
+		System.out.println("Player I Name:");
 		
 		Scanner input = new Scanner(System.in);
 		String name1 = input.nextLine();
 		
-		System.out.println("Initializing the game...");
-		Aspect as1 = new Aspect(true, true);
+
+		Player p1 = new Player(name1, 10, 0, 0);
+		
+		System.out.println("Player II Name:");
+		
+		String name2 = input.nextLine();
+		
+
+		Player p2 = new Player(name2, 10, 0, 0);
+
+		System.out.println("Players created!");
+		
+	    ArtifactCard elixirOfInsight = new ArtifactCard("Elixir of Insight", 0);
+	    ArtifactCard philosophersCompass = new ArtifactCard("Philosopher's Compass", 1);
+	    
+		/*Aspect as1 = new Aspect(true, true);
 		Aspect as2 = new Aspect(true, true);
 		Aspect as3 = new Aspect(true, true);
 		
 		Ingredient toad = new Ingredient("toad", 1, as1, as2, as3);
 		Ingredient claw = new Ingredient("claw", 2, as1, as2, as3);
 		Ingredient scorpion = new Ingredient("scorpion", 3, as1, as2, as3);
+		*/
+		List<ArtifactCard> artf_list1 = new ArrayList<ArtifactCard>();
+		artf_list1.add(philosophersCompass);
+		artf_list1.add(elixirOfInsight);
 		
-		List<Ingredient> ingr_list1 = new ArrayList<Ingredient>();
-		ingr_list1.add(toad);
-		ingr_list1.add(claw);
-		ingr_list1.add(scorpion);
+		ArtifactDeck artf_deck = new ArtifactDeck(2, artf_list1);
 		
-		IngredientDeck ingr_deck = new IngredientDeck(3, ingr_list1);
-		
-		System.out.println("Creating player...");
+		/*
 		Ingredient toad2 = new Ingredient("toad", 4, as1, as2, as3);
 		Ingredient claw2 = new Ingredient("claw", 5, as1, as2, as3);
 		
 		List<Ingredient> ingr_list2 = new ArrayList<Ingredient>();
 		ingr_list2.add(toad2);
 		ingr_list2.add(claw2);
+		*/
 		
-		Player p1 = new Player(name1, ingr_list2, 10, 0, 0);
+		System.out.println("\nPlayer I artifact storage:");
+		System.out.println(Arrays.toString(p1.getArtifacts().toArray()));
+		System.out.println("Player I gold:" + p1.getGold());
 		
-		System.out.println("player created!");
-		System.out.println("Current ingredient storage:");
-		System.out.println(Arrays.toString(p1.getIngredients().toArray()));
+		System.out.println("\nPlayer II artifact storage:");
+		System.out.println(Arrays.toString(p2.getArtifacts().toArray()));
+		System.out.println("Player II gold:" + p2.getGold());
 		
-		String action = "";
+		System.out.println("\nArtifact Deck artifact storage:");
+		System.out.println(Arrays.toString(artf_deck.getArtifacts().toArray()));
+
+		System.out.println("\nPlayer I's turn");
 		
-		do {
-			System.out.println("What do you do? forage, transmute, or exit");
-			action = input.nextLine();
-			
-			if (action == "forage") {
-				System.out.println("Foraging for ingredient!");
-				p1.forageIngredient(ingr_deck);
-			}
-		}
+		System.out.println("\nBuy Artifact processing...");
+		
+		p1.getArtFromDeck(artf_deck);
+		
+		System.out.println("\nPlayer I artifact storage:");
+		System.out.println(Arrays.toString(p1.getArtifacts().toArray()));
+		System.out.println("Player I gold:" + p1.getGold());
+		
+		System.out.println("\nPlayer II artifact storage:");
+		System.out.println(Arrays.toString(p2.getArtifacts().toArray()));
+		System.out.println("Player II gold:" + p2.getGold());
+		
+		System.out.println("\nArtifact Deck artifact storage:");
+		System.out.println(Arrays.toString(artf_deck.getArtifacts().toArray()));
+		
+		System.out.println("\nPlayer II's turn");
+		
+		System.out.println("\nBuy Artifact processing...");
+		
+		p2.getArtFromDeck(artf_deck);
+		
+		System.out.println("\nPlayer I artifact storage:");
+		System.out.println(Arrays.toString(p1.getArtifacts().toArray()));
+		System.out.println("Player I gold:" + p1.getGold());
+		
+		System.out.println("\nPlayer II artifact storage:");
+		System.out.println(Arrays.toString(p2.getArtifacts().toArray()));
+		System.out.println("Player II gold:" + p2.getGold());
+		
+		System.out.println("\nArtifact Deck artifact storage:");
+		System.out.println(Arrays.toString(artf_deck.getArtifacts().toArray()));
 		 
 
 	}

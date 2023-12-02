@@ -11,12 +11,4 @@ public class IngredientDeck {
 		this.ingredients = ingredients;
 	}
 
-	public Ingredient getTopCard() {
-		int position = ingredients.size() - 1
-		Ingredient ingr = ingredients.get(position);
-		ingredients.remove(position);
-    }
-
-    private void decreaseNumCards() {  
-    }
 }

@@ -1,16 +1,32 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ArtifactDeck {
+	private static ArtifactDeck instance;
+	
     private Integer cardNum;
     private List<ArtifactCard> artifacts;
-
     
-    public ArtifactDeck(Integer cardNum, List<ArtifactCard> artifacts) {
+    public static ArtifactDeck getInstance() {
+    	
+		if (instance == null) {
+			instance = new ArtifactDeck();
+		}
+		
+		return instance;
+	}
+    
+    public ArtifactDeck() {
 		super();
-		this.cardNum = cardNum;
-		this.artifacts = artifacts;
+		this.cardNum = 2;
+		List<ArtifactCard> artifacts = new ArrayList<ArtifactCard>();
+		artifacts.add(new ArtifactCard("Elixir of Insight", 0));
+		artifacts.add(new ArtifactCard("Philosopher's Compass", 1));
+		Collections.shuffle(artifacts);
+		this.artifacts = artifacts ;
 	}
 
 

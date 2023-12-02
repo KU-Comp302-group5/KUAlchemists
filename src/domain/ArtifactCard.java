@@ -29,6 +29,17 @@ public class ArtifactCard {
 	public String toString() {
 		return "ArtifactCard [name=" + name + "]";
 	}
+	
+	public void obtainAbility() {
+		if(this.ID == 0) {
+			// UI : IngredientDeckUI.showTopThreeCards()
+			// and IngredientDeckUI.rearrange() --> IngredientDeck.rearrange()
+		}
+		if (this.ID == 1) {
+			// UI : DeductionBoardUI.swap() --> DeductionBoard.swap(alchemyMarker1, alchemyMarker2)
+			// buradan emin olamadým, bu sadece UI funvtionality de olabilir.
+		}
+	}
     
     
     

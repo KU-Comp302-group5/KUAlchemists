@@ -31,12 +31,18 @@ public class Player {
 		this.sickness = sickness;
 	}
 	
-	public void getArtFromDeck(ArtifactDeck artfdeck) {
-		ArtifactCard boughtCard = artfdeck.getTopCard();
+	public void getArtFromDeck() {
+		ArtifactCard boughtCard = ArtifactDeck.getInstance().getTopCard();
 		this.artifacts.add(boughtCard);
 		System.out.println("\n"+ this.getUsername()+" bought artifact card: "+ boughtCard.getName());
 		this.decreaseGold(3);
 		
+	}
+	
+	public void removeArtifactCard(ArtifactCard artifactCard) {
+		if (this.artifacts.contains(artifactCard)) {
+			this.artifacts.remove(artifactCard);
+		}
 	}
 
 	private void decreaseGold(int i) {

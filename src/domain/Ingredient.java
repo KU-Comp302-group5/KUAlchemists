@@ -19,5 +19,45 @@ public class Ingredient {
 	public String toString() {
 		return "Ingredient [name=" + name + ", id=" + id + "]";
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Aspect getRedAspect() {
+		return redAspect;
+	}
+
+	public void setRedAspect(Aspect redAspect) {
+		this.redAspect = redAspect;
+	}
+
+	public Aspect getGreenAspect() {
+		return greenAspect;
+	}
+
+	public void setGreenAspect(Aspect greenAspect) {
+		this.greenAspect = greenAspect;
+	}
+
+	public Aspect getBlueAspect() {
+		return blueAspect;
+	}
+
+	public void setBlueAspect(Aspect blueAspect) {
+		this.blueAspect = blueAspect;
+	}
     
 }

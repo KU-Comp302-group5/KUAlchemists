@@ -5,6 +5,8 @@ public class HandlerFactory {
 	
 	private BuyArtifactHandler buyArtifactHandler;
 	private UseArtifactHandler useArtifactHandler;
+	private ForageIngHandler forageIngHandler;
+	private TransmuteIngredientHandler transmuteIngHandler;
 	
 	public static HandlerFactory getInstance() {
 		if (instance == null) {
@@ -17,6 +19,8 @@ public class HandlerFactory {
 	public HandlerFactory() {
 		super();
 		this.buyArtifactHandler= new BuyArtifactHandler();
+		this.forageIngHandler= new ForageIngHandler();
+		this.transmuteIngHandler= new TransmuteIngredientHandler();
 	}
 
 	public BuyArtifactHandler getBuyArtifactHandler() {
@@ -33,6 +37,22 @@ public class HandlerFactory {
 
 	public void setUseArtifactHandler(UseArtifactHandler useArtifactHandler) {
 		this.useArtifactHandler = useArtifactHandler;
+	}
+
+	public ForageIngHandler getForageIngHandler() {
+		return forageIngHandler;
+	}
+
+	public void setForageIngHandler(ForageIngHandler forageIngHandler) {
+		this.forageIngHandler = forageIngHandler;
+	}
+
+	public TransmuteIngredientHandler getTransmuteIngHandler() {
+		return transmuteIngHandler;
+	}
+
+	public void setTransmuteIngHandler(TransmuteIngredientHandler transmuteIngHandler) {
+		this.transmuteIngHandler = transmuteIngHandler;
 	}
 	
 	

@@ -1,12 +1,13 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
 	private String username;
 	//private Avatar avatar;
-	private List<Ingredient> ingredients ;
-	//private List<ArtifactCard> artifacts ;
+	//private List<Ingredient> ingredients ;
+	private List<ArtifactCard> artifacts ;
 	//private List<Potion> potions ;
 	//private List<Theory> theories ;
 	private int gold;
@@ -16,14 +17,13 @@ public class Player {
 	
 	public Player(String username, 
 			//Avatar avatar, 
-			List<Ingredient> ingredients, 
-			//List<ArtifactCard> artifacts, List<Potion> potions, List<Theory> theories, 
+			//List<Ingredient> ingredients, List<Potion> potions, List<Theory> theories, 
 			int gold, int reputation, int sickness) {
 		
 		this.username = username;
 		//this.avatar = avatar;
-		this.ingredients = ingredients;
-		//this.artifacts = artifacts;
+		//this.ingredients = ingredients;
+		this.artifacts = new ArrayList<ArtifactCard>();
 		//this.potions = potions;
 		//this.theories = theories;
 		this.gold = gold;
@@ -39,9 +39,24 @@ public class Player {
 	
 	public void addIngredient(Ingredient ingr) {
 		this.ingredients.add(ingr);
+	public void getArtFromDeck() {
+		ArtifactCard boughtCard = ArtifactDeck.getInstance().getTopCard();
+		this.artifacts.add(boughtCard);
+		System.out.println("\n"+ this.getUsername()+" bought artifact card: "+ boughtCard.getName());
+		this.decreaseGold(3);
+		
+	}
+	
+	public void removeArtifactCard(ArtifactCard artifactCard) {
+		if (this.artifacts.contains(artifactCard)) {
+			this.artifacts.remove(artifactCard);
+		}
 	}
 
-
+	private void decreaseGold(int i) {
+		this.gold-=i;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -52,13 +67,13 @@ public class Player {
 	}
 
 
-	public List<Ingredient> getIngredients() {
-		return ingredients;
+	public List<ArtifactCard> getArtifacts() {
+		return artifacts;
 	}
 
 
-	public void setIngredients(List<Ingredient> ingredients) {
-		this.ingredients = ingredients;
+	public void setArtifacts(List<ArtifactCard> artifacts) {
+		this.artifacts = artifacts;
 	}
 
 

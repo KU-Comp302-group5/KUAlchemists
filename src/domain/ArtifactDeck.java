@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ArtifactDeck {
+	
 	private static ArtifactDeck instance;
 	
     private Integer cardNum;
@@ -57,5 +58,8 @@ public class ArtifactDeck {
 		this.artifacts = artifacts;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "ArtifactDeck [cardNum=" + cardNum + ", artifacts=" + artifacts + "]";
+	}
 }

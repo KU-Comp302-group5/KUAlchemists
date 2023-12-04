@@ -1,17 +1,14 @@
+package domain;
+
+import java.util.List;
+
 public class IngredientDeck {
-    private int CardNum;
-    private null ingredients;
+    private int cardNum;
+    private List<Ingredient> ingredients ;
 
-    public IngredientDeck(){
-        this.CardNum = 0;
-        this.ingredients = null;
-    }
+    public IngredientDeck(int cardNum, List<Ingredient> ingredients) {
+		this.cardNum = cardNum;
+		this.ingredients = ingredients;
+	}
 
-    private void getTopCard() {
-        
-    }
-
-    private void decreaseNumCards() {
-        
-    }
 }

@@ -1,5 +1,7 @@
+package domain;
+
 public class PublicationCard {
-    private null ingredient;
+    private int ingredient;
 
     public PublicationCard(){
         

@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
 
 public class BoardPage extends JFrame implements ActionListener {
 	
-	private static JPanel panelBoard;
-	private static JButton help, pause, potionBrewing, publicationTrack, deductionBoard, turnButton;
+	private static JPanel panelBoard, player_ingr, player_arts;
+	private static JButton help, pause, potionBrewing, publicationTrack, deductionBoard, turnButton, ingrDeckButton, player_ing, artifactDeckButton, player_art;
 	private JLabel gold, sickness, name;
 	private Player currentPlayer;
     private Player player1, player2;
@@ -26,7 +26,7 @@ public class BoardPage extends JFrame implements ActionListener {
       
         currentPlayer = player1;
 		
-		JPanel player_arts = new JPanel();
+		player_arts = new JPanel();
 		player_arts.setBounds(0, 280, 600, 120);
 		player_arts.setBackground(Color.ORANGE);
 		JLabel pa_text = new JLabel("Player's Artifacts");
@@ -34,13 +34,13 @@ public class BoardPage extends JFrame implements ActionListener {
 		player_arts.add(pa_text);
 		
 		for (int i=0; i<currentPlayer.getArtifacts().size(); i++) {
-			JButton player_art = new JButton(currentPlayer.getArtifacts().get(i).toString());
+			player_art.setText(currentPlayer.getArtifacts().get(i).toString());
 			player_art.setBounds(10, 10, 60, 60); // should change
 			player_arts.add(player_art);
 		}
 		panelBoard.add(player_arts);
 		
-		JPanel player_ingr = new JPanel();
+		player_ingr = new JPanel();
 		player_ingr.setBounds(0, 400, 600, 120);
 		player_ingr.setBackground(Color.MAGENTA);
 		JLabel pi_text = new JLabel("Player's Ingredients");
@@ -48,7 +48,7 @@ public class BoardPage extends JFrame implements ActionListener {
 		panelBoard.add(player_ingr);
 		
 		for (int i=0; i<currentPlayer.getIngredients().size(); i++) {
-			JButton player_ing = new JButton(currentPlayer.getIngredients().get(i).toString());
+			player_ing.setText(currentPlayer.getIngredients().get(i).toString());
 			player_ing.setBounds(10, 10, 60, 60); // should change
 			player_ingr.add(player_ing);
 		}
@@ -56,6 +56,30 @@ public class BoardPage extends JFrame implements ActionListener {
 		help = new JButton("Help");
 		pause = new JButton("Pause");
 		turnButton = new JButton("Turn");
+		ingrDeckButton = new JButton("Ingredient Deck");
+		player_ing = new JButton("Ingredients: ");
+		artifactDeckButton = new JButton("Artifacts Deck");
+		player_art = new JButton("Artifacts: ");	
+		
+		ingrDeckButton.setBounds(140, 120, 150, 50);
+		ingrDeckButton.setForeground(Color.BLUE);
+		ingrDeckButton.addActionListener(e -> {
+        	System.out.println("ingrDeckButton clicked");
+        	currentPlayer.forageIngredient();
+            updateIngredientsPanel(player_ingr);
+        	System.out.println(currentPlayer.getIngredients());
+        });
+        getPanelBoard().add(ingrDeckButton);
+        
+		artifactDeckButton.setBounds(310, 120, 150, 50);
+		artifactDeckButton.setForeground(Color.BLUE);
+		artifactDeckButton.addActionListener(e -> {
+        	System.out.println("artifactDeckButton clicked");
+        	currentPlayer.getArtFromDeck();
+            updateArtifactsPanel(player_arts);
+        	System.out.println(currentPlayer.getArtifacts());
+        });
+        getPanelBoard().add(artifactDeckButton);
 		
 		help.setBounds(0, 0, 40, 20);
 		help.setForeground(Color.BLACK);
@@ -120,6 +144,36 @@ public class BoardPage extends JFrame implements ActionListener {
 		getPanelBoard().add(turnButton);
 	}
 	
+    private void updateArtifactsPanel(JPanel player_arts) {
+    	player_arts.removeAll();
+        JLabel pa_text = new JLabel("Player's Artifacts: ");
+        player_arts.add(pa_text);
+
+		for (int i=0; i<currentPlayer.getArtifacts().size(); i++) {
+			JButton player_art = new JButton(currentPlayer.getArtifacts().get(i).toString());
+			player_art.setBounds(10, 10, 60, 60); // should change
+			player_arts.add(player_art);
+		}
+
+		player_arts.revalidate();  //need to revise
+		player_arts.repaint();  //need to revise
+    }
+	
+    private void updateIngredientsPanel(JPanel player_ingr) {
+        player_ingr.removeAll();
+        JLabel pi_text = new JLabel("Player's Ingredients");
+        player_ingr.add(pi_text);
+
+        for (int i = 0; i < currentPlayer.getIngredients().size(); i++) {
+            JButton player_ing = new JButton(currentPlayer.getIngredients().get(i).toString());
+            player_ing.setBounds(10, 10, 80, 30);
+            player_ingr.add(player_ing);
+        }
+
+        player_ingr.revalidate();  //need to revise
+        player_ingr.repaint();  //need to revise
+    }
+	
 	private void switchTurns() {
 		if (currentPlayer == player1) {
 			currentPlayer = player2;
@@ -128,7 +182,9 @@ public class BoardPage extends JFrame implements ActionListener {
 		}
 		name.setText("Player: " + currentPlayer.getUsername());
 		gold.setText("Gold: " + currentPlayer.getGold());
-		sickness.setText("Sickness: " + currentPlayer.getSickness());	
+		sickness.setText("Sickness: " + currentPlayer.getSickness());
+		updateIngredientsPanel(player_ingr);
+		updateArtifactsPanel(player_arts);
 	}
 	
 	private void showHelpDialog() {

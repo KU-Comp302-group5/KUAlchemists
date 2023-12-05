@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class BoardPage extends JFrame implements ActionListener {
 	
 	private static JPanel panelBoard;
-	private static JButton help, pause;
+	private static JButton help, pause, potionBrewing, publicationTrack, deductionBoard;
 	
 	public BoardPage() {
 		super("KUAlchemists");
@@ -32,6 +32,27 @@ public class BoardPage extends JFrame implements ActionListener {
 		
 		getPanelBoard().add(pause);
 		
+        potionBrewing = new JButton("Potion Brewing");
+        publicationTrack = new JButton("Publication Track");
+        deductionBoard = new JButton("Deduction Board");
+
+        int buttonWidth = 200;
+        int buttonHeight = 40;
+        
+        potionBrewing.setBounds(0, 520, buttonWidth, buttonHeight);
+        potionBrewing.setForeground(Color.BLUE);
+        potionBrewing.addActionListener(e -> System.out.println("Potion Brewing button clicked"));
+        getPanelBoard().add(potionBrewing);
+
+        publicationTrack.setBounds(200, 520, buttonWidth, buttonHeight);
+        publicationTrack.setForeground(Color.RED);
+        publicationTrack.addActionListener(e -> System.out.println("Publication Track button clicked"));
+        getPanelBoard().add(publicationTrack);
+
+        deductionBoard.setBounds(400, 520, buttonWidth, buttonHeight);
+        deductionBoard.setForeground(Color.GREEN);
+        deductionBoard.addActionListener(e -> System.out.println("Deduction Board button clicked"));
+        getPanelBoard().add(deductionBoard);
 	}
 	
 	private void showHelpDialog() {
@@ -39,9 +60,9 @@ public class BoardPage extends JFrame implements ActionListener {
 	    		this,
 	    		"Help",
 	    		true);
-	    help.setSize(200, 100);
+	    help.setSize(300, 100);
 	    
-	    JLabel helpText = new JLabel("Help Information dummy");
+	    JLabel helpText = new JLabel("This is help center.");
 	    help.add(helpText, BorderLayout.CENTER);
 	    JButton ok = new JButton("OK");
 	    ok.addActionListener(e -> help.dispose());

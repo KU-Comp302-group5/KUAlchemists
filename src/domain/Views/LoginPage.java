@@ -2,6 +2,7 @@ package domain.Views;
 
 import javax.swing.*;
 
+import domain.Player;
 import domain.ViewControllers.BoardController;
 
 import java.awt.*;
@@ -16,7 +17,6 @@ public class LoginPage extends JFrame implements ActionListener{
 	private static JPanel panelLogin;
 	public static JTextField userName1, userName2;
 	public static int avatarChosen1, avatarChosen2;
-	
 
 
 	public  LoginPage() {
@@ -165,12 +165,12 @@ public class LoginPage extends JFrame implements ActionListener{
 				System.out.println(getUserName());
 				System.out.println(getAvatarChosen());
 				BoardController board = new BoardController();
+				dispose();
 			}
 		});
 		getPanelLogin().add(openBoard);
 	}
 		
-
 	@Override
 	public void actionPerformed(ActionEvent e) {		
 	}

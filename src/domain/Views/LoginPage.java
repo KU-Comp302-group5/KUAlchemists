@@ -164,7 +164,10 @@ public class LoginPage extends JFrame implements ActionListener{
 				System.out.println(getAvatarChosen2());
 				System.out.println(getUserName());
 				System.out.println(getAvatarChosen());
-				BoardController board = new BoardController();
+				
+				Player player = new Player(getUserName(), 333, 0, 1);
+		        
+		        BoardController boardController = new BoardController(player);
 				dispose();
 			}
 		});

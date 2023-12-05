@@ -1,11 +1,14 @@
 package domain.ViewControllers;
 import javax.swing.JFrame;
+
+import domain.Player;
 import domain.Views.BoardPage;
 
 public class BoardController {
-	BoardPage boardPage = new BoardPage();
+	private BoardPage boardPage;
 	
-	public BoardController() {
+	public BoardController(Player player) {
+		boardPage = new BoardPage(player);
 		boardPage.add(BoardPage.getPanelBoard());
 		boardPage.setSize(600,600);
 		boardPage.setVisible(true);

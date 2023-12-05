@@ -1,6 +1,9 @@
 package domain.Views;
 
 import javax.swing.*;
+
+import domain.Player;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,8 +12,9 @@ public class BoardPage extends JFrame implements ActionListener {
 	
 	private static JPanel panelBoard;
 	private static JButton help, pause, potionBrewing, publicationTrack, deductionBoard;
+	private JLabel gold, sickness, name;
 	
-	public BoardPage() {
+	public BoardPage(Player player) {
 		super("KUAlchemists");
 		setPanelBoard(new JPanel());
 		getPanelBoard().setLayout(null);
@@ -31,7 +35,6 @@ public class BoardPage extends JFrame implements ActionListener {
 		pause.addActionListener(e -> showPauseDialog());
 		
 		getPanelBoard().add(pause);
-		System.out.println("dummy2");
 		
         potionBrewing = new JButton("Potion Brewing");
         publicationTrack = new JButton("Publication Track");
@@ -42,18 +45,37 @@ public class BoardPage extends JFrame implements ActionListener {
         
         potionBrewing.setBounds(0, 520, buttonWidth, buttonHeight);
         potionBrewing.setForeground(Color.BLUE);
-        potionBrewing.addActionListener(e -> System.out.println("Potion Brewing button clicked"));
+        potionBrewing.addActionListener(e -> {
+        	System.out.println("Potion Brewing button clicked");
+        });
         getPanelBoard().add(potionBrewing);
 
         publicationTrack.setBounds(200, 520, buttonWidth, buttonHeight);
         publicationTrack.setForeground(Color.RED);
-        publicationTrack.addActionListener(e -> System.out.println("Publication Track button clicked"));
+        publicationTrack.addActionListener(e -> {
+        	System.out.println("Publication Track button clicked");
+        });
         getPanelBoard().add(publicationTrack);
 
         deductionBoard.setBounds(400, 520, buttonWidth, buttonHeight);
         deductionBoard.setForeground(Color.GREEN);
-        deductionBoard.addActionListener(e -> System.out.println("Deduction Board button clicked"));
+        deductionBoard.addActionListener(e -> {
+        	System.out.println("Deduction Board button clicked");
+        });
         getPanelBoard().add(deductionBoard);
+        
+        
+        name = new JLabel("Player: " + player.getUsername());
+        name.setBounds(250, 5, 200, 15);
+        getPanelBoard().add(name);
+        
+        gold = new JLabel("Gold: " + player.getGold());
+        gold.setBounds(250, 20, 100, 30);
+        getPanelBoard().add(gold);
+
+        sickness = new JLabel("Sickness: " + player.getSickness());
+        sickness.setBounds(250, 50, 100, 30);
+        getPanelBoard().add(sickness);
 	}
 	
 	private void showHelpDialog() {

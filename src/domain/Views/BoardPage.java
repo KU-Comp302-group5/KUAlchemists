@@ -31,6 +31,7 @@ public class BoardPage extends JFrame implements ActionListener {
 		pause.addActionListener(e -> showPauseDialog());
 		
 		getPanelBoard().add(pause);
+		System.out.println("dummy2");
 		
         potionBrewing = new JButton("Potion Brewing");
         publicationTrack = new JButton("Publication Track");

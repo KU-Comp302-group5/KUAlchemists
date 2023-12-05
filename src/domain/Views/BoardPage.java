@@ -77,6 +77,7 @@ public class BoardPage extends JFrame implements ActionListener {
         	System.out.println("artifactDeckButton clicked");
         	currentPlayer.getArtFromDeck();
             updateArtifactsPanel(player_arts);
+            gold.setText("Gold: " + currentPlayer.getGold());
         	System.out.println(currentPlayer.getArtifacts());
         });
         getPanelBoard().add(artifactDeckButton);

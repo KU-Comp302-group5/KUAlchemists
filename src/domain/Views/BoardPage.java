@@ -11,13 +11,20 @@ import java.awt.event.ActionListener;
 public class BoardPage extends JFrame implements ActionListener {
 	
 	private static JPanel panelBoard;
-	private static JButton help, pause, potionBrewing, publicationTrack, deductionBoard;
+	private static JButton help, pause, potionBrewing, publicationTrack, deductionBoard, turnButton;
 	private JLabel gold, sickness, name;
+	private Player currentPlayer;
+    private Player player1, player2;
 	
-	public BoardPage(Player player) {
+	public BoardPage(Player player1, Player player2) {
 		super("KUAlchemists");
 		setPanelBoard(new JPanel());
 		getPanelBoard().setLayout(null);
+		
+		this.player1 = player1;
+        this.player2 = player2;
+      
+        currentPlayer = player1;
 		
 		JPanel player_arts = new JPanel();
 		player_arts.setBounds(0, 280, 600, 120);
@@ -26,8 +33,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		pa_text.setBounds(10, 290, 200, 20); // should change
 		player_arts.add(pa_text);
 		
-		for (int i=0; i<player.getArtifacts().size(); i++) {
-			JButton player_art = new JButton(player.getArtifacts().get(i).toString());
+		for (int i=0; i<currentPlayer.getArtifacts().size(); i++) {
+			JButton player_art = new JButton(currentPlayer.getArtifacts().get(i).toString());
 			player_art.setBounds(10, 10, 60, 60); // should change
 			player_arts.add(player_art);
 		}
@@ -40,14 +47,15 @@ public class BoardPage extends JFrame implements ActionListener {
 		player_ingr.add(pi_text);
 		panelBoard.add(player_ingr);
 		
-		for (int i=0; i<player.getIngredients().size(); i++) {
-			JButton player_ing = new JButton(player.getIngredients().get(i).toString());
+		for (int i=0; i<currentPlayer.getIngredients().size(); i++) {
+			JButton player_ing = new JButton(currentPlayer.getIngredients().get(i).toString());
 			player_ing.setBounds(10, 10, 60, 60); // should change
 			player_ingr.add(player_ing);
 		}
 		
 		help = new JButton("Help");
 		pause = new JButton("Pause");
+		turnButton = new JButton("Turn");
 		
 		help.setBounds(0, 0, 40, 20);
 		help.setForeground(Color.BLACK);
@@ -92,17 +100,35 @@ public class BoardPage extends JFrame implements ActionListener {
         getPanelBoard().add(deductionBoard);
         
         
-        name = new JLabel("Player: " + player.getUsername());
+        name = new JLabel("Player: " + currentPlayer.getUsername());
         name.setBounds(250, 5, 200, 15);
         getPanelBoard().add(name);
         
-        gold = new JLabel("Gold: " + player.getGold());
+        gold = new JLabel("Gold: " + currentPlayer.getGold());
         gold.setBounds(250, 20, 100, 30);
         getPanelBoard().add(gold);
 
-        sickness = new JLabel("Sickness: " + player.getSickness());
+        sickness = new JLabel("Sickness: " + currentPlayer.getSickness());
         sickness.setBounds(250, 50, 100, 30);
         getPanelBoard().add(sickness);
+        
+        //Just added to show turn of players able to change. Just for demonstration.
+		turnButton.setBounds(400, 0, 50, 20);
+		turnButton.addActionListener(e -> {
+			switchTurns();
+		});
+		getPanelBoard().add(turnButton);
+	}
+	
+	private void switchTurns() {
+		if (currentPlayer == player1) {
+			currentPlayer = player2;
+		} else {
+			currentPlayer = player1;
+		}
+		name.setText("Player: " + currentPlayer.getUsername());
+		gold.setText("Gold: " + currentPlayer.getGold());
+		sickness.setText("Sickness: " + currentPlayer.getSickness());	
 	}
 	
 	private void showHelpDialog() {

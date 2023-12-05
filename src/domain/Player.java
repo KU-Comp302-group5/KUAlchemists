@@ -23,10 +23,6 @@ public class Player {
 		//this.avatar = avatar;
 		this.ingredients = new ArrayList<Ingredient>();
 		this.artifacts = new ArrayList<ArtifactCard>();
-		this.getArtFromDeck(); //to try UI
-		this.getArtFromDeck(); //to try UI
-		this.forageIngredient(); //to try UI
-		this.forageIngredient(); //to try UI
 		//this.potions = potions;
 		//this.theories = theories;
 		this.gold = gold;

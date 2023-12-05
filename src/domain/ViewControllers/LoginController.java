@@ -1,5 +1,4 @@
 package domain.ViewControllers;
-
 import javax.swing.JFrame;
 
 import domain.Views.LoginPage;
@@ -9,7 +8,7 @@ public class LoginController {
 
 	public LoginController() {
 		loginPage.add(LoginPage.getPanelLogin());
-		loginPage.setSize(400,400);
+		loginPage.setSize(600,600);
 		loginPage.setVisible(true);
 		loginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

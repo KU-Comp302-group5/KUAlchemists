@@ -54,8 +54,4 @@ public class HandlerFactory {
 	public void setTransmuteIngHandler(TransmuteIngredientHandler transmuteIngHandler) {
 		this.transmuteIngHandler = transmuteIngHandler;
 	}
-	
-	
-
-	
 }

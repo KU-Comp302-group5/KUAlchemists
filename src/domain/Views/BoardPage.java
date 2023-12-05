@@ -19,6 +19,33 @@ public class BoardPage extends JFrame implements ActionListener {
 		setPanelBoard(new JPanel());
 		getPanelBoard().setLayout(null);
 		
+		JPanel player_arts = new JPanel();
+		player_arts.setBounds(0, 280, 600, 120);
+		player_arts.setBackground(Color.ORANGE);
+		JLabel pa_text = new JLabel("Player's Artifacts");
+		pa_text.setBounds(10, 290, 200, 20); // should change
+		player_arts.add(pa_text);
+		
+		for (int i=0; i<player.getArtifacts().size(); i++) {
+			JButton player_art = new JButton(player.getArtifacts().get(i).toString());
+			player_art.setBounds(10, 10, 60, 60); // should change
+			player_arts.add(player_art);
+		}
+		panelBoard.add(player_arts);
+		
+		JPanel player_ingr = new JPanel();
+		player_ingr.setBounds(0, 400, 600, 120);
+		player_ingr.setBackground(Color.MAGENTA);
+		JLabel pi_text = new JLabel("Player's Ingredients");
+		player_ingr.add(pi_text);
+		panelBoard.add(player_ingr);
+		
+		for (int i=0; i<player.getIngredients().size(); i++) {
+			JButton player_ing = new JButton(player.getIngredients().get(i).toString());
+			player_ing.setBounds(10, 10, 60, 60); // should change
+			player_ingr.add(player_ing);
+		}
+		
 		help = new JButton("Help");
 		pause = new JButton("Pause");
 		

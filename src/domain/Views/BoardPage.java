@@ -41,7 +41,7 @@ public class BoardPage extends JFrame implements ActionListener {
 	    		true);
 	    help.setSize(200, 100);
 	    
-	    JLabel helpText = new JLabel("Help Information");
+	    JLabel helpText = new JLabel("Help Information dummy");
 	    help.add(helpText, BorderLayout.CENTER);
 	    JButton ok = new JButton("OK");
 	    ok.addActionListener(e -> help.dispose());

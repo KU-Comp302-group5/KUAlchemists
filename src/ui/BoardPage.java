@@ -2,8 +2,10 @@ package ui;
 
 import javax.swing.*;
 
-import domain.Player;
-import domain.controllers.UseArtifactHandler;
+import domain.ArtListener;
+import domain.IngListener;
+import domain.KUAlchemistsGame;
+import domain.controllers.HandlerFactory;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,67 +16,60 @@ public class BoardPage extends JFrame implements ActionListener {
 	private static JPanel panelBoard, player_ingr, player_arts;
 	private static JButton help, pause, potionBrewing, publicationTrack, deductionBoard, turnButton, ingrDeckButton, player_ing, artifactDeckButton, player_art;
 	private JLabel gold, sickness, name;
-	private Player currentPlayer;
-    private Player player1, player2;
+	private int currentPlayer;
 	
-	public BoardPage(Player player1, Player player2) {
+	public BoardPage() {
 		super("KUAlchemists");
 		setPanelBoard(new JPanel());
 		getPanelBoard().setLayout(null);
+		currentPlayer = 1;
 		
-		this.player1 = player1;
-        this.player2 = player2;
-      
-        currentPlayer = player1;
-		
-		player_arts = new JPanel();
+		player_arts = new PlayerArts();
 		player_arts.setBounds(0, 280, 600, 120);
 		player_arts.setBackground(Color.ORANGE);
 		JLabel pa_text = new JLabel("Player's Artifacts");
 		pa_text.setBounds(10, 290, 200, 20); // should change
 		player_arts.add(pa_text);
 		panelBoard.add(player_arts);
-		updateArtifactsPanel(player_arts);
+		((PlayerArts) player_arts).updateArts();
 		
-		player_ingr = new JPanel();
+		//might change later
+		KUAlchemistsGame.getInstance().getPlayerI().addArtListener((PlayerArts) player_arts);
+		KUAlchemistsGame.getInstance().getPlayerII().addArtListener((PlayerArts) player_arts);
+		
+		player_ingr = new PlayerIngs();
 		player_ingr.setBounds(0, 400, 600, 120);
 		player_ingr.setBackground(Color.MAGENTA);
 		JLabel pi_text = new JLabel("Player's Ingredients");
 		player_ingr.add(pi_text);
 		panelBoard.add(player_ingr);
-		updateIngredientsPanel(player_ingr);
+		((PlayerIngs) player_ingr).updateIngs();
+		
+		//might change later
+		KUAlchemistsGame.getInstance().getPlayerI().addIngListener((PlayerIngs) player_ingr);
+		KUAlchemistsGame.getInstance().getPlayerII().addIngListener((PlayerIngs) player_ingr);
 		
 		help = new JButton("Help");
 		pause = new JButton("Pause");
 		turnButton = new JButton("Turn");
 		ingrDeckButton = new JButton("Ingredient Deck");
-		//player_ing = new JButton("Ingredients: ");
 		artifactDeckButton = new JButton("Artifacts Deck");
-		//player_art = new JButton("Artifacts: ");	
 		
 		ingrDeckButton.setBounds(140, 120, 150, 50);
 		ingrDeckButton.setForeground(Color.BLUE);
 		ingrDeckButton.addActionListener(e -> {
         	System.out.println("ingrDeckButton clicked");
-        	currentPlayer.forageIngredient();
-            updateIngredientsPanel(player_ingr);
-        	System.out.println(currentPlayer.getIngredients());
+        	HandlerFactory.getInstance().getForageIngHandler().forageIngredient(KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
         });
         getPanelBoard().add(ingrDeckButton);
-        
-
-        
-        
-        
         
 		artifactDeckButton.setBounds(310, 120, 150, 50);
 		artifactDeckButton.setForeground(Color.BLUE);
 		artifactDeckButton.addActionListener(e -> {
         	System.out.println("artifactDeckButton clicked");
-        	currentPlayer.getArtFromDeck();
-            updateArtifactsPanel(player_arts);
-            gold.setText("Gold: " + currentPlayer.getGold());
-        	System.out.println(currentPlayer.getArtifacts());
+        	HandlerFactory.getInstance().getBuyArtifactHandler().buyArtifact(KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+            gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getGold());
+        	System.out.println(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getArtifacts());
         });
         getPanelBoard().add(artifactDeckButton);
 		
@@ -121,15 +116,24 @@ public class BoardPage extends JFrame implements ActionListener {
         getPanelBoard().add(deductionBoard);
         
         
-        name = new JLabel("Player: " + currentPlayer.getUsername());
+        name = new JLabel("Player: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername());
         name.setBounds(250, 5, 200, 15);
         getPanelBoard().add(name);
         
-        gold = new JLabel("Gold: " + currentPlayer.getGold());
+        
+        /**
+         * Observer pattern should be implemented for updating gold.
+         *
+         */
+        gold = new JLabel("Gold: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getGold());
         gold.setBounds(250, 20, 100, 30);
         getPanelBoard().add(gold);
 
-        sickness = new JLabel("Sickness: " + currentPlayer.getSickness());
+        /**
+         * Observer pattern should be implemented for updating sickness.
+         *
+         */
+        sickness = new JLabel("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getSickness());
         sickness.setBounds(250, 50, 100, 30);
         getPanelBoard().add(sickness);
         
@@ -141,65 +145,85 @@ public class BoardPage extends JFrame implements ActionListener {
 		getPanelBoard().add(turnButton);
 	}
 	
-    private void updateArtifactsPanel(JPanel player_arts) {
-    	player_arts.removeAll();
-        JLabel pa_text = new JLabel("Player's Artifacts: ");
-        player_arts.add(pa_text);
-        UseArtifactHandler handler = new UseArtifactHandler();
-
-		for (int i=0; i<currentPlayer.getArtifacts().size(); i++) {
-			
-			JButton player_art = new JButton(currentPlayer.getArtifacts().get(i).toString());
-			player_art.setBounds(10, 10, 60, 60); // should change
-			player_arts.add(player_art);
-			int temp = i;
-            player_art.addActionListener(e -> {
-            	System.out.println("Artifact is used");
-            	handler.useArtifact(currentPlayer, currentPlayer.getArtifacts().get(temp));
-                updateArtifactsPanel(player_arts);
-                // gold.setText("Gold: " + currentPlayer.getGold());  like observer
-            	System.out.println(currentPlayer.getArtifacts());
-            });
-		}
-
-		player_arts.revalidate();  //need to revise
-		player_arts.repaint();  //need to revise
-    }
 	
-    private void updateIngredientsPanel(JPanel player_ingr) {
-        player_ingr.removeAll();
-        JLabel pi_text = new JLabel("Player's Ingredients");
-        player_ingr.add(pi_text);
+	/**
+     * Observer pattern.
+     *
+     * Inner class implementing ArtListener for PlayerArts
+     */
+    private class PlayerArts extends JPanel implements ArtListener {
+        
+    	public void updateArts() {
+    		this.removeAll();
+    		JLabel pa_text = new JLabel("Player's Artifacts: ");
+            this.add(pa_text);
+            
+            for (int i=0; i<KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getArtifacts().size(); i++) {
+    			
+    			JButton player_art = new JButton(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getArtifacts().get(i).toString());
+    			player_art.setBounds(10, 10, 60, 60); // should change
+    			this.add(player_art);
+    			int temp = i;
+                player_art.addActionListener(e -> {
+                	System.out.println("Artifact is used");
+                	HandlerFactory.getInstance().getUseArtifactHandler().useArtifact(KUAlchemistsGame.getInstance().getPlayer(currentPlayer), 
+                			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getArtifacts().get(temp));
+                });
+    		}
+    		this.revalidate();  //need to revise
+    		this.repaint();  //need to revise
+    	}
+        
+        @Override
+    	public void onArtChange() {
+    		updateArts();
+    	}
+    }
+    
+    
+    /**
+     * Observer pattern.
+     *
+     * Inner class implementing IngListener for PlayerIngs.
+     */
+    private class PlayerIngs extends JPanel implements IngListener {
 
-        for (int i = 0; i < currentPlayer.getIngredients().size(); i++) {
-            JButton player_ing = new JButton(currentPlayer.getIngredients().get(i).toString());
-            player_ing.setBounds(10, 10, 80, 30);
-            player_ingr.add(player_ing);
-            int temp = i;
-            player_ing.addActionListener(e -> {
-            	System.out.println("Ingredient is transmuted.");
-            	currentPlayer.transmuteIngredient(currentPlayer.getIngredients().get(temp), 1);
-                updateIngredientsPanel(player_ingr);
-                gold.setText("Gold: " + currentPlayer.getGold());
-            	System.out.println(currentPlayer.getIngredients());
-            });
-        }
-
-        player_ingr.revalidate();  //need to revise
-        player_ingr.repaint();  //need to revise
+    	public void updateIngs() {
+    		this.removeAll();
+            JLabel pi_text = new JLabel("Player's Ingredients");
+            this.add(pi_text);
+            
+            for (int i = 0; i < KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().size(); i++) {
+                JButton player_ing = new JButton(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(i).toString());
+                player_ing.setBounds(10, 10, 80, 30);
+                this.add(player_ing);
+                player_ing.addActionListener(e -> {
+                	System.out.println("Ingredient is transmuted.");
+                	HandlerFactory.getInstance().getTransmuteIngHandler().transmuteIngredient(KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+                    gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getGold());
+                });
+            }
+            this.revalidate();  //need to revise
+            this.repaint();  //need to revise
+    	}
+    	
+		@Override
+		public void onIngChange() {
+			updateIngs();
+		}
     }
 	
 	private void switchTurns() {
-		if (currentPlayer == player1) {
-			currentPlayer = player2;
+		if (currentPlayer == 1) {
+			currentPlayer = 2;
 		} else {
-			currentPlayer = player1;
+			currentPlayer = 1;
 		}
-		name.setText("Player: " + currentPlayer.getUsername());
-		gold.setText("Gold: " + currentPlayer.getGold());
-		sickness.setText("Sickness: " + currentPlayer.getSickness());
-		updateIngredientsPanel(player_ingr);
-		updateArtifactsPanel(player_arts);
+		name.setText("Player: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername());
+		gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getGold());
+		sickness.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getSickness());
+		((PlayerIngs) player_ingr).updateIngs();
+		((PlayerArts) player_arts).updateArts();
 	}
 	
 	private void showHelpDialog() {
@@ -236,11 +260,9 @@ public class BoardPage extends JFrame implements ActionListener {
 	    pause.setVisible(true);
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	public static JPanel getPanelBoard() {
@@ -250,6 +272,4 @@ public class BoardPage extends JFrame implements ActionListener {
 	public static void setPanelBoard(JPanel panelBoard) {
 		BoardPage.panelBoard = panelBoard;
 	}
-	
-	
 }

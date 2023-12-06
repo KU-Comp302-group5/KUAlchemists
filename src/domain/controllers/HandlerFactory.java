@@ -1,5 +1,11 @@
 package domain.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import domain.ArtListener;
+import domain.IngListener;
+
 public class HandlerFactory {
 	private static HandlerFactory instance;
 	
@@ -13,7 +19,6 @@ public class HandlerFactory {
 		if (instance == null) {
 			instance = new HandlerFactory();
 		}
-		
 		return instance;
 	}
 

@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 
 public class LoginPage extends JFrame implements ActionListener{
 	
-	
 	static private JButton avatar11, avatar12, avatar13, avatar21, avatar22, avatar23, openBoard;
 	static private JLabel label11, label12, label21, label22;
 	private static JPanel panelLogin;
@@ -169,8 +168,7 @@ public class LoginPage extends JFrame implements ActionListener{
 				HandlerFactory.getInstance().getLoginHandler().login1(getUserName(), getAvatarChosen());
 				HandlerFactory.getInstance().getLoginHandler().login2(getUserName2(), getAvatarChosen2());
 				
-				BoardPage boardPage = new BoardPage(HandlerFactory.getInstance().getLoginHandler().getPlayer1(),
-						HandlerFactory.getInstance().getLoginHandler().getPlayer2());
+				BoardPage boardPage = new BoardPage();
 				boardPage.setVisible(true);
 				boardPage.add(BoardPage.getPanelBoard());
 				boardPage.setSize(600,600);

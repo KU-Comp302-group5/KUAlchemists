@@ -13,6 +13,8 @@ public class Player {
 	private int gold;
 	private int reputation;
 	private int sickness;
+	List<IngListener> ingListeners = new ArrayList<>();
+	List<ArtListener> artListeners = new ArrayList<>();
 	
 	public Player(String username, int avatar) {
 		
@@ -27,10 +29,29 @@ public class Player {
 		this.sickness = 0;
 	}
 	
+	public void addIngListener(IngListener lis) {
+		ingListeners.add(lis);
+	}
+	
+	public void addArtListener(ArtListener lis) {
+		artListeners.add(lis);
+	}
+	
+	public void publishIngEvent() {
+		for(IngListener l: ingListeners)
+			l.onIngChange();
+	}
+	
+	public void publishArtEvent() {
+		for(ArtListener l: artListeners)
+			l.onArtChange();
+	}
+	
 	public void forageIngredient() {
 		Ingredient ingr = IngredientDeck.getInstance().getTopCard();
 		addIngredient(ingr);
 		System.out.println("\n"+ this.getUsername()+" got ingredient card: "+ ingr.getName());
+		publishIngEvent();
 	}
 	
 	public void addIngredient(Ingredient ingr) {
@@ -54,6 +75,7 @@ public class Player {
 			this.ingredients.remove(ingr);
 			increaseGold(gold_num);
 			System.out.println("\n"+ this.getUsername()+" transmuted ingredient card: "+ ingr.getName());
+			publishIngEvent();
 		}
 	}
 
@@ -62,11 +84,13 @@ public class Player {
 		this.artifacts.add(boughtCard);
 		System.out.println("\n"+ this.getUsername()+" bought artifact card: "+ boughtCard.getName());
 		this.decreaseGold(3);
+		publishArtEvent();
 	}
 	
 	public void removeArtifactCard(ArtifactCard artifactCard) {
 		if (this.artifacts.contains(artifactCard)) {
 			this.artifacts.remove(artifactCard);
+			publishArtEvent();
 		}
 	}
 

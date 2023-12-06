@@ -32,13 +32,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		JLabel pa_text = new JLabel("Player's Artifacts");
 		pa_text.setBounds(10, 290, 200, 20); // should change
 		player_arts.add(pa_text);
-		
-		for (int i=0; i<currentPlayer.getArtifacts().size(); i++) {
-			player_art.setText(currentPlayer.getArtifacts().get(i).toString());
-			player_art.setBounds(10, 10, 60, 60); // should change
-			player_arts.add(player_art);
-		}
 		panelBoard.add(player_arts);
+		updateArtifactsPanel(player_arts);
 		
 		player_ingr = new JPanel();
 		player_ingr.setBounds(0, 400, 600, 120);
@@ -46,20 +41,15 @@ public class BoardPage extends JFrame implements ActionListener {
 		JLabel pi_text = new JLabel("Player's Ingredients");
 		player_ingr.add(pi_text);
 		panelBoard.add(player_ingr);
-		
-		for (int i=0; i<currentPlayer.getIngredients().size(); i++) {
-			player_ing.setText(currentPlayer.getIngredients().get(i).toString());
-			player_ing.setBounds(10, 10, 60, 60); // should change
-			player_ingr.add(player_ing);
-		}
+		updateIngredientsPanel(player_ingr);
 		
 		help = new JButton("Help");
 		pause = new JButton("Pause");
 		turnButton = new JButton("Turn");
 		ingrDeckButton = new JButton("Ingredient Deck");
-		player_ing = new JButton("Ingredients: ");
+		//player_ing = new JButton("Ingredients: ");
 		artifactDeckButton = new JButton("Artifacts Deck");
-		player_art = new JButton("Artifacts: ");	
+		//player_art = new JButton("Artifacts: ");	
 		
 		ingrDeckButton.setBounds(140, 120, 150, 50);
 		ingrDeckButton.setForeground(Color.BLUE);
@@ -70,6 +60,11 @@ public class BoardPage extends JFrame implements ActionListener {
         	System.out.println(currentPlayer.getIngredients());
         });
         getPanelBoard().add(ingrDeckButton);
+        
+
+        
+        
+        
         
 		artifactDeckButton.setBounds(310, 120, 150, 50);
 		artifactDeckButton.setForeground(Color.BLUE);
@@ -169,6 +164,14 @@ public class BoardPage extends JFrame implements ActionListener {
             JButton player_ing = new JButton(currentPlayer.getIngredients().get(i).toString());
             player_ing.setBounds(10, 10, 80, 30);
             player_ingr.add(player_ing);
+            int temp = i;
+            player_ing.addActionListener(e -> {
+            	System.out.println("Ingredient is transmuted.");
+            	currentPlayer.transmuteIngredient(currentPlayer.getIngredients().get(temp), 1);
+                updateIngredientsPanel(player_ingr);
+                gold.setText("Gold: " + currentPlayer.getGold());
+            	System.out.println(currentPlayer.getIngredients());
+            });
         }
 
         player_ingr.revalidate();  //need to revise

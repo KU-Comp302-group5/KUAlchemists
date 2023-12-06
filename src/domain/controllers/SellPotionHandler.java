@@ -1,4 +1,6 @@
-package domain;
+package domain.controllers;
+
+import domain.Ingredient;
 
 public class SellPotionHandler {
 	

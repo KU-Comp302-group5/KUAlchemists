@@ -1,9 +1,9 @@
-package domain.Views;
+package ui;
 
 import javax.swing.*;
 
 import domain.Player;
-import domain.UseArtifactHandler;
+import domain.controllers.UseArtifactHandler;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

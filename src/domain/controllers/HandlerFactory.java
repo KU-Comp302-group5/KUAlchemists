@@ -1,8 +1,9 @@
-package domain;
+package domain.controllers;
 
 public class HandlerFactory {
 	private static HandlerFactory instance;
 	
+	private LoginHandler loginHandler;
 	private BuyArtifactHandler buyArtifactHandler;
 	private UseArtifactHandler useArtifactHandler;
 	private ForageIngHandler forageIngHandler;
@@ -21,6 +22,8 @@ public class HandlerFactory {
 		this.buyArtifactHandler= new BuyArtifactHandler();
 		this.forageIngHandler= new ForageIngHandler();
 		this.transmuteIngHandler= new TransmuteIngredientHandler();
+		this.useArtifactHandler= new UseArtifactHandler();
+		this.loginHandler= new LoginHandler();
 	}
 
 	public BuyArtifactHandler getBuyArtifactHandler() {
@@ -54,4 +57,13 @@ public class HandlerFactory {
 	public void setTransmuteIngHandler(TransmuteIngredientHandler transmuteIngHandler) {
 		this.transmuteIngHandler = transmuteIngHandler;
 	}
+
+	public LoginHandler getLoginHandler() {
+		return loginHandler;
+	}
+
+	public void setLoginHandler(LoginHandler loginHandler) {
+		this.loginHandler = loginHandler;
+	}
+	
 }

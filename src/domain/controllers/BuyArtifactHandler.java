@@ -1,4 +1,6 @@
-package domain;
+package domain.controllers;
+
+import domain.Player;
 
 public class BuyArtifactHandler {
 	

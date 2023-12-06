@@ -5,29 +5,26 @@ import java.util.List;
 
 public class Player {
 	private String username;
-	//private Avatar avatar;
+	private int avatar;
 	private List<Ingredient> ingredients ;
 	private List<ArtifactCard> artifacts ;
-	//private List<Potion> potions ;
-	//private List<Theory> theories ;
+	private List<Potion> potions ;
+	private List<Theory> theories ;
 	private int gold;
 	private int reputation;
 	private int sickness;
 	
-	public Player(String username, 
-			//Avatar avatar, 
-			//List<Ingredient> ingredients, List<Potion> potions, List<Theory> theories, 
-			int gold, int reputation, int sickness) {
+	public Player(String username, int avatar) {
 		
 		this.username = username;
-		//this.avatar = avatar;
+		this.avatar = avatar;
 		this.ingredients = new ArrayList<Ingredient>();
 		this.artifacts = new ArrayList<ArtifactCard>();
-		//this.potions = potions;
-		//this.theories = theories;
-		this.gold = gold;
-		this.reputation = reputation;
-		this.sickness = sickness;
+		this.potions = new ArrayList<Potion>();
+		this.theories = new ArrayList<Theory>();
+		this.gold = 10;
+		this.reputation = 0;
+		this.sickness = 0;
 	}
 	
 	public void forageIngredient() {

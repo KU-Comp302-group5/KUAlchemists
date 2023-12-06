@@ -1,4 +1,4 @@
-package domain;
+package domain.controllers;
 
 public class DeductionBoardHandler{
 

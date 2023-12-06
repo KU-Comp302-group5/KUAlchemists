@@ -1,9 +1,9 @@
-package domain.Views;
+package ui;
 
 import javax.swing.*;
 
 import domain.Player;
-import domain.ViewControllers.BoardController;
+import domain.controllers.HandlerFactory;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -166,10 +166,16 @@ public class LoginPage extends JFrame implements ActionListener{
 				System.out.println(getAvatarChosen());
 				
 				//Information of Player1 and Player2 is derived from login page and injected to BoardController
-				Player player1 = new Player(getUserName(), 100, 0, 1);
-				Player player2 = new Player(getUserName2(), 200, 0, 3);
+				HandlerFactory.getInstance().getLoginHandler().login1(getUserName(), getAvatarChosen());
+				HandlerFactory.getInstance().getLoginHandler().login2(getUserName2(), getAvatarChosen2());
 				
-		        BoardController boardController = new BoardController(player1,player2);
+				BoardPage boardPage = new BoardPage(HandlerFactory.getInstance().getLoginHandler().getPlayer1(),
+						HandlerFactory.getInstance().getLoginHandler().getPlayer2());
+				boardPage.setVisible(true);
+				boardPage.add(BoardPage.getPanelBoard());
+				boardPage.setSize(600,600);
+				boardPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				
 				dispose();
 			}
 		});

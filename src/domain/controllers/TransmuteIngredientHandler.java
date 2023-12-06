@@ -1,4 +1,7 @@
-package domain;
+package domain.controllers;
+
+import domain.Ingredient;
+import domain.Player;
 
 public class TransmuteIngredientHandler {
 	

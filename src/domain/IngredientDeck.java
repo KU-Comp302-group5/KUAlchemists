@@ -42,10 +42,16 @@ public class IngredientDeck {
 	}
 
 	public Ingredient getTopCard() {
-		Ingredient ingr = ingredients.get(cardNum-1);
-    	ingredients.remove(cardNum-1);
-    	cardNum--;
-    	return ingr;
+		if (cardNum > 0) {
+			Ingredient ingr = ingredients.get(cardNum-1);
+	    	ingredients.remove(cardNum-1);
+	    	cardNum--;
+	    	return ingr;
+		}
+		else {
+			System.out.println("No cards to draw in the ingredients deck");
+			return null;
+		}
     }
 
 	@Override

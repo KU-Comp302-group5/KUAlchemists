@@ -32,10 +32,17 @@ public class ArtifactDeck {
 
 
 	public ArtifactCard getTopCard() {
-    	ArtifactCard card = artifacts.get(cardNum-1);
-    	artifacts.remove(cardNum-1);
-    	cardNum--;
-    	return card;
+    	
+    	if (cardNum > 0) {
+			ArtifactCard card = artifacts.get(cardNum-1);
+	    	artifacts.remove(cardNum-1);
+	    	cardNum--;
+	    	return card;
+		}
+		else {
+			System.out.println("No cards to draw in the artifact cards deck");
+			return null;
+		}
     }
 
 

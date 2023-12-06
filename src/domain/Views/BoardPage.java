@@ -3,6 +3,7 @@ package domain.Views;
 import javax.swing.*;
 
 import domain.Player;
+import domain.UseArtifactHandler;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -144,11 +145,21 @@ public class BoardPage extends JFrame implements ActionListener {
     	player_arts.removeAll();
         JLabel pa_text = new JLabel("Player's Artifacts: ");
         player_arts.add(pa_text);
+        UseArtifactHandler handler = new UseArtifactHandler();
 
 		for (int i=0; i<currentPlayer.getArtifacts().size(); i++) {
+			
 			JButton player_art = new JButton(currentPlayer.getArtifacts().get(i).toString());
 			player_art.setBounds(10, 10, 60, 60); // should change
 			player_arts.add(player_art);
+			int temp = i;
+            player_art.addActionListener(e -> {
+            	System.out.println("Artifact is used");
+            	handler.useArtifact(currentPlayer, currentPlayer.getArtifacts().get(temp));
+                updateArtifactsPanel(player_arts);
+                // gold.setText("Gold: " + currentPlayer.getGold());  like observer
+            	System.out.println(currentPlayer.getArtifacts());
+            });
 		}
 
 		player_arts.revalidate();  //need to revise

@@ -2,6 +2,8 @@ package domain.Views;
 
 import javax.swing.*;
 
+import domain.BuyArtifactHandler;
+import domain.ForageIngHandler;
 import domain.Player;
 import domain.TransmuteIngredientHandler;
 import domain.UseArtifactHandler;
@@ -53,32 +55,35 @@ public class BoardPage extends JFrame implements ActionListener {
 		artifactDeckButton = new JButton("Artifacts Deck");
 		//player_art = new JButton("Artifacts: ");	
 		
+		
+		
+		// ingredient deck initialization, used for foraging for ingredient
 		ingrDeckButton.setBounds(140, 120, 150, 50);
 		ingrDeckButton.setForeground(Color.BLUE);
 		ingrDeckButton.addActionListener(e -> {
         	System.out.println("ingrDeckButton clicked");
-        	currentPlayer.forageIngredient();
-            updateIngredientsPanel(player_ingr);
+            ForageIngHandler forageIngHandler = new ForageIngHandler();
+            forageIngHandler.forageIngredient(currentPlayer);
+            updateIngredientsPanel(player_ingr); // replace with observer
         	System.out.println(currentPlayer.getIngredients());
         });
         getPanelBoard().add(ingrDeckButton);
         
-
-        
-        
-        
-        
+        // artifact deck button initialization, used for buying artifact
 		artifactDeckButton.setBounds(310, 120, 150, 50);
 		artifactDeckButton.setForeground(Color.BLUE);
 		artifactDeckButton.addActionListener(e -> {
         	System.out.println("artifactDeckButton clicked");
-        	currentPlayer.getArtFromDeck();
-            updateArtifactsPanel(player_arts);
+        	BuyArtifactHandler buyArtifactHandler = new BuyArtifactHandler();
+        	buyArtifactHandler.buyArtifact(currentPlayer);
             gold.setText("Gold: " + currentPlayer.getGold());
+            updateArtifactsPanel(player_arts); // replace with observer
         	System.out.println(currentPlayer.getArtifacts());
         });
         getPanelBoard().add(artifactDeckButton);
 		
+        
+        
 		help.setBounds(0, 0, 40, 20);
 		help.setForeground(Color.BLACK);
 		help.setBackground(Color.WHITE);

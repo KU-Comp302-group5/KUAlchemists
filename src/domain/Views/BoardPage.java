@@ -3,6 +3,7 @@ package domain.Views;
 import javax.swing.*;
 
 import domain.Player;
+import domain.TransmuteIngredientHandler;
 import domain.UseArtifactHandler;
 
 import java.awt.*;
@@ -170,6 +171,7 @@ public class BoardPage extends JFrame implements ActionListener {
         player_ingr.removeAll();
         JLabel pi_text = new JLabel("Player's Ingredients");
         player_ingr.add(pi_text);
+        TransmuteIngredientHandler handler = new TransmuteIngredientHandler();
 
         for (int i = 0; i < currentPlayer.getIngredients().size(); i++) {
             JButton player_ing = new JButton(currentPlayer.getIngredients().get(i).toString());
@@ -178,8 +180,10 @@ public class BoardPage extends JFrame implements ActionListener {
             int temp = i;
             player_ing.addActionListener(e -> {
             	System.out.println("Ingredient is transmuted.");
-            	currentPlayer.transmuteIngredient(currentPlayer.getIngredients().get(temp), 1);
-                updateIngredientsPanel(player_ingr);
+            	// does not use controller
+            	//currentPlayer.transmuteIngredient(currentPlayer.getIngredients().get(temp), 1);
+                handler.transmuteIngredient(currentPlayer, currentPlayer.getIngredients().get(temp));
+            	updateIngredientsPanel(player_ingr);
                 gold.setText("Gold: " + currentPlayer.getGold());
             	System.out.println(currentPlayer.getIngredients());
             });

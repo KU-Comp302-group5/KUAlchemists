@@ -52,11 +52,21 @@ public class Player {
 		return ingredients.get(ingredients.size()-1);
 	}
 	
-	public void transmuteIngredient(Ingredient ingr, int gold_num) {
+	public void transmuteIngredient(Ingredient ingr) {
+		removeIngredient(ingr);
+		increaseGold(1);
+		/*
 		if (this.ingredients.contains(ingr)) {
 			this.ingredients.remove(ingr);
 			increaseGold(gold_num);
 			System.out.println("\n"+ this.getUsername()+" transmuted ingredient card: "+ ingr.getName());
+		}
+		*/
+	}
+	
+	public void removeIngredient(Ingredient ingredient) {
+		if (this.ingredients.contains(ingredient)) {
+			this.ingredients.remove(ingredient);
 		}
 	}
 

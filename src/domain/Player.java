@@ -49,8 +49,10 @@ public class Player {
 	
 	public void forageIngredient() {
 		Ingredient ingr = IngredientDeck.getInstance().getTopCard();
-		addIngredient(ingr);
-		System.out.println("\n"+ this.getUsername()+" got ingredient card: "+ ingr.getName());
+		if (ingr != null) {
+			addIngredient(ingr);
+			System.out.println("\n"+ this.getUsername()+" got ingredient card: "+ ingr.getName());
+		}
 		publishIngEvent();
 	}
 	
@@ -81,9 +83,11 @@ public class Player {
 
 	public void getArtFromDeck() {
 		ArtifactCard boughtCard = ArtifactDeck.getInstance().getTopCard();
-		this.artifacts.add(boughtCard);
-		System.out.println("\n"+ this.getUsername()+" bought artifact card: "+ boughtCard.getName());
-		this.decreaseGold(3);
+		if (boughtCard != null) {
+			this.artifacts.add(boughtCard);
+			System.out.println("\n"+ this.getUsername()+" bought artifact card: "+ boughtCard.getName());
+			this.decreaseGold(3);
+		}
 		publishArtEvent();
 	}
 	

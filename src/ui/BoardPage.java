@@ -212,6 +212,11 @@ public class BoardPage extends JFrame implements ActionListener {
 			updateIngs();
 		}
     }
+    
+    private class ElixirOfInsight extends JPanel{
+    	
+    	
+    }
 	
 	private void switchTurns() {
 		if (currentPlayer == 1) {

@@ -30,6 +30,8 @@ public class ArtifactCard {
 		return "ArtifactCard [name=" + name + "]";
 	}
 	
+	// now in UseArtifactHandler
+	/*
 	public void obtainAbility() {
 		if(this.ID == 0) {
 			// UI : IngredientDeckUI.showTopThreeCards()
@@ -37,10 +39,10 @@ public class ArtifactCard {
 		}
 		if (this.ID == 1) {
 			// UI : DeductionBoardUI.swap() --> DeductionBoard.swap(alchemyMarker1, alchemyMarker2)
-			// buradan emin olamadým, bu sadece UI funvtionality de olabilir.
+			// buradan emin olamadï¿½m, bu sadece UI funvtionality de olabilir.
 		}
 	}
-    
+    */
     
     
     

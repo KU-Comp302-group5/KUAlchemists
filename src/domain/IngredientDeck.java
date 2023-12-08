@@ -19,7 +19,7 @@ public class IngredientDeck {
 	}
 
     public IngredientDeck() {
-		this.cardNum = 2;
+		this.cardNum = 3;
 		
 		List<Ingredient> ingrs = new ArrayList<Ingredient>();
 		
@@ -35,12 +35,29 @@ public class IngredientDeck {
 		ingrs.add(claw);
 		ingrs.add(scorpion);
 		
-		Collections.shuffle(ingrs);
+		//Collections.shuffle(ingrs);
 		
 		this.ingredients = ingrs;
 		
 	}
 
+    
+    // for Elixir of insight
+    public List<Ingredient> getTopThreeCards(){
+    	if (cardNum < 3) {
+    		return null;
+    	}
+    	else {
+    		Ingredient ingr;
+    		List<Ingredient> topThreeIngredientList = new ArrayList<>();
+    		for (int i = 1; i < 4 ; i++) {
+    			ingr = ingredients.get(cardNum - i);
+    			topThreeIngredientList.add(ingr);
+    		}
+    		return topThreeIngredientList;
+    	}
+    }
+    
 	public Ingredient getTopCard() {
 		if (cardNum > 0) {
 			Ingredient ingr = ingredients.get(cardNum-1);
@@ -52,6 +69,26 @@ public class IngredientDeck {
 			System.out.println("No cards to draw in the ingredients deck");
 			return null;
 		}
+    }
+	
+	// getter for ingredients
+	public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    // Setter method for ingredients
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+    
+ // Getter method for cardNum
+    public int getCardNum() {
+        return cardNum;
+    }
+
+    // Setter method for cardNum
+    public void setCardNum(int cardNum) {
+        this.cardNum = cardNum;
     }
 
 	@Override

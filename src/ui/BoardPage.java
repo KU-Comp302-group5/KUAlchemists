@@ -73,6 +73,9 @@ public class BoardPage extends JFrame implements ActionListener {
         });
         getPanelBoard().add(artifactDeckButton);
 		
+        //help.setFont(new Font("Arial", Font.PLAIN, 9));
+        help.setMargin(new Insets(0, 0, 0, 0));
+        help.setFocusPainted(false);
 		help.setBounds(0, 0, 40, 20);
 		help.setForeground(Color.BLACK);
 		help.setBackground(Color.WHITE);
@@ -80,7 +83,9 @@ public class BoardPage extends JFrame implements ActionListener {
 		
 		getPanelBoard().add(help);
 		
-		pause.setBounds(560, 0, 40, 20);
+		pause.setMargin(new Insets(0, 0, 0, 0));
+        pause.setFocusPainted(false);
+		pause.setBounds(520, 0, 60, 20);
 		pause.setForeground(Color.BLACK);
 		pause.setBackground(Color.WHITE);
 		pause.addActionListener(e -> showPauseDialog());
@@ -138,6 +143,8 @@ public class BoardPage extends JFrame implements ActionListener {
         getPanelBoard().add(sickness);
         
         //Just added to show turn of players able to change. Just for demonstration.
+        turnButton.setMargin(new Insets(0, 0, 0, 0));
+        turnButton.setFocusPainted(false);
 		turnButton.setBounds(400, 0, 50, 20);
 		turnButton.addActionListener(e -> {
 			switchTurns();
@@ -237,7 +244,7 @@ public class BoardPage extends JFrame implements ActionListener {
 	    		"Help",
 	    		true);
 	    help.setSize(300, 100);
-	    
+	    help.setModal(false);
 	    JLabel helpText = new JLabel("This is help center.");
 	    help.add(helpText, BorderLayout.CENTER);
 	    JButton ok = new JButton("OK");

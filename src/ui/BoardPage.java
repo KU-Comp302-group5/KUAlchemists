@@ -65,6 +65,7 @@ public class BoardPage extends JFrame implements ActionListener {
 		ingrDeckButton.addActionListener(e -> {
         	System.out.println("ingrDeckButton clicked");
         	HandlerFactory.getInstance().getForageIngHandler().forageIngredient(KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+        	switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " foraged an ingredient.");
         });
         getPanelBoard().add(ingrDeckButton);
         
@@ -75,6 +76,7 @@ public class BoardPage extends JFrame implements ActionListener {
         	HandlerFactory.getInstance().getBuyArtifactHandler().buyArtifact(KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
             gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getGold());
         	System.out.println(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getArtifacts());
+        	switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " bought an artifact.");
         });
         getPanelBoard().add(artifactDeckButton);
 		
@@ -157,7 +159,7 @@ public class BoardPage extends JFrame implements ActionListener {
         turnButton.setFocusPainted(false);
 		turnButton.setBounds(400, 0, 50, 20);
 		turnButton.addActionListener(e -> {
-			switchTurns();
+			switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " did nothing.");
 		});
 		getPanelBoard().add(turnButton);
 	}
@@ -185,6 +187,7 @@ public class BoardPage extends JFrame implements ActionListener {
                 	System.out.println("Artifact is used");
                 	HandlerFactory.getInstance().getUseArtifactHandler().useArtifact(KUAlchemistsGame.getInstance().getPlayer(currentPlayer), 
                 			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getArtifacts().get(temp));
+                	switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " used an artifact.");
                 });
     		}
     		this.revalidate();  //need to revise
@@ -218,6 +221,7 @@ public class BoardPage extends JFrame implements ActionListener {
                 	System.out.println("Ingredient is transmuted.");
                 	HandlerFactory.getInstance().getTransmuteIngHandler().transmuteIngredient(KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
                     gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getGold());
+                    switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " transmuted an ingredient.");
                 });
             }
             this.revalidate();  //need to revise
@@ -235,7 +239,22 @@ public class BoardPage extends JFrame implements ActionListener {
     	
     }
 	
-	private void switchTurns() {
+	private void switchTurns(String message) {
+	    JDialog turn = new JDialog(
+	    		this,
+	    		"Turn",
+	    		true);
+	    turn.setSize(300, 100);
+	    turn.setModal(false);
+	    JLabel turnText = new JLabel(message + " Next player's turn!");
+	    turn.add(turnText, BorderLayout.CENTER);
+	    JButton ok = new JButton("OK");
+	    ok.addActionListener(e -> turn.dispose());
+	    turn.add(ok, BorderLayout.SOUTH);
+	    
+	    turn.setLocationRelativeTo(turnText);
+	    turn.setVisible(true);
+	    
 		if (currentPlayer == 1) {
 			currentPlayer = 2;
 		} else if (currentPlayer == 2) {

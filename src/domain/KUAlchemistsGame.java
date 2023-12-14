@@ -12,6 +12,9 @@ public class KUAlchemistsGame {
 	private static LoginPage loginPage;
 	private static Player playerI;
 	private static Player playerII;
+	private static Player playerIII;
+	private static Player playerIV;
+
 
 	/**
 	 * Private constructor for the game.
@@ -59,12 +62,24 @@ public class KUAlchemistsGame {
     	KUAlchemistsGame.playerII = new Player(username, avatar);
     }
     
+    public void createPlayerIII(String username, int avatar) {
+    	KUAlchemistsGame.playerIII = new Player(username, avatar);
+    }
+    
+    public void createPlayerIV(String username, int avatar) {
+    	KUAlchemistsGame.playerIV = new Player(username, avatar);
+    }
+    
     public Player getPlayer(int no) {
     	if (no == 1) {
     		return playerI;
     	}
-    	else {
+    	else if (no == 2) {
     		return playerII;
+    	}else if (no == 3) {
+    		return playerIII;
+    	} else {
+    		return playerIV;
     	}
     }
 
@@ -82,5 +97,21 @@ public class KUAlchemistsGame {
 
 	public void setPlayerII(Player playerII) {
 		KUAlchemistsGame.playerII = playerII;
+	}
+	
+	public Player getPlayerIII() {
+		return playerIII;
+	}
+
+	public void setPlayerIII(Player playerIII) {
+		KUAlchemistsGame.playerIII = playerIII;
+	}
+
+	public Player getPlayerIV() {
+		return playerIV;
+	}
+
+	public void setPlayerIV(Player playerIV) {
+		KUAlchemistsGame.playerIV = playerIV;
 	}
 }

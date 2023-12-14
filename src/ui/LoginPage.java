@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import domain.Player;
 import domain.controllers.HandlerFactory;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,12 +22,17 @@ public class LoginPage extends JFrame implements ActionListener{
 		setPanelLogin(new JPanel());
 		getPanelLogin().setLayout(null);
 		
+		ImageIcon avatar1 = new ImageIcon("avatar1.png");
+		ImageIcon avatar2 = new ImageIcon("avatar2.png");
+		ImageIcon avatar3 = new ImageIcon("avatar3.png");
+
 		
 		//Information of first user
 		label11 = new JLabel("Player 1 Username");
-		avatar11 = new JButton("avatar1");
-		avatar12 = new JButton("avatar2");
-		avatar13 = new JButton("avatar3");
+		//avatar11 = new JButton("avatar1");
+		avatar11 = new JButton(avatar1);
+		avatar12 = new JButton(avatar2);
+		avatar13 = new JButton(avatar3);
 		openBoard = new JButton("Open Game!");
 
 		

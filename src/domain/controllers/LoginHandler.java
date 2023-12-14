@@ -11,4 +11,12 @@ public class LoginHandler {
     public void login2(String username, int avatar) {
     	KUAlchemistsGame.getInstance().createPlayerII(username, avatar);
     }
+    
+    public void login3(String username, int avatar) {
+    	KUAlchemistsGame.getInstance().createPlayerIII(username, avatar);
+    }
+    
+    public void login4(String username, int avatar) {
+    	KUAlchemistsGame.getInstance().createPlayerIV(username, avatar);
+    }
 }

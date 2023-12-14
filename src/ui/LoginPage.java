@@ -11,11 +11,11 @@ import java.awt.event.ActionListener;
 
 public class LoginPage extends JFrame implements ActionListener{
 	
-	static private JButton avatar11, avatar12, avatar13, avatar21, avatar22, avatar23, openBoard;
-	static private JLabel label11, label12, label21, label22;
+	static private JButton avatar11, avatar12, avatar13, avatar21, avatar22, avatar23, avatar31, avatar32, avatar33, avatar41, avatar42, avatar43, openBoard;
+	static private JLabel label11, label12, label21, label22, label31, label32, label41, label42;
 	private static JPanel panelLogin;
-	public static JTextField userName1, userName2;
-	public static int avatarChosen1, avatarChosen2;
+	public static JTextField userName1, userName2, userName3, userName4;
+	public static int avatarChosen1, avatarChosen2, avatarChosen3, avatarChosen4;
 
 
 	public  LoginPage() {
@@ -88,6 +88,70 @@ public class LoginPage extends JFrame implements ActionListener{
 		
 		getPanelLogin().add(avatar13);
 		
+		//Information of third user
+		label31 = new JLabel("Player 3 Username");
+		avatar31 = new JButton("avatar1");
+		avatar32 = new JButton("avatar2");
+		avatar33 = new JButton("avatar3");
+		openBoard = new JButton("Open Game!");
+
+		
+		label31.setBounds(100, 250, 150, 20);
+		getPanelLogin().add(label31);	
+		
+		userName3 = new JTextField();
+		userName3.setBounds(100, 275, 150, 20);
+		getPanelLogin().add(userName3);
+		
+		label32 = new JLabel("Choose your avatar");
+		label32.setBounds(100, 300, 150, 20);
+		getPanelLogin().add(label32);
+		
+		avatar31.setBounds(70, 320, 60, 60);
+		avatar31.setForeground(Color.BLACK);
+		avatar31.setBackground(Color.WHITE);
+		avatar31.addActionListener(
+				new ActionListener() 
+				{ 
+			@Override
+				public void actionPerformed(ActionEvent arg0) {
+				setAvatarChosen3(1);
+				
+			}
+		});
+		
+		getPanelLogin().add(avatar31);
+		
+		avatar32.setBounds(140, 320, 60, 60);
+		avatar32.setForeground(Color.BLACK);
+		avatar32.setBackground(Color.WHITE);
+		avatar32.addActionListener(
+				new ActionListener() 
+				{ 
+			@Override
+				public void actionPerformed(ActionEvent arg0) {
+				setAvatarChosen3(2);
+				
+			}
+		});
+		
+		getPanelLogin().add(avatar32);
+		
+		avatar33.setBounds(210, 320, 60, 60);
+		avatar33.setForeground(Color.BLACK);
+		avatar33.setBackground(Color.WHITE);
+		avatar33.addActionListener(
+				new ActionListener() 
+				{ 
+			@Override
+				public void actionPerformed(ActionEvent arg0) {
+				setAvatarChosen3(3);
+				
+			}
+		});
+		
+		getPanelLogin().add(avatar33);
+		
 		//Information of second user
 		label21 = new JLabel("Player 2 Username");
 		avatar21 = new JButton("avatar1");
@@ -151,7 +215,71 @@ public class LoginPage extends JFrame implements ActionListener{
 		
 		getPanelLogin().add(avatar23);
 		
-		openBoard.setBounds(210, 320, 120, 60);
+		//Information of fourth user
+		label41 = new JLabel("Player 4 Username");
+		avatar41 = new JButton("avatar1");
+		avatar42 = new JButton("avatar2");
+		avatar43 = new JButton("avatar3");
+
+		
+		label41.setBounds(300, 250, 150, 20);
+		getPanelLogin().add(label41);	
+		
+		userName4 = new JTextField();
+		userName4.setBounds(300, 275, 150, 20);
+		getPanelLogin().add(userName4);
+		
+		label42 = new JLabel("Choose your avatar");
+		label42.setBounds(300, 300, 150, 20);
+		getPanelLogin().add(label42);
+		
+		avatar41.setBounds(270, 320, 60, 60);
+		avatar41.setForeground(Color.BLACK);
+		avatar41.setBackground(Color.WHITE);
+		avatar41.addActionListener(
+				new ActionListener() 
+				{ 
+			@Override
+				public void actionPerformed(ActionEvent arg0) {
+				setAvatarChosen4(1);
+				
+			}
+		});
+		
+		getPanelLogin().add(avatar41);
+		
+		avatar42.setBounds(340, 320, 60, 60);
+		avatar42.setForeground(Color.BLACK);
+		avatar42.setBackground(Color.WHITE);
+		avatar42.addActionListener(
+				new ActionListener() 
+				{ 
+			@Override
+				public void actionPerformed(ActionEvent arg0) {
+				setAvatarChosen4(2);
+				
+			}
+		});
+		
+		getPanelLogin().add(avatar42);
+		
+		avatar43.setBounds(410, 320, 60, 60);
+		avatar43.setForeground(Color.BLACK);
+		avatar43.setBackground(Color.WHITE);
+		avatar43.addActionListener(
+				new ActionListener() 
+				{ 
+			@Override
+				public void actionPerformed(ActionEvent arg0) {
+				setAvatarChosen4(3);
+				
+			}
+		});
+		
+		getPanelLogin().add(avatar43);
+		
+		
+		openBoard.setBounds(210, 450, 120, 60);
 		openBoard.setForeground(Color.BLACK);
 		openBoard.setBackground(Color.WHITE);
 		openBoard.addActionListener(
@@ -164,9 +292,11 @@ public class LoginPage extends JFrame implements ActionListener{
 				System.out.println(getUserName());
 				System.out.println(getAvatarChosen());
 				
-				//Information of Player1 and Player2 is derived from login page and injected to BoardController
+				//Information of Players is derived from login page and injected to BoardController
 				HandlerFactory.getInstance().getLoginHandler().login1(getUserName(), getAvatarChosen());
 				HandlerFactory.getInstance().getLoginHandler().login2(getUserName2(), getAvatarChosen2());
+				HandlerFactory.getInstance().getLoginHandler().login3(getUserName3(), getAvatarChosen3());
+				HandlerFactory.getInstance().getLoginHandler().login4(getUserName4(), getAvatarChosen4());
 				
 				BoardPage boardPage = new BoardPage();
 				boardPage.setVisible(true);
@@ -228,5 +358,41 @@ public class LoginPage extends JFrame implements ActionListener{
 
 	public void setAvatarChosen2(int avatarChosen) {
 		LoginPage.avatarChosen2 = avatarChosen;
+	}
+	
+	public String getUserName3() {
+		return userName3.getText();
+	}
+
+
+	public int getAvatarChosen3() {
+		return avatarChosen3;
+	}
+	
+	public void setUserName3(JTextField userName) {
+		LoginPage.userName3 = userName;
+	}
+
+
+	public void setAvatarChosen3(int avatarChosen) {
+		LoginPage.avatarChosen3 = avatarChosen;
+	}
+	
+	public String getUserName4() {
+		return userName4.getText();
+	}
+
+
+	public int getAvatarChosen4() {
+		return avatarChosen4;
+	}
+	
+	public void setUserName4(JTextField userName) {
+		LoginPage.userName4 = userName;
+	}
+
+
+	public void setAvatarChosen4(int avatarChosen) {
+		LoginPage.avatarChosen4 = avatarChosen;
 	}
 }

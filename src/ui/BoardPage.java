@@ -36,6 +36,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		//might change later
 		KUAlchemistsGame.getInstance().getPlayerI().addArtListener((PlayerArts) player_arts);
 		KUAlchemistsGame.getInstance().getPlayerII().addArtListener((PlayerArts) player_arts);
+		KUAlchemistsGame.getInstance().getPlayerIII().addArtListener((PlayerArts) player_arts);
+		KUAlchemistsGame.getInstance().getPlayerIV().addArtListener((PlayerArts) player_arts);
 		
 		player_ingr = new PlayerIngs();
 		player_ingr.setBounds(0, 400, 600, 120);
@@ -48,6 +50,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		//might change later
 		KUAlchemistsGame.getInstance().getPlayerI().addIngListener((PlayerIngs) player_ingr);
 		KUAlchemistsGame.getInstance().getPlayerII().addIngListener((PlayerIngs) player_ingr);
+		KUAlchemistsGame.getInstance().getPlayerIII().addIngListener((PlayerIngs) player_ingr);
+		KUAlchemistsGame.getInstance().getPlayerIV().addIngListener((PlayerIngs) player_ingr);
 		
 		help = new JButton("Help");
 		pause = new JButton("Pause");
@@ -228,6 +232,10 @@ public class BoardPage extends JFrame implements ActionListener {
 	private void switchTurns() {
 		if (currentPlayer == 1) {
 			currentPlayer = 2;
+		} else if (currentPlayer == 2) {
+			currentPlayer = 3;
+		} else if (currentPlayer == 3) {
+			currentPlayer = 4;
 		} else {
 			currentPlayer = 1;
 		}

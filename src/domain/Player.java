@@ -7,6 +7,7 @@ public class Player {
 	private String username;
 	private int avatar;
 	private List<Ingredient> ingredients ;
+
 	private List<ArtifactCard> artifacts ;
 	private List<Potion> potions ;
 	private List<Theory> theories ;
@@ -146,6 +147,10 @@ public class Player {
 		this.sickness = sickness;
 	}
 
+	public int getAvatar() {
+		return avatar;
+	}
+	
 	@Override
 	public String toString() {
 		return "Player [username=" + username + ", ingredients=" + ingredients + ", artifacts=" + artifacts + ", gold="

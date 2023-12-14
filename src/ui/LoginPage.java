@@ -2,6 +2,7 @@ package ui;
 
 import javax.swing.*;
 
+import domain.Avatar;
 import domain.Player;
 import domain.controllers.HandlerFactory;
 import java.awt.*;
@@ -21,18 +22,16 @@ public class LoginPage extends JFrame implements ActionListener{
 		super("Log-in Page");		
 		setPanelLogin(new JPanel());
 		getPanelLogin().setLayout(null);
-		
-		ImageIcon avatar1 = new ImageIcon("avatar1.png");
-		ImageIcon avatar2 = new ImageIcon("avatar2.png");
-		ImageIcon avatar3 = new ImageIcon("avatar3.png");
 
+		
 		
 		//Information of first user
 		label11 = new JLabel("Player 1 Username");
+	
 		//avatar11 = new JButton("avatar1");
-		avatar11 = new JButton(avatar1);
-		avatar12 = new JButton(avatar2);
-		avatar13 = new JButton(avatar3);
+		avatar11 = new JButton(Avatar.getAvatarImage(1));
+		avatar12 = new JButton(Avatar.getAvatarImage(2));
+		avatar13 = new JButton(Avatar.getAvatarImage(3));
 		openBoard = new JButton("Open Game!");
 
 		
@@ -94,9 +93,9 @@ public class LoginPage extends JFrame implements ActionListener{
 		
 		//Information of third user
 		label31 = new JLabel("Player 3 Username");
-		avatar31 = new JButton("avatar1");
-		avatar32 = new JButton("avatar2");
-		avatar33 = new JButton("avatar3");
+		avatar31 = new JButton(Avatar.getAvatarImage(1));
+		avatar32 = new JButton(Avatar.getAvatarImage(2));
+		avatar33 = new JButton(Avatar.getAvatarImage(3));
 		openBoard = new JButton("Open Game!");
 
 		
@@ -158,23 +157,23 @@ public class LoginPage extends JFrame implements ActionListener{
 		
 		//Information of second user
 		label21 = new JLabel("Player 2 Username");
-		avatar21 = new JButton("avatar1");
-		avatar22 = new JButton("avatar2");
-		avatar23 = new JButton("avatar3");
+		avatar21 = new JButton(Avatar.getAvatarImage(1));
+		avatar22 = new JButton(Avatar.getAvatarImage(2));
+		avatar23 = new JButton(Avatar.getAvatarImage(3));
 
 		
-		label21.setBounds(300, 100, 150, 20);
+		label21.setBounds(320, 100, 150, 20);
 		getPanelLogin().add(label21);	
 		
 		userName2 = new JTextField();
-		userName2.setBounds(300, 125, 150, 20);
+		userName2.setBounds(320, 125, 150, 20);
 		getPanelLogin().add(userName2);
 		
 		label22 = new JLabel("Choose your avatar");
-		label22.setBounds(300, 150, 150, 20);
+		label22.setBounds(320, 150, 150, 20);
 		getPanelLogin().add(label22);
 		
-		avatar21.setBounds(270, 170, 60, 60);
+		avatar21.setBounds(290, 170, 60, 60);
 		avatar21.setForeground(Color.BLACK);
 		avatar21.setBackground(Color.WHITE);
 		avatar21.addActionListener(
@@ -189,7 +188,7 @@ public class LoginPage extends JFrame implements ActionListener{
 		
 		getPanelLogin().add(avatar21);
 		
-		avatar22.setBounds(340, 170, 60, 60);
+		avatar22.setBounds(360, 170, 60, 60);
 		avatar22.setForeground(Color.BLACK);
 		avatar22.setBackground(Color.WHITE);
 		avatar22.addActionListener(
@@ -204,7 +203,7 @@ public class LoginPage extends JFrame implements ActionListener{
 		
 		getPanelLogin().add(avatar22);
 		
-		avatar23.setBounds(410, 170, 60, 60);
+		avatar23.setBounds(430, 170, 60, 60);
 		avatar23.setForeground(Color.BLACK);
 		avatar23.setBackground(Color.WHITE);
 		avatar23.addActionListener(
@@ -221,23 +220,23 @@ public class LoginPage extends JFrame implements ActionListener{
 		
 		//Information of fourth user
 		label41 = new JLabel("Player 4 Username");
-		avatar41 = new JButton("avatar1");
-		avatar42 = new JButton("avatar2");
-		avatar43 = new JButton("avatar3");
+		avatar41 = new JButton(Avatar.getAvatarImage(1));
+		avatar42 = new JButton(Avatar.getAvatarImage(2));
+		avatar43 = new JButton(Avatar.getAvatarImage(3));
 
 		
-		label41.setBounds(300, 250, 150, 20);
+		label41.setBounds(320, 250, 150, 20);
 		getPanelLogin().add(label41);	
 		
 		userName4 = new JTextField();
-		userName4.setBounds(300, 275, 150, 20);
+		userName4.setBounds(320, 275, 150, 20);
 		getPanelLogin().add(userName4);
 		
 		label42 = new JLabel("Choose your avatar");
-		label42.setBounds(300, 300, 150, 20);
+		label42.setBounds(320, 300, 150, 20);
 		getPanelLogin().add(label42);
 		
-		avatar41.setBounds(270, 320, 60, 60);
+		avatar41.setBounds(290, 320, 60, 60);
 		avatar41.setForeground(Color.BLACK);
 		avatar41.setBackground(Color.WHITE);
 		avatar41.addActionListener(
@@ -252,7 +251,7 @@ public class LoginPage extends JFrame implements ActionListener{
 		
 		getPanelLogin().add(avatar41);
 		
-		avatar42.setBounds(340, 320, 60, 60);
+		avatar42.setBounds(360, 320, 60, 60);
 		avatar42.setForeground(Color.BLACK);
 		avatar42.setBackground(Color.WHITE);
 		avatar42.addActionListener(
@@ -267,7 +266,7 @@ public class LoginPage extends JFrame implements ActionListener{
 		
 		getPanelLogin().add(avatar42);
 		
-		avatar43.setBounds(410, 320, 60, 60);
+		avatar43.setBounds(430, 320, 60, 60);
 		avatar43.setForeground(Color.BLACK);
 		avatar43.setBackground(Color.WHITE);
 		avatar43.addActionListener(
@@ -283,7 +282,7 @@ public class LoginPage extends JFrame implements ActionListener{
 		getPanelLogin().add(avatar43);
 		
 		
-		openBoard.setBounds(210, 450, 120, 60);
+		openBoard.setBounds(220, 450, 120, 60);
 		openBoard.setForeground(Color.BLACK);
 		openBoard.setBackground(Color.WHITE);
 		openBoard.addActionListener(

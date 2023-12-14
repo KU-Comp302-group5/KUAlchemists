@@ -3,6 +3,7 @@ package ui;
 import javax.swing.*;
 
 import domain.ArtListener;
+import domain.Avatar;
 import domain.IngListener;
 import domain.KUAlchemistsGame;
 import domain.controllers.HandlerFactory;
@@ -15,7 +16,7 @@ public class BoardPage extends JFrame implements ActionListener {
 	
 	private static JPanel panelBoard, player_ingr, player_arts;
 	private static JButton help, pause, potionBrewing, publicationTrack, deductionBoard, turnButton, ingrDeckButton, player_ing, artifactDeckButton, player_art;
-	private JLabel gold, sickness, name;
+	private JLabel gold, sickness, name, avatar;
 	private int currentPlayer;
 	
 	public BoardPage() {
@@ -129,6 +130,10 @@ public class BoardPage extends JFrame implements ActionListener {
         name.setBounds(250, 5, 200, 15);
         getPanelBoard().add(name);
         
+        avatar = new JLabel();
+        avatar.setIcon(Avatar.getAvatarImage(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getAvatar()));
+        avatar.setBounds(180, 5, 60, 60);
+        getPanelBoard().add(avatar);
         
         /**
          * Observer pattern should be implemented for updating gold.
@@ -146,6 +151,7 @@ public class BoardPage extends JFrame implements ActionListener {
         sickness.setBounds(250, 50, 100, 30);
         getPanelBoard().add(sickness);
         
+  
         //Just added to show turn of players able to change. Just for demonstration.
         turnButton.setMargin(new Insets(0, 0, 0, 0));
         turnButton.setFocusPainted(false);
@@ -240,6 +246,7 @@ public class BoardPage extends JFrame implements ActionListener {
 			currentPlayer = 1;
 		}
 		name.setText("Player: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername());
+        avatar.setIcon(Avatar.getAvatarImage(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getAvatar()));
 		gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getGold());
 		sickness.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getSickness());
 		((PlayerIngs) player_ingr).updateIngs();

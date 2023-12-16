@@ -277,8 +277,10 @@ public class BoardPage extends JFrame implements ActionListener {
 	    		this,
 	    		"Help",
 	    		true);
+	    
 	    help.setSize(300, 100);
 	    help.setModal(false);
+	    
 	    JLabel helpText = new JLabel("This is help center.");
 	    help.add(helpText, BorderLayout.CENTER);
 	    JButton ok = new JButton("OK");

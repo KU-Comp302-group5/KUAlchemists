@@ -48,8 +48,8 @@ public class KUAlchemistsGame {
      */
     public void startLoginView() {
 		loginPage = new LoginPage(); 	
-		loginPage.add(LoginPage.getPanelLogin());
-		loginPage.setSize(600,600);
+		loginPage.add(loginPage.getPanelLogin());
+		loginPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		loginPage.setVisible(true);
 		loginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

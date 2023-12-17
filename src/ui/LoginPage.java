@@ -17,6 +17,7 @@ public class LoginPage extends JFrame implements ActionListener{
 	private JPanel panelLogin;
 	public static JTextField userName1, userName2, userName3, userName4;
 	public static int avatarChosen1, avatarChosen2, avatarChosen3, avatarChosen4;
+	public static int playerNum = 2;
 
 
 	public  LoginPage() {
@@ -211,9 +212,13 @@ public class LoginPage extends JFrame implements ActionListener{
 				HandlerFactory.getInstance().getLoginHandler().login1(getUserName(), getAvatarChosen());
 				HandlerFactory.getInstance().getLoginHandler().login2(getUserName2(), getAvatarChosen2());
 				if(userName3!=null) {
-					HandlerFactory.getInstance().getLoginHandler().login3(getUserName3(), getAvatarChosen3());}
+					playerNum++;
+					HandlerFactory.getInstance().getLoginHandler().login3(getUserName3(), getAvatarChosen3());
+					}
 				if(userName4!=null) {
-					HandlerFactory.getInstance().getLoginHandler().login4(getUserName4(), getAvatarChosen4());}
+					playerNum++;
+					HandlerFactory.getInstance().getLoginHandler().login4(getUserName4(), getAvatarChosen4());
+					}
 				
 				BoardPage boardPage = new BoardPage();
 				boardPage.setVisible(true);
@@ -439,5 +444,13 @@ public class LoginPage extends JFrame implements ActionListener{
 
 	public void setAvatarChosen4(int avatarChosen) {
 		LoginPage.avatarChosen4 = avatarChosen;
+	}
+
+	public int getPlayerNum() {
+		return playerNum;
+	}
+
+	public void setPlayerNum(int playerNum) {
+		this.playerNum = playerNum;
 	}
 }

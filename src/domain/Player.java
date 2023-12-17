@@ -98,13 +98,34 @@ public class Player {
 			publishArtEvent();
 		}
 	}
+	
+	public void discardIngredients(Ingredient ingr1, Ingredient ingr2) {
+		if (this.ingredients.contains(ingr1) && (this.ingredients.contains(ingr2))) {
+			this.ingredients.remove(ingr1);
+			this.ingredients.remove(ingr2);
+			publishIngEvent();
+		}
+	}
+	
+	public void addPotion(Potion p) {
+		this.potions.add(p);
+	}
+	
 
-	private void decreaseGold(int i) {
+	public void decreaseGold(int i) {
 		this.gold-=i;
 	}
 	
-	private void increaseGold(int i) {
+	public void increaseGold(int i) {
 		this.gold+=i;
+	}
+	
+	public void decreaseSickness(int i) {
+		this.sickness-=i;
+	}
+	
+	public void increaseSickness(int i) {
+		this.sickness+=i;
 	}
 	
 	public String getUsername() {

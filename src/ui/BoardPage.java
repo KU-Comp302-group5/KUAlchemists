@@ -99,14 +99,14 @@ public class BoardPage extends JFrame implements ActionListener {
         publicationTrack.addActionListener(e -> {
         	System.out.println("Publication Track button clicked");
         });
-        getPanelBoard().add(publicationTrack);
+        //getPanelBoard().add(publicationTrack);
 
         deductionBoard.setBounds(400, 520, buttonWidth, buttonHeight);
         deductionBoard.setForeground(Color.GREEN);
         deductionBoard.addActionListener(e -> {
         	System.out.println("Deduction Board button clicked");
         });
-        getPanelBoard().add(deductionBoard);
+        //getPanelBoard().add(deductionBoard);
         
         
         name = new JLabel("Player I: " + KUAlchemistsGame.getInstance().getPlayerI().getUsername());

@@ -9,4 +9,21 @@ public class Aspect {
 		this.circleSize = circleSize;
 	}
 
+	public boolean isSign() {
+		return sign;
+	}
+
+	public void setSign(boolean sign) {
+		this.sign = sign;
+	}
+
+	public boolean isCircleSize() {
+		return circleSize;
+	}
+
+	public void setCircleSize(boolean circleSize) {
+		this.circleSize = circleSize;
+	}
+	
+
 }

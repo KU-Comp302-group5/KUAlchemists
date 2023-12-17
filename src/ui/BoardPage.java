@@ -21,9 +21,9 @@ public class BoardPage extends JFrame implements ActionListener {
 	private JLabel gold, gold2, gold3, gold4,
 				   sickness, sickness2, sickness3, sickness4,
 				   reputation,reputation2, reputation3, reputation4,
-				   name, avatar, name2, avatar2, name3, avatar3, name4, avatar4,
-				   p1a_text, p2a_text, p3a_text, p4a_text,
-				   p1i_text, p2i_text, p3i_text, p4i_text;
+				   name, avatar, name2, avatar2, name3, avatar3, name4, avatar4;
+				   //p1a_text, p2a_text, p3a_text, p4a_text,
+				   //p1i_text, p2i_text, p3i_text, p4i_text
 	private int currentPlayer;
 	
 	public BoardPage() {
@@ -32,67 +32,34 @@ public class BoardPage extends JFrame implements ActionListener {
 		getPanelBoard().setLayout(null);
 		currentPlayer = 1;
 		
-		player1_arts = new PlayerArts(1);
-		player1_arts.setLayout(null);
-		player1_arts.setBounds(55, 120, 250, 60);
-		player1_arts.setBackground(Color.ORANGE);
-		panelBoard.add(player1_arts);
-		((PlayerArts) player1_arts).updateArts();
-		
-		player2_arts = new PlayerArts(2);
-		player2_arts.setLayout(null);
-		player2_arts.setBounds(355, 120, 250, 60);
-		player2_arts.setBackground(Color.ORANGE);
-		panelBoard.add(player2_arts);
-		((PlayerArts) player2_arts).updateArts();
-		
-		//might change later
-		KUAlchemistsGame.getInstance().getPlayerI().addArtListener((PlayerArts) player1_arts);
-		KUAlchemistsGame.getInstance().getPlayerII().addArtListener((PlayerArts) player2_arts);
-		
-		player1_ingr = new PlayerIngs(1);
-		player1_ingr.setLayout(null);
-		player1_ingr.setBounds(55, 180, 250, 60);
-		player1_ingr.setBackground(Color.MAGENTA);
-		panelBoard.add(player1_ingr);
-		((PlayerIngs) player1_ingr).updateIngs();
-		
-		player2_ingr = new PlayerIngs(2);
-		player2_ingr.setLayout(null);
-		player2_ingr.setBounds(355, 180, 250, 60);
-		player2_ingr.setBackground(Color.MAGENTA);
-		panelBoard.add(player2_ingr);
-		((PlayerIngs) player2_ingr).updateIngs();
-		
-		//might change later
-		KUAlchemistsGame.getInstance().getPlayerI().addIngListener((PlayerIngs) player1_ingr);
-		KUAlchemistsGame.getInstance().getPlayerII().addIngListener((PlayerIngs) player2_ingr);
-		
 		help = new JButton("Help");
 		pause = new JButton("Pause");
 		turnButton = new JButton("Turn");
 		ingrDeckButton = new JButton("Ingredient Deck");
 		artifactDeckButton = new JButton("Artifacts Deck");
 		
-		ingrDeckButton.setBounds(140, 120, 150, 50);
+		ingrDeckButton.setBounds(140, 260, 150, 50);
 		ingrDeckButton.setForeground(Color.BLUE);
 		ingrDeckButton.addActionListener(e -> {
         	System.out.println("ingrDeckButton clicked");
+        	//is it a must to implement gold with observer?
         	HandlerFactory.getInstance().getForageIngHandler().forageIngredient(KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+        	updateGoldUI();
         	switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " foraged an ingredient.");
         });
-        //getPanelBoard().add(ingrDeckButton);
+        getPanelBoard().add(ingrDeckButton);
         
-		artifactDeckButton.setBounds(310, 120, 150, 50);
+		artifactDeckButton.setBounds(310, 260, 150, 50);
 		artifactDeckButton.setForeground(Color.BLUE);
 		artifactDeckButton.addActionListener(e -> {
         	System.out.println("artifactDeckButton clicked");
+        	//again gold UI update without observer
         	HandlerFactory.getInstance().getBuyArtifactHandler().buyArtifact(KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
-            gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getGold());
+        	updateGoldUI();
         	System.out.println(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getArtifacts());
         	switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " bought an artifact.");
         });
-        //getPanelBoard().add(artifactDeckButton);
+        getPanelBoard().add(artifactDeckButton);
 		
         //help.setFont(new Font("Arial", Font.PLAIN, 9));
         help.setMargin(new Insets(0, 0, 0, 0));
@@ -171,6 +138,24 @@ public class BoardPage extends JFrame implements ActionListener {
         reputation.setBounds(203, 95, 80, 30);
         getPanelBoard().add(reputation);
         
+        player1_arts = new PlayerArts(1);
+		player1_arts.setLayout(null);
+		player1_arts.setBounds(55, 120, 250, 60);
+		player1_arts.setBackground(Color.ORANGE);
+		panelBoard.add(player1_arts);
+		((PlayerArts) player1_arts).updateArts();
+		
+		KUAlchemistsGame.getInstance().getPlayerI().addArtListener((PlayerArts) player1_arts);
+		
+		player1_ingr = new PlayerIngs(1);
+		player1_ingr.setLayout(null);
+		player1_ingr.setBounds(55, 180, 250, 60);
+		player1_ingr.setBackground(Color.MAGENTA);
+		panelBoard.add(player1_ingr);
+		((PlayerIngs) player1_ingr).updateIngs();
+		
+		KUAlchemistsGame.getInstance().getPlayerI().addIngListener((PlayerIngs) player1_ingr);
+		
         name2 = new JLabel("Player II: " + KUAlchemistsGame.getInstance().getPlayerII().getUsername());
         name2.setBounds(425, 20, 200, 15);
         getPanelBoard().add(name2);
@@ -191,6 +176,24 @@ public class BoardPage extends JFrame implements ActionListener {
         reputation2 = new JLabel("Reputation: " + KUAlchemistsGame.getInstance().getPlayerII().getReputation());
         reputation2.setBounds(503, 95, 80, 30);
         getPanelBoard().add(reputation2);
+        
+		player2_arts = new PlayerArts(2);
+		player2_arts.setLayout(null);
+		player2_arts.setBounds(355, 120, 250, 60);
+		player2_arts.setBackground(Color.ORANGE);
+		panelBoard.add(player2_arts);
+		((PlayerArts) player2_arts).updateArts();
+
+		KUAlchemistsGame.getInstance().getPlayerII().addArtListener((PlayerArts) player2_arts);
+			
+		player2_ingr = new PlayerIngs(2);
+		player2_ingr.setLayout(null);
+		player2_ingr.setBounds(355, 180, 250, 60);
+		player2_ingr.setBackground(Color.MAGENTA);
+		panelBoard.add(player2_ingr);
+		((PlayerIngs) player2_ingr).updateIngs();
+
+		KUAlchemistsGame.getInstance().getPlayerII().addIngListener((PlayerIngs) player2_ingr);
         
         if(LoginPage.playerNum==3) {
         	showPlayer3();
@@ -215,6 +218,21 @@ public class BoardPage extends JFrame implements ActionListener {
 		//getPanelBoard().add(turnButton);
 	}
 	
+	private void updateGoldUI() {
+		if (currentPlayer==1) {
+			gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayerI().getGold());
+		}
+		if (currentPlayer==2) {
+			gold2.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayerII().getGold());
+		}
+		if (currentPlayer==3) {
+			gold3.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayerIII().getGold());
+		}
+		if (currentPlayer==4) {
+			gold4.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayerIV().getGold());
+		}
+	}
+
 	public void showPlayer3() {
         name3 = new JLabel("Player III: " + KUAlchemistsGame.getInstance().getPlayerIII().getUsername());
         name3.setBounds(725, 20, 200, 15);
@@ -408,21 +426,12 @@ public class BoardPage extends JFrame implements ActionListener {
 	    turn.setLocationRelativeTo(turnText);
 	    turn.setVisible(true);
 	    
-		if (currentPlayer == 1) {
-			currentPlayer = 2;
-		} else if (currentPlayer == 2) {
-			currentPlayer = 3;
-		} else if (currentPlayer == 3) {
-			currentPlayer = 4;
-		} else {
+		if (currentPlayer == LoginPage.playerNum) {
 			currentPlayer = 1;
+		} 
+		else {
+			currentPlayer++;
 		}
-		name.setText("Player: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername());
-        avatar.setIcon(Avatar.getAvatarImage(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getAvatar()));
-		gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getGold());
-		sickness.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getSickness());
-		//((PlayerIngs) player_ingr).updateIngs();
-		//((PlayerArts) player_arts).updateArts();
 	}
 	
 	private void showHelpDialog() {

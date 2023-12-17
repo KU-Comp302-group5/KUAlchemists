@@ -8,6 +8,8 @@ public class PotionMaker {
     public PotionMaker() {
 	}
 
-	private void mixIngredients() {
+	private void mixIngredients(Ingredient ingr1, Ingredient ingr2, String experimental) {
+		
+		
     }
 }

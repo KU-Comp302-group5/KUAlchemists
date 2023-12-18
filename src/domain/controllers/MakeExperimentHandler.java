@@ -10,7 +10,9 @@ public class MakeExperimentHandler {
     public MakeExperimentHandler() {
     }
 
-    private void makeExperiment(Ingredient ingr1, Ingredient ingr2, String experimental, Player player) {
+    public void makeExperiment(Ingredient ingr1, Ingredient ingr2, String experimental, Player player) {
+    	
+    	System.out.println("in exp handler: ingr1: "+ingr1.toString()+"ingr 2: " +ingr2.toString());
     	PotionMaker pm = new PotionMaker();
     	
 		Potion potion = pm.mixIngredients(ingr1, ingr2);

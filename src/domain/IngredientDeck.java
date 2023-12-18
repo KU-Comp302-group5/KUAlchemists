@@ -19,7 +19,7 @@ public class IngredientDeck {
 	}
 
     public IngredientDeck() {
-		this.cardNum = 3;
+		this.cardNum = 8;
 		
 		List<Ingredient> ingrs = new ArrayList<Ingredient>();
 		

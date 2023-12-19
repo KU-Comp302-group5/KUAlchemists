@@ -7,6 +7,7 @@ import domain.Avatar;
 import domain.IngListener;
 import domain.Ingredient;
 import domain.KUAlchemistsGame;
+import domain.PotListener;
 import domain.controllers.HandlerFactory;
 
 import java.awt.*;
@@ -19,7 +20,8 @@ import java.util.ArrayList;
 public class BoardPage extends JFrame implements ActionListener {
 	
 	private static JPanel panelBoard, player1_ingr, player2_ingr, player3_ingr, player4_ingr,
-				   player1_arts, player2_arts, player3_arts, player4_arts;
+				   player1_arts, player2_arts, player3_arts, player4_arts,
+				   player1_pot, player2_pot, player3_pot, player4_pot;
 	private static PotionBrew potionBrewing;
 	private static JButton help, pause,  publicationTrack, deductionBoard, turnButton, ingrDeckButton, player_ing,
 	artifactDeckButton, player_art;
@@ -43,7 +45,7 @@ public class BoardPage extends JFrame implements ActionListener {
 		ingrDeckButton = new JButton("Ingredient Deck");
 		artifactDeckButton = new JButton("Artifacts Deck");
 		
-		ingrDeckButton.setBounds(140, 260, 150, 50);
+		ingrDeckButton.setBounds(140, 320, 150, 50);
 		ingrDeckButton.setForeground(Color.BLUE);
 		ingrDeckButton.addActionListener(e -> {
         	System.out.println("ingrDeckButton clicked");
@@ -54,7 +56,7 @@ public class BoardPage extends JFrame implements ActionListener {
         });
         getPanelBoard().add(ingrDeckButton);
         
-		artifactDeckButton.setBounds(310, 260, 150, 50);
+		artifactDeckButton.setBounds(310, 320, 150, 50);
 		artifactDeckButton.setForeground(Color.BLUE);
 		artifactDeckButton.addActionListener(e -> {
         	System.out.println("artifactDeckButton clicked");
@@ -92,7 +94,7 @@ public class BoardPage extends JFrame implements ActionListener {
         int buttonWidth = 200;
         int buttonHeight = 40;
         
-        potionBrewing.setBounds(100, 350, 500, 300);
+        potionBrewing.setBounds(100, 400, 500, 300);
         potionBrewing.setLayout(null);
         potionBrewing.setBackground(Color.BLUE);
         potionBrewing.updatePotionBrew();
@@ -168,6 +170,15 @@ public class BoardPage extends JFrame implements ActionListener {
 		
 		KUAlchemistsGame.getInstance().getPlayerI().addIngListener((PlayerIngs) player1_ingr);
 		
+		player1_pot = new PlayerPot(1);
+		player1_pot.setLayout(null);
+		player1_pot.setBounds(55, 240, 250, 60);
+		player1_pot.setBackground(Color.MAGENTA);
+		panelBoard.add(player1_pot);
+		((PlayerPot) player1_pot).updatePot();
+		
+		KUAlchemistsGame.getInstance().getPlayerI().addPotListener((PlayerPot) player1_pot);
+		
         name2 = new JLabel("Player II: " + KUAlchemistsGame.getInstance().getPlayerII().getUsername());
         name2.setBounds(425, 20, 200, 15);
         getPanelBoard().add(name2);
@@ -206,6 +217,15 @@ public class BoardPage extends JFrame implements ActionListener {
 		((PlayerIngs) player2_ingr).updateIngs();
 
 		KUAlchemistsGame.getInstance().getPlayerII().addIngListener((PlayerIngs) player2_ingr);
+		
+		player2_pot = new PlayerPot(2);
+		player2_pot.setLayout(null);
+		player2_pot.setBounds(355, 240, 250, 60);
+		player2_pot.setBackground(Color.MAGENTA);
+		panelBoard.add(player2_pot);
+		((PlayerPot) player2_pot).updatePot();
+		
+		KUAlchemistsGame.getInstance().getPlayerII().addPotListener((PlayerPot) player2_pot);
         
         if(LoginPage.playerNum==3) {
         	showPlayer3();
@@ -246,6 +266,21 @@ public class BoardPage extends JFrame implements ActionListener {
 		}
 		if (currentPlayer==4) {
 			gold4.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayerIV().getGold());
+		}
+	}
+	
+	private void updateSicknessUI() {
+		if (currentPlayer==1) {
+			sickness.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayerI().getSickness());
+		}
+		if (currentPlayer==2) {
+			sickness2.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayerII().getSickness());
+		}
+		if (currentPlayer==3) {
+			sickness3.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayerIII().getSickness());
+		}
+		if (currentPlayer==4) {
+			sickness4.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayerIV().getSickness());
 		}
 	}
 
@@ -289,6 +324,15 @@ public class BoardPage extends JFrame implements ActionListener {
 		
 		KUAlchemistsGame.getInstance().getPlayerIII().addIngListener((PlayerIngs) player3_ingr);
 		
+		player3_pot = new PlayerPot(3);
+		player3_pot.setLayout(null);
+		player3_pot.setBounds(655, 240, 250, 60);
+		player3_pot.setBackground(Color.MAGENTA);
+		panelBoard.add(player3_pot);
+		((PlayerPot) player3_pot).updatePot();
+		
+		KUAlchemistsGame.getInstance().getPlayerIII().addPotListener((PlayerPot) player3_pot);
+		
 	}
 	
 	public void showPlayer4() {
@@ -330,6 +374,15 @@ public class BoardPage extends JFrame implements ActionListener {
 		((PlayerIngs) player4_ingr).updateIngs();
 		
 		KUAlchemistsGame.getInstance().getPlayerIV().addIngListener((PlayerIngs) player4_ingr);
+		
+		player4_pot = new PlayerPot(4);
+		player4_pot.setLayout(null);
+		player4_pot.setBounds(955, 240, 250, 60);
+		player4_pot.setBackground(Color.MAGENTA);
+		panelBoard.add(player4_pot);
+		((PlayerPot) player4_pot).updatePot();
+		
+		KUAlchemistsGame.getInstance().getPlayerIV().addPotListener((PlayerPot) player4_pot);
 	}
 	
 	
@@ -420,6 +473,58 @@ public class BoardPage extends JFrame implements ActionListener {
 			updateIngs();
 		}
     }
+    
+    /**
+     * Observer pattern.
+     *
+     * Inner class implementing PotListener for PlayerPot.
+     */
+    private class PlayerPot extends JPanel implements PotListener {
+    	
+    	private int playerNum;
+
+    	public PlayerPot(int playerNum) {
+			super();
+			this.playerNum = playerNum;
+		}
+
+		public void updatePot() {
+			
+    		this.removeAll();
+    		
+            JLabel pi_text = new JLabel("Player " + playerNum + "'s Potions:");
+            pi_text.setBounds(10, 5, 200, 20);
+            this.add(pi_text);
+            
+            for (int i = 0; i < KUAlchemistsGame.getInstance().getPlayer(playerNum).getPotions().size(); i++) {
+            	
+            	String str = null;
+            	switch (KUAlchemistsGame.getInstance().getPlayer(playerNum).getPotions().get(i).getQuality()) {
+            	case 1: 
+            		str="positive";
+            		break;
+            	case -1:
+            		str="negative";
+            		break;
+            	case 0:
+            		str="neutral";
+            		break;
+            	}
+            	
+                JLabel player_ing = new JLabel(str);
+                player_ing.setBounds(10, 20+9*i, 200, 30);
+                this.add(player_ing);
+            }
+            this.revalidate();  //need to revise
+            this.repaint();  //need to revise
+    	}
+    	
+		@Override
+		public void onPotChange() {
+			updatePot();
+		}
+    }
+    
     private class PotionBrew extends JPanel implements IngListener, ItemListener {
     	
     	ArrayList<JCheckBox> checkboxes;
@@ -477,7 +582,9 @@ public class BoardPage extends JFrame implements ActionListener {
             	HandlerFactory.getInstance().getMakeExperimentHandler().makeExperiment(
             			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(0)),
             			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(1)),
-            			str, KUAlchemistsGame.getInstance().getPlayer(currentPlayer));           
+            			str, KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+            	updateGoldUI();
+            	updateSicknessUI();
                 switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " made an experiment.");
             });
             

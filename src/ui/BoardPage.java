@@ -23,7 +23,8 @@ public class BoardPage extends JFrame implements ActionListener {
 				   player1_arts, player2_arts, player3_arts, player4_arts,
 				   player1_pot, player2_pot, player3_pot, player4_pot;
 	private static PotionBrew potionBrewing;
-	private static JButton help, pause,  publicationTrack, deductionBoard, turnButton, ingrDeckButton, player_ing,
+	private static PublicationArea publicationArea;
+	private static JButton help, pause, deductionBoard, turnButton, ingrDeckButton, player_ing,
 	artifactDeckButton, player_art;
 	private JLabel gold, gold2, gold3, gold4,
 				   sickness, sickness2, sickness3, sickness4,
@@ -88,7 +89,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		getPanelBoard().add(pause);
 		
         potionBrewing = new PotionBrew();
-        publicationTrack = new JButton("Publication Track");
+        publicationArea = new PublicationArea();
+        //publicationTrack = new JButton("Publication Track");
         deductionBoard = new JButton("Deduction Board");
 
         int buttonWidth = 200;
@@ -108,12 +110,11 @@ public class BoardPage extends JFrame implements ActionListener {
         
         //addPotionBrewingAreaProperties();
 
-        publicationTrack.setBounds(200, 520, buttonWidth, buttonHeight);
-        publicationTrack.setForeground(Color.RED);
-        publicationTrack.addActionListener(e -> {
-        	System.out.println("Publication Track button clicked");
-        });
-        //getPanelBoard().add(publicationTrack);
+        publicationArea.setBounds(700, 400, 300, 300);
+        publicationArea.setLayout(null);
+        publicationArea.setBackground(Color.RED);
+        publicationArea.updatePublicationArea();
+        getPanelBoard().add(publicationArea);
 
         deductionBoard.setBounds(400, 520, buttonWidth, buttonHeight);
         deductionBoard.setForeground(Color.GREEN);
@@ -655,7 +656,27 @@ public class BoardPage extends JFrame implements ActionListener {
     
     }
     
-    private class ElixirOfInsight extends JPanel{
+    private class PublicationArea extends JPanel {
+    	
+    	public void updatePublicationArea() {
+    		
+    		this.removeAll();
+    		
+    		JLabel marker_text = new JLabel("Alchemy Markers: ");
+    		marker_text.setBounds(10, 5, 200, 20);
+            this.add(marker_text);
+            
+            JLabel ingr_text = new JLabel("Ingredients: ");
+    		ingr_text.setBounds(160, 5, 200, 20);
+            this.add(ingr_text);
+    		
+    		
+    		
+    		
+    		revalidate();
+            repaint();
+    	}
+    	
     	
     	
     }

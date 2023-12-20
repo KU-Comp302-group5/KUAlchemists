@@ -19,23 +19,35 @@ public class IngredientDeck {
 	}
 
     public IngredientDeck() {
-		this.cardNum = 3;
+		this.cardNum = 8;
 		
 		List<Ingredient> ingrs = new ArrayList<Ingredient>();
 		
 		Aspect as1 = new Aspect(true, true);
-		Aspect as2 = new Aspect(true, true);
-		Aspect as3 = new Aspect(true, true);
+		Aspect as2 = new Aspect(true, false);
+		Aspect as3 = new Aspect(false, false);
+		Aspect as4 = new Aspect(false, true);
 		
-		Ingredient toad = new Ingredient("toad", 1, as1, as2, as3);
-		Ingredient claw = new Ingredient("claw", 2, as1, as2, as3);
-		Ingredient scorpion = new Ingredient("scorpion", 3, as1, as2, as3);
+		//Ingredient(name, ID, red, green, blue)
+		Ingredient toad = new Ingredient("toad", 1, as3, as1, as4);
+		Ingredient claw = new Ingredient("claw", 2, as1, as1, as1);
+		Ingredient scorpion = new Ingredient("scorpion", 3, as3, as1, as4);
+		Ingredient fern = new Ingredient("fern", 4, as2, as2, as2);
+		Ingredient feather = new Ingredient("feather", 5, as1, as4, as3);
+		Ingredient mushroom = new Ingredient("mushroom", 6, as4, as2, as3);
+		Ingredient flower = new Ingredient("flower", 7, as4, as3, as1);
+		Ingredient root = new Ingredient("root", 8, as2, as3, as4);
 		
 		ingrs.add(toad);
 		ingrs.add(claw);
 		ingrs.add(scorpion);
+		ingrs.add(fern);
+		ingrs.add(feather);
+		ingrs.add(mushroom);
+		ingrs.add(flower);
+		ingrs.add(root);
 		
-		//Collections.shuffle(ingrs);
+		Collections.shuffle(ingrs);
 		
 		this.ingredients = ingrs;
 		

@@ -11,17 +11,19 @@ import java.awt.event.ActionListener;
 
 public class LoginPage extends JFrame implements ActionListener{
 	
-	static private JButton avatar11, avatar12, avatar13, avatar21, avatar22, avatar23, avatar31, avatar32, avatar33, avatar41, avatar42, avatar43, openBoard;
+	static private JButton avatar11, avatar12, avatar13, avatar21, avatar22, avatar23, avatar31,
+					avatar32, avatar33, avatar41, avatar42, avatar43, openBoard, addPlayerBtn, addPlayerBtn2;
 	static private JLabel label11, label12, label21, label22, label31, label32, label41, label42;
-	private static JPanel panelLogin;
+	private JPanel panelLogin;
 	public static JTextField userName1, userName2, userName3, userName4;
 	public static int avatarChosen1, avatarChosen2, avatarChosen3, avatarChosen4;
+	public static int playerNum = 2;
 
 
 	public  LoginPage() {
 		super("Log-in Page");		
-		setPanelLogin(new JPanel());
-		getPanelLogin().setLayout(null);
+		panelLogin = new JPanel();
+		panelLogin.setLayout(null);
 
 		
 		
@@ -32,21 +34,21 @@ public class LoginPage extends JFrame implements ActionListener{
 		avatar11 = new JButton(Avatar.getAvatarImage(1));
 		avatar12 = new JButton(Avatar.getAvatarImage(2));
 		avatar13 = new JButton(Avatar.getAvatarImage(3));
-		openBoard = new JButton("Open Game!");
+		//another avatar is needed here
 
 		
-		label11.setBounds(100, 100, 150, 20);
-		getPanelLogin().add(label11);	
+		label11.setBounds(160, 300, 150, 20);
+		panelLogin.add(label11);	
 		
 		userName1 = new JTextField();
-		userName1.setBounds(100, 125, 150, 20);
-		getPanelLogin().add(userName1);
+		userName1.setBounds(150, 325, 150, 20);
+		panelLogin.add(userName1);
 		
 		label12 = new JLabel("Choose your avatar");
-		label12.setBounds(100, 150, 150, 20);
-		getPanelLogin().add(label12);
+		label12.setBounds(160, 360, 150, 20);
+		panelLogin.add(label12);
 		
-		avatar11.setBounds(70, 170, 60, 60);
+		avatar11.setBounds(120, 380, 60, 60);
 		avatar11.setForeground(Color.BLACK);
 		avatar11.setBackground(Color.WHITE);
 		avatar11.addActionListener(
@@ -59,9 +61,9 @@ public class LoginPage extends JFrame implements ActionListener{
 			}
 		});
 		
-		getPanelLogin().add(avatar11);
+		panelLogin.add(avatar11);
 		
-		avatar12.setBounds(140, 170, 60, 60);
+		avatar12.setBounds(190, 380, 60, 60);
 		avatar12.setForeground(Color.BLACK);
 		avatar12.setBackground(Color.WHITE);
 		avatar12.addActionListener(
@@ -74,9 +76,9 @@ public class LoginPage extends JFrame implements ActionListener{
 			}
 		});
 		
-		getPanelLogin().add(avatar12);
+		panelLogin.add(avatar12);
 		
-		avatar13.setBounds(210, 170, 60, 60);
+		avatar13.setBounds(260, 380, 60, 60);
 		avatar13.setForeground(Color.BLACK);
 		avatar13.setBackground(Color.WHITE);
 		avatar13.addActionListener(
@@ -89,71 +91,8 @@ public class LoginPage extends JFrame implements ActionListener{
 			}
 		});
 		
-		getPanelLogin().add(avatar13);
+		panelLogin.add(avatar13);
 		
-		//Information of third user
-		label31 = new JLabel("Player 3 Username");
-		avatar31 = new JButton(Avatar.getAvatarImage(1));
-		avatar32 = new JButton(Avatar.getAvatarImage(2));
-		avatar33 = new JButton(Avatar.getAvatarImage(3));
-		openBoard = new JButton("Open Game!");
-
-		
-		label31.setBounds(100, 250, 150, 20);
-		getPanelLogin().add(label31);	
-		
-		userName3 = new JTextField();
-		userName3.setBounds(100, 275, 150, 20);
-		getPanelLogin().add(userName3);
-		
-		label32 = new JLabel("Choose your avatar");
-		label32.setBounds(100, 300, 150, 20);
-		getPanelLogin().add(label32);
-		
-		avatar31.setBounds(70, 320, 60, 60);
-		avatar31.setForeground(Color.BLACK);
-		avatar31.setBackground(Color.WHITE);
-		avatar31.addActionListener(
-				new ActionListener() 
-				{ 
-			@Override
-				public void actionPerformed(ActionEvent arg0) {
-				setAvatarChosen3(1);
-				
-			}
-		});
-		
-		getPanelLogin().add(avatar31);
-		
-		avatar32.setBounds(140, 320, 60, 60);
-		avatar32.setForeground(Color.BLACK);
-		avatar32.setBackground(Color.WHITE);
-		avatar32.addActionListener(
-				new ActionListener() 
-				{ 
-			@Override
-				public void actionPerformed(ActionEvent arg0) {
-				setAvatarChosen3(2);
-				
-			}
-		});
-		
-		getPanelLogin().add(avatar32);
-		
-		avatar33.setBounds(210, 320, 60, 60);
-		avatar33.setForeground(Color.BLACK);
-		avatar33.setBackground(Color.WHITE);
-		avatar33.addActionListener(
-				new ActionListener() 
-				{ 
-			@Override
-				public void actionPerformed(ActionEvent arg0) {
-				setAvatarChosen3(3);
-				
-			}
-		});
-		
-		getPanelLogin().add(avatar33);
 		
 		//Information of second user
 		label21 = new JLabel("Player 2 Username");
@@ -162,18 +101,18 @@ public class LoginPage extends JFrame implements ActionListener{
 		avatar23 = new JButton(Avatar.getAvatarImage(3));
 
 		
-		label21.setBounds(320, 100, 150, 20);
-		getPanelLogin().add(label21);	
+		label21.setBounds(435, 300, 150, 20);
+		panelLogin.add(label21);	
 		
 		userName2 = new JTextField();
-		userName2.setBounds(320, 125, 150, 20);
-		getPanelLogin().add(userName2);
+		userName2.setBounds(425, 325, 150, 20);
+		panelLogin.add(userName2);
 		
 		label22 = new JLabel("Choose your avatar");
-		label22.setBounds(320, 150, 150, 20);
-		getPanelLogin().add(label22);
+		label22.setBounds(435, 360, 150, 20);
+		panelLogin.add(label22);
 		
-		avatar21.setBounds(290, 170, 60, 60);
+		avatar21.setBounds(395, 380, 60, 60);
 		avatar21.setForeground(Color.BLACK);
 		avatar21.setBackground(Color.WHITE);
 		avatar21.addActionListener(
@@ -186,9 +125,9 @@ public class LoginPage extends JFrame implements ActionListener{
 			}
 		});
 		
-		getPanelLogin().add(avatar21);
+		panelLogin.add(avatar21);
 		
-		avatar22.setBounds(360, 170, 60, 60);
+		avatar22.setBounds(465, 380, 60, 60);
 		avatar22.setForeground(Color.BLACK);
 		avatar22.setBackground(Color.WHITE);
 		avatar22.addActionListener(
@@ -201,9 +140,9 @@ public class LoginPage extends JFrame implements ActionListener{
 			}
 		});
 		
-		getPanelLogin().add(avatar22);
+		panelLogin.add(avatar22);
 		
-		avatar23.setBounds(430, 170, 60, 60);
+		avatar23.setBounds(535, 380, 60, 60);
 		avatar23.setForeground(Color.BLACK);
 		avatar23.setBackground(Color.WHITE);
 		avatar23.addActionListener(
@@ -216,73 +155,47 @@ public class LoginPage extends JFrame implements ActionListener{
 			}
 		});
 		
-		getPanelLogin().add(avatar23);
-		
-		//Information of fourth user
-		label41 = new JLabel("Player 4 Username");
-		avatar41 = new JButton(Avatar.getAvatarImage(1));
-		avatar42 = new JButton(Avatar.getAvatarImage(2));
-		avatar43 = new JButton(Avatar.getAvatarImage(3));
+		panelLogin.add(avatar23);
 
-		
-		label41.setBounds(320, 250, 150, 20);
-		getPanelLogin().add(label41);	
-		
-		userName4 = new JTextField();
-		userName4.setBounds(320, 275, 150, 20);
-		getPanelLogin().add(userName4);
-		
-		label42 = new JLabel("Choose your avatar");
-		label42.setBounds(320, 300, 150, 20);
-		getPanelLogin().add(label42);
-		
-		avatar41.setBounds(290, 320, 60, 60);
-		avatar41.setForeground(Color.BLACK);
-		avatar41.setBackground(Color.WHITE);
-		avatar41.addActionListener(
+		addPlayerBtn = new JButton("Add player.");
+		addPlayerBtn.setBounds(770, 350, 120, 40);
+		addPlayerBtn.setForeground(Color.BLACK);
+		addPlayerBtn.setBackground(Color.WHITE);
+		addPlayerBtn.addActionListener(
 				new ActionListener() 
 				{ 
 			@Override
 				public void actionPerformed(ActionEvent arg0) {
-				setAvatarChosen4(1);
-				
+					panelLogin.remove(addPlayerBtn);
+					panelLogin.revalidate();
+					panelLogin.repaint();
+					addPlayer3();
 			}
 		});
+		panelLogin.add(addPlayerBtn);
 		
-		getPanelLogin().add(avatar41);
-		
-		avatar42.setBounds(360, 320, 60, 60);
-		avatar42.setForeground(Color.BLACK);
-		avatar42.setBackground(Color.WHITE);
-		avatar42.addActionListener(
+		addPlayerBtn2 = new JButton("Add player.");
+		addPlayerBtn2.setBounds(1045, 350, 120, 40);
+		addPlayerBtn2.setForeground(Color.BLACK);
+		addPlayerBtn2.setBackground(Color.WHITE);
+		addPlayerBtn2.addActionListener(
 				new ActionListener() 
 				{ 
 			@Override
 				public void actionPerformed(ActionEvent arg0) {
-				setAvatarChosen4(2);
 				
+					
+					panelLogin.remove(addPlayerBtn2);
+					panelLogin.revalidate();
+					panelLogin.repaint();
+					addPlayer4();
 			}
 		});
+		panelLogin.add(addPlayerBtn2);
 		
-		getPanelLogin().add(avatar42);
+		openBoard = new JButton("Open Game!");
 		
-		avatar43.setBounds(430, 320, 60, 60);
-		avatar43.setForeground(Color.BLACK);
-		avatar43.setBackground(Color.WHITE);
-		avatar43.addActionListener(
-				new ActionListener() 
-				{ 
-			@Override
-				public void actionPerformed(ActionEvent arg0) {
-				setAvatarChosen4(3);
-				
-			}
-		});
-		
-		getPanelLogin().add(avatar43);
-		
-		
-		openBoard.setBounds(220, 450, 120, 60);
+		openBoard.setBounds(572, 470, 120, 60);
 		openBoard.setForeground(Color.BLACK);
 		openBoard.setBackground(Color.WHITE);
 		openBoard.addActionListener(
@@ -298,35 +211,169 @@ public class LoginPage extends JFrame implements ActionListener{
 				//Information of Players is derived from login page and injected to BoardController
 				HandlerFactory.getInstance().getLoginHandler().login1(getUserName(), getAvatarChosen());
 				HandlerFactory.getInstance().getLoginHandler().login2(getUserName2(), getAvatarChosen2());
-				HandlerFactory.getInstance().getLoginHandler().login3(getUserName3(), getAvatarChosen3());
-				HandlerFactory.getInstance().getLoginHandler().login4(getUserName4(), getAvatarChosen4());
+				if(userName3!=null) {
+					playerNum++;
+					HandlerFactory.getInstance().getLoginHandler().login3(getUserName3(), getAvatarChosen3());
+					}
+				if(userName4!=null) {
+					playerNum++;
+					HandlerFactory.getInstance().getLoginHandler().login4(getUserName4(), getAvatarChosen4());
+					}
 				
 				BoardPage boardPage = new BoardPage();
 				boardPage.setVisible(true);
 				boardPage.add(BoardPage.getPanelBoard());
-				boardPage.setSize(600,600);
+				//boardPage.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+				boardPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				boardPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
 				dispose();
 			}
 		});
-		getPanelLogin().add(openBoard);
+		panelLogin.add(openBoard);
 	}
 		
 	@Override
 	public void actionPerformed(ActionEvent e) {		
 	}
 
+	public void addPlayer3() {
+		//Information of third user
+				label31 = new JLabel("Player 3 Username");
+				avatar31 = new JButton(Avatar.getAvatarImage(1));
+				avatar32 = new JButton(Avatar.getAvatarImage(2));
+				avatar33 = new JButton(Avatar.getAvatarImage(3));
 
-	public static JPanel getPanelLogin() {
+				
+				label31.setBounds(710, 300, 150, 20);
+				panelLogin.add(label31);	
+				
+				userName3 = new JTextField();
+				userName3.setBounds(700, 325, 150, 20);
+				panelLogin.add(userName3);
+				
+				label32 = new JLabel("Choose your avatar");
+				label32.setBounds(710, 360, 150, 20);
+				panelLogin.add(label32);
+				
+				avatar31.setBounds(670, 380, 60, 60);
+				avatar31.setForeground(Color.BLACK);
+				avatar31.setBackground(Color.WHITE);
+				avatar31.addActionListener(
+						new ActionListener() 
+						{ 
+					@Override
+						public void actionPerformed(ActionEvent arg0) {
+						setAvatarChosen3(1);
+						
+					}
+				});
+				
+				panelLogin.add(avatar31);
+				
+				avatar32.setBounds(740, 380, 60, 60);
+				avatar32.setForeground(Color.BLACK);
+				avatar32.setBackground(Color.WHITE);
+				avatar32.addActionListener(
+						new ActionListener() 
+						{ 
+					@Override
+						public void actionPerformed(ActionEvent arg0) {
+						setAvatarChosen3(2);
+						
+					}
+				});
+				
+				panelLogin.add(avatar32);
+				
+				avatar33.setBounds(810, 380, 60, 60);
+				avatar33.setForeground(Color.BLACK);
+				avatar33.setBackground(Color.WHITE);
+				avatar33.addActionListener(
+						new ActionListener() 
+						{ 
+					@Override
+						public void actionPerformed(ActionEvent arg0) {
+						setAvatarChosen3(3);
+						
+					}
+				});
+				
+				panelLogin.add(avatar33);
+	}
+	public void addPlayer4() {
+		//Information of fourth user
+		label41 = new JLabel("Player 4 Username");
+		avatar41 = new JButton(Avatar.getAvatarImage(1));
+		avatar42 = new JButton(Avatar.getAvatarImage(2));
+		avatar43 = new JButton(Avatar.getAvatarImage(3));
+
+		
+		label41.setBounds(985, 300, 150, 20);
+		panelLogin.add(label41);	
+		
+		userName4 = new JTextField();
+		userName4.setBounds(975, 325, 150, 20);
+		panelLogin.add(userName4);
+		
+		label42 = new JLabel("Choose your avatar");
+		label42.setBounds(985, 360, 150, 20);
+		panelLogin.add(label42);
+		
+		avatar41.setBounds(945, 380, 60, 60);
+		avatar41.setForeground(Color.BLACK);
+		avatar41.setBackground(Color.WHITE);
+		avatar41.addActionListener(
+				new ActionListener() 
+				{ 
+			@Override
+				public void actionPerformed(ActionEvent arg0) {
+				setAvatarChosen4(1);
+				
+			}
+		});
+		
+		panelLogin.add(avatar41);
+		
+		avatar42.setBounds(1015, 380, 60, 60);
+		avatar42.setForeground(Color.BLACK);
+		avatar42.setBackground(Color.WHITE);
+		avatar42.addActionListener(
+				new ActionListener() 
+				{ 
+			@Override
+				public void actionPerformed(ActionEvent arg0) {
+				setAvatarChosen4(2);
+				
+			}
+		});
+		
+		panelLogin.add(avatar42);
+		
+		avatar43.setBounds(1085, 380, 60, 60);
+		avatar43.setForeground(Color.BLACK);
+		avatar43.setBackground(Color.WHITE);
+		avatar43.addActionListener(
+				new ActionListener() 
+				{ 
+			@Override
+				public void actionPerformed(ActionEvent arg0) {
+				setAvatarChosen4(3);
+				
+			}
+		});
+		
+		panelLogin.add(avatar43);
+	}
+	
+	public JPanel getPanelLogin() {
 		return panelLogin;
 	}
 
-
-	public static void setPanelLogin(JPanel panelLogin) {
-		LoginPage.panelLogin = panelLogin;
+	public void setPanelLogin(JPanel panelLogin) {
+		this.panelLogin = panelLogin;
 	}
-	
+
 	public String getUserName() {
 		return userName1.getText();
 	}
@@ -397,5 +444,13 @@ public class LoginPage extends JFrame implements ActionListener{
 
 	public void setAvatarChosen4(int avatarChosen) {
 		LoginPage.avatarChosen4 = avatarChosen;
+	}
+
+	public int getPlayerNum() {
+		return playerNum;
+	}
+
+	public void setPlayerNum(int playerNum) {
+		this.playerNum = playerNum;
 	}
 }

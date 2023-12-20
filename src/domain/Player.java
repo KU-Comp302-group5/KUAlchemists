@@ -14,8 +14,9 @@ public class Player {
 	private int gold;
 	private int reputation;
 	private int sickness;
-	List<IngListener> ingListeners = new ArrayList<>();
-	List<ArtListener> artListeners = new ArrayList<>();
+	private List<IngListener> ingListeners;
+	private List<ArtListener> artListeners;
+	private List<PotListener> potListeners;
 	
 	public Player(String username, int avatar) {
 		
@@ -25,6 +26,9 @@ public class Player {
 		this.artifacts = new ArrayList<ArtifactCard>();
 		this.potions = new ArrayList<Potion>();
 		this.theories = new ArrayList<Theory>();
+		this.ingListeners = new ArrayList<>();
+		this.artListeners = new ArrayList<>();
+		this.potListeners = new ArrayList<>();
 		this.gold = 10;
 		this.reputation = 0;
 		this.sickness = 0;
@@ -37,6 +41,16 @@ public class Player {
 	public void addArtListener(ArtListener lis) {
 		artListeners.add(lis);
 	}
+	
+	public void addPotListener(PotListener lis) {
+		potListeners.add(lis);
+	}
+	
+	public void publishPotEvent() {
+		for(PotListener l: potListeners)
+			l.onPotChange();
+	}
+	
 	
 	public void publishIngEvent() {
 		for(IngListener l: ingListeners)
@@ -98,13 +112,35 @@ public class Player {
 			publishArtEvent();
 		}
 	}
+	
+	public void discardIngredients(Ingredient ingr1, Ingredient ingr2) {
+		if (this.ingredients.contains(ingr1) && (this.ingredients.contains(ingr2))) {
+			this.ingredients.remove(ingr1);
+			this.ingredients.remove(ingr2);
+			publishIngEvent();
+		}
+	}
+	
+	public void addPotion(Potion p) {
+		this.potions.add(p);
+		publishPotEvent();
+	}
+	
 
-	private void decreaseGold(int i) {
+	public void decreaseGold(int i) {
 		this.gold-=i;
 	}
 	
-	private void increaseGold(int i) {
+	public void increaseGold(int i) {
 		this.gold+=i;
+	}
+	
+	public void decreaseSickness(int i) {
+		this.sickness-=i;
+	}
+	
+	public void increaseSickness(int i) {
+		this.sickness+=i;
 	}
 	
 	public String getUsername() {
@@ -151,6 +187,14 @@ public class Player {
 		return avatar;
 	}
 	
+	public List<Potion> getPotions() {
+		return potions;
+	}
+
+	public void setPotions(List<Potion> potions) {
+		this.potions = potions;
+	}
+
 	@Override
 	public String toString() {
 		return "Player [username=" + username + ", ingredients=" + ingredients + ", artifacts=" + artifacts + ", gold="

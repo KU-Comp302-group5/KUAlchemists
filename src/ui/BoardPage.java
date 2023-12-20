@@ -670,9 +670,6 @@ public class BoardPage extends JFrame implements ActionListener {
     		ingr_text.setBounds(160, 5, 200, 20);
             this.add(ingr_text);
     		
-    		
-    		
-    		
     		revalidate();
             repaint();
     	}

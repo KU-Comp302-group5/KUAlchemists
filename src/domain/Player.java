@@ -126,6 +126,10 @@ public class Player {
 		publishPotEvent();
 	}
 	
+	public void makePublication(Ingredient ingr, AlchemyMarker marker) {
+		
+	}
+	
 
 	public void decreaseGold(int i) {
 		this.gold-=i;
@@ -200,5 +204,7 @@ public class Player {
 		return "Player [username=" + username + ", ingredients=" + ingredients + ", artifacts=" + artifacts + ", gold="
 				+ gold + ", reputation=" + reputation + ", sickness=" + sickness + "]";
 	}
+
+	
 
 }

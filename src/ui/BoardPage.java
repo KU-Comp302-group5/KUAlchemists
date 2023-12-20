@@ -3,6 +3,7 @@ package ui;
 import javax.swing.*;
 
 import domain.ArtListener;
+import domain.ArtifactCard;
 import domain.Avatar;
 import domain.IngListener;
 import domain.Ingredient;
@@ -394,10 +395,12 @@ public class BoardPage extends JFrame implements ActionListener {
     private class PlayerArts extends JPanel implements ArtListener {
     	
     	private int playerNum;
+    	private Window parentWindow; //  = SwingUtilities.getWindowAncestor(this);
         
     	public PlayerArts(int playerNum) {
 			super();
 			this.playerNum = playerNum;
+			this.parentWindow = SwingUtilities.getWindowAncestor(this);
 		}
 
 		public void updateArts() {
@@ -413,12 +416,34 @@ public class BoardPage extends JFrame implements ActionListener {
     			player_art.setBounds(10, 20+9*i, 60, 30); // should change
     			this.add(player_art);
     			int temp = i;
-                player_art.addActionListener(e -> {
-                	System.out.println("Artifact is used");
-                	HandlerFactory.getInstance().getUseArtifactHandler().useArtifact(KUAlchemistsGame.getInstance().getPlayer(playerNum), 
-                			KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(temp));
-                	switchTurns(KUAlchemistsGame.getInstance().getPlayer(playerNum).getUsername() + " used an artifact.");
-                });
+    			
+    			// if the artifact requires immediate user interaction through panel, such as elixir of insight
+    			if (KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(temp).getHasPanel()) {
+    				if (KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(temp).getID() == 0) {
+    					player_art.addActionListener(e -> {
+    						System.out.println("Elixir of Insight Artifact is used");
+    						// to set the behavior (strategy) of UseArtifactHandler and to remove artifact card from player's list
+    						HandlerFactory.getInstance().getUseArtifactHandler().useArtifact(KUAlchemistsGame.getInstance().getPlayer(playerNum), 
+    	                			KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(temp));
+    						
+    						
+	    					ElixirOfInsightDialog dialog = new ElixirOfInsightDialog((Frame) this.parentWindow);
+	    					dialog.add(dialog.getPanelArtifact());
+	    					dialog.setSize(600,600);
+	    					dialog.setVisible(true);
+	    					
+	    					//panel.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	    					switchTurns(KUAlchemistsGame.getInstance().getPlayer(playerNum).getUsername() + " used an artifact.");
+    					});
+    				}
+    			}
+    			else {
+    				player_art.addActionListener(e -> {
+                    	System.out.println("This artifact cannot be used now!");
+                    	JOptionPane.showMessageDialog(this.parentWindow,"This artifact cannot be used now!");  
+                    });
+    			}    			
+                
     		}
     		revalidate();  //need to revise
     		repaint();  //need to revise
@@ -583,6 +608,14 @@ public class BoardPage extends JFrame implements ActionListener {
             			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(0)),
             			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(1)),
             			str, KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+            	
+            	// if the player has magic mortar card
+            	if (KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getArtifacts().contains(new ArtifactCard("Magic Mortar", 2, false))){
+            		// TO DO
+            		// show MagicMortarDialog to take input from user
+            		// MagicMortarDialog takes which ingredient the user wants to be not discarded
+            		System.out.println("magic mortar used");
+            	}
             	updateGoldUI();
             	updateSicknessUI();
                 switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " made an experiment.");
@@ -654,11 +687,7 @@ public class BoardPage extends JFrame implements ActionListener {
 		}
     
     }
-    
-    private class ElixirOfInsight extends JPanel{
-    	
-    	
-    }
+ 
 	
 	private void switchTurns(String message) {
 	    JDialog turn = new JDialog(

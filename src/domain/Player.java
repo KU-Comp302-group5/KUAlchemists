@@ -7,10 +7,8 @@ public class Player {
 	private String username;
 	private int avatar;
 	private List<Ingredient> ingredients ;
-
 	private List<ArtifactCard> artifacts ;
 	private List<Potion> potions ;
-	private List<Theory> theories ;
 	private int gold;
 	private int reputation;
 	private int sickness;
@@ -25,7 +23,6 @@ public class Player {
 		this.ingredients = new ArrayList<Ingredient>();
 		this.artifacts = new ArrayList<ArtifactCard>();
 		this.potions = new ArrayList<Potion>();
-		this.theories = new ArrayList<Theory>();
 		this.ingListeners = new ArrayList<>();
 		this.artListeners = new ArrayList<>();
 		this.potListeners = new ArrayList<>();

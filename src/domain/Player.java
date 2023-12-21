@@ -18,7 +18,7 @@ public class Player {
 	private List<ArtListener> artListeners;
 	private List<PotListener> potListeners;
 	
-	public Player(String username, int avatar) {
+	public Player(String username, Integer avatar) {
 		
 		this.username = username;
 		this.avatar = avatar;

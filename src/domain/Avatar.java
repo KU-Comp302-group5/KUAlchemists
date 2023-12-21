@@ -8,7 +8,7 @@ public class Avatar {
     public static ImageIcon avatar2 = new ImageIcon("avatar2.png");
     public static ImageIcon avatar3 = new ImageIcon("avatar3.png");
     
-    public static ImageIcon getAvatarImage(int avatarType) {
+    public static ImageIcon getAvatarImage(Integer avatarType) {
         ImageIcon selectedAvatar = null;
         switch (avatarType) {
             case 1:

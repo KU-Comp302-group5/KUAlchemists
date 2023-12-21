@@ -202,6 +202,10 @@ public class Player {
 				+ gold + ", reputation=" + reputation + ", sickness=" + sickness + "]";
 	}
 
+	public void increaseReputation(int i) {
+		reputation += i;
+	}
+
 	
 
 }

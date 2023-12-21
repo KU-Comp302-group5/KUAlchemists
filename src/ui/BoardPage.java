@@ -2,12 +2,15 @@ package ui;
 
 import javax.swing.*;
 
+import domain.AlchemyMarker;
 import domain.ArtListener;
 import domain.Avatar;
 import domain.IngListener;
 import domain.Ingredient;
 import domain.KUAlchemistsGame;
 import domain.PotListener;
+import domain.PubListener;
+import domain.PublicationTrack;
 import domain.controllers.HandlerFactory;
 
 import java.awt.*;
@@ -16,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 public class BoardPage extends JFrame implements ActionListener {
 	
@@ -115,6 +120,9 @@ public class BoardPage extends JFrame implements ActionListener {
         publicationArea.setBackground(Color.RED);
         publicationArea.updatePublicationArea();
         getPanelBoard().add(publicationArea);
+        
+        PublicationTrack.getInstance().addPubListener((PublicationArea) publicationArea);
+        
 
         deductionBoard.setBounds(400, 520, buttonWidth, buttonHeight);
         deductionBoard.setForeground(Color.GREEN);
@@ -267,6 +275,21 @@ public class BoardPage extends JFrame implements ActionListener {
 		}
 		if (currentPlayer==4) {
 			gold4.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayerIV().getGold());
+		}
+	}
+	
+	private void updateReputationUI() {
+		if (currentPlayer==1) {
+			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerI().getReputation());
+		}
+		if (currentPlayer==2) {
+			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerII().getReputation());
+		}
+		if (currentPlayer==3) {
+			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerIII().getReputation());
+		}
+		if (currentPlayer==4) {
+			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerIV().getReputation());
 		}
 	}
 	
@@ -656,26 +679,101 @@ public class BoardPage extends JFrame implements ActionListener {
     
     }
     
-    private class PublicationArea extends JPanel {
+    
+    
+    /**
+     * Already published theories needs be made visible for debunking.
+     *
+     * 
+     */
+    private class PublicationArea extends JPanel implements PubListener, ItemListener {
     	
     	public void updatePublicationArea() {
     		
     		this.removeAll();
     		
-    		JLabel marker_text = new JLabel("Alchemy Markers: ");
+    		JLabel marker_text = new JLabel("Ingredients: ");
     		marker_text.setBounds(10, 5, 200, 20);
             this.add(marker_text);
             
-            JLabel ingr_text = new JLabel("Ingredients: ");
+            JLabel ingr_text = new JLabel("Alchemy Marker: ");
     		ingr_text.setBounds(160, 5, 200, 20);
             this.add(ingr_text);
+            
+            ButtonGroup ingrGroup = new ButtonGroup();
+            ButtonGroup markerGroup = new ButtonGroup();
+            
+            List<Ingredient> ingrs = HandlerFactory.getInstance().getPublicationHandler().getAvailableIngredients();
+            
+            for (int i=0; i<ingrs.size(); i++) {
+            	
+            	JRadioButton ingrBtn= new JRadioButton(ingrs.get(i).getName());
+            	ingrBtn.setBounds(10, 30 + 30*i, 100, 20);
+            	ingrBtn.addItemListener(this);
+            	ingrGroup.add(ingrBtn);
+            	this.add(ingrBtn);
+            	ingrBtn.setVisible(true);
+            }
+            
+            List<AlchemyMarker> markers = HandlerFactory.getInstance().getPublicationHandler().getAvailableAlchemies();
+            
+            for (int i=0; i<markers.size(); i++) {
+            	
+            	JRadioButton markerBtn= new JRadioButton(Integer.toString(markers.get(i).getID()));
+            	markerBtn.setBounds(160, 30 + 30*i, 100, 20);
+            	markerBtn.addItemListener(this);
+            	markerGroup.add(markerBtn);
+            	this.add(markerBtn);
+            	markerBtn.setVisible(true);
+            }
+            
+            JButton publishBtn = new JButton("Publish Theory");
+            publishBtn.setBounds(100, 270, 150, 20);
+            this.add(publishBtn);
+            publishBtn.setVisible(true);
+            publishBtn.addActionListener(e -> {
+            	System.out.println("Publish button in UI");
+            	String ingrName = null;
+            	String markerName = null;
+            	
+            	
+            	for (Enumeration<AbstractButton> buttons = ingrGroup.getElements(); buttons.hasMoreElements();) {
+                    AbstractButton button = buttons.nextElement();
+
+                    if (button.isSelected()) {
+                         ingrName = button.getText();
+                    }
+                }
+            	
+            	for (Enumeration<AbstractButton> buttons = markerGroup.getElements(); buttons.hasMoreElements();) {
+                    AbstractButton button = buttons.nextElement();
+
+                    if (button.isSelected()) {
+                         markerName = button.getText();
+                    }
+                }
+            	
+            	HandlerFactory.getInstance().getPublicationHandler().makePublication(ingrName, markerName, currentPlayer);
+            	updateGoldUI();
+            	updateReputationUI();
+                switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " made a publication.");
+            });
     		
     		revalidate();
             repaint();
     	}
-    	
-    	
-    	
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			
+		}
+
+		@Override
+		public void onPubChange() {
+			updatePublicationArea();
+			
+		}
+    
     }
 	
 	private void switchTurns(String message) {

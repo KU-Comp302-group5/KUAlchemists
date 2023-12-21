@@ -16,6 +16,7 @@ public class HandlerFactory {
 	private TransmuteIngredientHandler transmuteIngHandler;
 	private ElixirOfInsightHandler elixirOfInsightHandler;
 	private MakeExperimentHandler makeExperimentHandler;
+	private PublicationHandler publicationHandler;
 	
 	public static HandlerFactory getInstance() {
 		if (instance == null) {
@@ -32,7 +33,12 @@ public class HandlerFactory {
 		this.useArtifactHandler= new UseArtifactHandler();
 		this.loginHandler= new LoginHandler();
 		this.elixirOfInsightHandler = new ElixirOfInsightHandler();
-		this.makeExperimentHandler = new MakeExperimentHandler(); 
+		this.makeExperimentHandler = new MakeExperimentHandler();
+		this.publicationHandler = new PublicationHandler();
+	}
+	
+	public PublicationHandler getPublicationHandler() {
+		return publicationHandler;
 	}
 
 	public BuyArtifactHandler getBuyArtifactHandler() {

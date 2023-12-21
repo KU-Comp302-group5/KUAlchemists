@@ -12,6 +12,8 @@ public class PublicationTrack {
     private List<Ingredient> availableIngredients;
     private List<Theory> publishedTheories;
     
+    private List<PubListener> pubListeners;
+    
     
 	public static PublicationTrack getInstance() {
 		if (instance == null) {
@@ -23,16 +25,60 @@ public class PublicationTrack {
 	public PublicationTrack() {
 		populateTrack();
 		this.publishedTheories = new ArrayList<Theory>();
+		this.pubListeners = new ArrayList<PubListener>();
 	}
 	
 	public void publishTheory(Ingredient ingr, AlchemyMarker marker, int playerNo) {
 		Theory publishedTheory = new Theory(ingr, marker, playerNo);
 		publishedTheories.add(publishedTheory);
+		removeAvailableIngr(ingr);
+		removeAvailableMarker(marker);
+		publishPublicationEvent();
+	}
+
+	private void publishPublicationEvent() {
+		for (PubListener l: pubListeners) {
+			l.onPubChange();
+		}
+		
+	}
+
+	private void removeAvailableMarker(AlchemyMarker marker) {
+		availableAlchemies.remove(marker);
+	}
+
+	private void removeAvailableIngr(Ingredient ingr) {
+		availableIngredients.remove(ingr);
+		
 	}
 
 	private void populateTrack() {
 		populateAvailableAlchemies();
 		populateAvailableIngredients();
+	}
+
+	public List<AlchemyMarker> getAvailableAlchemies() {
+		return availableAlchemies;
+	}
+
+	public void setAvailableAlchemies(List<AlchemyMarker> availableAlchemies) {
+		this.availableAlchemies = availableAlchemies;
+	}
+
+	public List<Ingredient> getAvailableIngredients() {
+		return availableIngredients;
+	}
+
+	public void setAvailableIngredients(List<Ingredient> availableIngredients) {
+		this.availableIngredients = availableIngredients;
+	}
+
+	public List<Theory> getPublishedTheories() {
+		return publishedTheories;
+	}
+
+	public void setPublishedTheories(List<Theory> publishedTheories) {
+		this.publishedTheories = publishedTheories;
 	}
 
 	private void populateAvailableIngredients() {
@@ -63,8 +109,6 @@ public class PublicationTrack {
 		ingrs.add(flower);
 		ingrs.add(root);
 		
-		Collections.shuffle(ingrs);
-		
 		this.availableIngredients = ingrs;
 	}
 
@@ -77,15 +121,15 @@ public class PublicationTrack {
 		Aspect as3 = new Aspect(false, false);
 		Aspect as4 = new Aspect(false, true);
 		
-		//AlchemyMarker(red, green, blue)
-		AlchemyMarker marker1 = new AlchemyMarker(as3, as1, as4);
-		AlchemyMarker marker2 = new AlchemyMarker(as1, as1, as1);
-		AlchemyMarker marker3 = new AlchemyMarker(as3, as1, as4);
-		AlchemyMarker marker4 = new AlchemyMarker(as2, as2, as2);
-		AlchemyMarker marker5 = new AlchemyMarker(as1, as4, as3);
-		AlchemyMarker marker6 = new AlchemyMarker(as4, as2, as3);
-		AlchemyMarker marker7 = new AlchemyMarker(as4, as3, as1);
-		AlchemyMarker marker8 = new AlchemyMarker(as2, as3, as4);
+		//AlchemyMarker(red, green, blue, id)
+		AlchemyMarker marker1 = new AlchemyMarker(as3, as1, as4, 1);
+		AlchemyMarker marker2 = new AlchemyMarker(as1, as1, as1, 2);
+		AlchemyMarker marker3 = new AlchemyMarker(as3, as1, as4, 3);
+		AlchemyMarker marker4 = new AlchemyMarker(as2, as2, as2, 4);
+		AlchemyMarker marker5 = new AlchemyMarker(as1, as4, as3, 5);
+		AlchemyMarker marker6 = new AlchemyMarker(as4, as2, as3, 6);
+		AlchemyMarker marker7 = new AlchemyMarker(as4, as3, as1, 7);
+		AlchemyMarker marker8 = new AlchemyMarker(as2, as3, as4, 8);
 		
 		markers.add(marker1);
 		markers.add(marker2);
@@ -96,8 +140,30 @@ public class PublicationTrack {
 		markers.add(marker7);
 		markers.add(marker8);
 		
-		Collections.shuffle(markers);
-		
 		this.availableAlchemies = markers;	
+	}
+
+	public Ingredient getIngredientByName(String ingr) {
+		
+		for (int i=0; i<availableIngredients.size(); i++) {
+			if (availableIngredients.get(i).getName().equals(ingr)) {
+				return availableIngredients.get(i);
+			}
+		}
+		return null;
+	}
+
+	public AlchemyMarker getMarkerByName(String marker) {
+		
+		for (int i=0; i<availableAlchemies.size(); i++) {
+			if (availableAlchemies.get(i).getID() == (Integer.parseInt(marker))) {
+				return availableAlchemies.get(i);
+			}
+		}
+		return null;
+	}
+
+	public void addPubListener(PubListener e) {
+		pubListeners.add(e);
 	}
 }

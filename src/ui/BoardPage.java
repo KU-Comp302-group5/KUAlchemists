@@ -29,6 +29,7 @@ public class BoardPage extends JFrame implements ActionListener {
 				   player1_pot, player2_pot, player3_pot, player4_pot;
 	private static PotionBrew potionBrewing;
 	private static PublicationArea publicationArea;
+	private static SellPotionPanel sellPotionPanel;
 	private static JButton help, pause, deductionBoard, turnButton, ingrDeckButton, player_ing,
 	artifactDeckButton, player_art;
 	private JLabel gold, gold2, gold3, gold4,
@@ -94,6 +95,7 @@ public class BoardPage extends JFrame implements ActionListener {
 		getPanelBoard().add(pause);
 		
         potionBrewing = new PotionBrew();
+        sellPotionPanel = new SellPotionPanel();
         publicationArea = new PublicationArea();
         //publicationTrack = new JButton("Publication Track");
         deductionBoard = new JButton("Deduction Board");
@@ -101,19 +103,23 @@ public class BoardPage extends JFrame implements ActionListener {
         int buttonWidth = 200;
         int buttonHeight = 40;
         
-        potionBrewing.setBounds(100, 400, 500, 300);
+        potionBrewing.setBounds(100, 400, 500, 230);
         potionBrewing.setLayout(null);
         potionBrewing.setBackground(Color.BLUE);
         potionBrewing.updatePotionBrew();
-        //potionBrewing.setLayout(null);
         getPanelBoard().add(potionBrewing);
-        //revalidate();
-        //repaint();
         
         KUAlchemistsGame.getInstance().getPlayerI().addIngListener((PotionBrew) potionBrewing);
         KUAlchemistsGame.getInstance().getPlayerII().addIngListener((PotionBrew) potionBrewing);
         
-        //addPotionBrewingAreaProperties();
+        sellPotionPanel.setBounds(100, 630, 500, 230);
+        sellPotionPanel.setLayout(null);
+        sellPotionPanel.setBackground(Color.GREEN);
+        sellPotionPanel.updatePanel();
+        getPanelBoard().add(sellPotionPanel);
+        
+        KUAlchemistsGame.getInstance().getPlayerI().addIngListener((SellPotionPanel) sellPotionPanel);
+        KUAlchemistsGame.getInstance().getPlayerII().addIngListener((SellPotionPanel) sellPotionPanel);
 
         publicationArea.setBounds(700, 400, 300, 300);
         publicationArea.setLayout(null);
@@ -239,12 +245,14 @@ public class BoardPage extends JFrame implements ActionListener {
         if(LoginPage.playerNum==3) {
         	showPlayer3();
         	KUAlchemistsGame.getInstance().getPlayerIII().addIngListener((PotionBrew) potionBrewing);
+        	KUAlchemistsGame.getInstance().getPlayerIII().addIngListener((SellPotionPanel) sellPotionPanel);
         }
         
         if(LoginPage.playerNum==4) {
         	showPlayer3();
         	showPlayer4();
         	KUAlchemistsGame.getInstance().getPlayerIV().addIngListener((PotionBrew) potionBrewing);
+        	KUAlchemistsGame.getInstance().getPlayerIV().addIngListener((SellPotionPanel) sellPotionPanel);
         }
         
 
@@ -678,6 +686,137 @@ public class BoardPage extends JFrame implements ActionListener {
 		}
     
     }
+    
+    private class SellPotionPanel extends JPanel implements IngListener, ItemListener {
+    	
+    	ArrayList<JCheckBox> checkboxes;
+    	ArrayList<JCheckBox> clickedcheckboxes;
+    	ArrayList<Integer> ingrindex;
+    	JButton makeExpBtn;
+    	JRadioButton testBtn1;
+    	JRadioButton testBtn2;
+    	JLabel test;
+
+		
+    	public void updatePanel() {
+			
+    		this.removeAll();
+    		
+    		JLabel pa_text = new JLabel("Available Ingredients: ");
+    		pa_text.setBounds(10, 5, 200, 20);
+            this.add(pa_text);
+            
+            test = new JLabel("Test on: ");
+    		test.setBounds(230, 15, 200, 20);
+            this.add(test);
+            test.setVisible(false);
+            
+        	testBtn1= new JRadioButton("Yourself");
+        	testBtn1.setBounds(230, 45, 200, 20);
+        	testBtn1.addItemListener(this);
+        	this.add(testBtn1);
+        	testBtn1.setVisible(false);
+        	
+        	testBtn2= new JRadioButton("Student");
+        	testBtn2.setBounds(230, 75, 200, 20);
+        	testBtn2.addItemListener(this);
+        	this.add(testBtn2);
+        	testBtn2.setVisible(false);
+        	
+        	ButtonGroup testgroup = new ButtonGroup();
+        	
+        	testgroup.add(testBtn1);
+        	testgroup.add(testBtn2);
+        	
+            makeExpBtn = new JButton("Make Experiment");
+            makeExpBtn.setBounds(140, 160, 150, 30);
+            this.add(makeExpBtn);
+            makeExpBtn.setVisible(false);
+            makeExpBtn.addActionListener(e -> {
+            	System.out.println("Experiment button in UI");
+            	String str = null;
+            	if (testBtn1.isSelected()) {
+            		str = "yourself";
+            	}
+            	if(testBtn2.isSelected()) {
+            		str = "student";
+            	}
+            	HandlerFactory.getInstance().getMakeExperimentHandler().makeExperiment(
+            			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(0)),
+            			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(1)),
+            			str, KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+            	updateGoldUI();
+            	updateSicknessUI();
+                switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " made an experiment.");
+            });
+            
+            checkboxes = new ArrayList<JCheckBox>();
+            clickedcheckboxes = new ArrayList<JCheckBox>();
+            ingrindex = new ArrayList<Integer>();
+            
+            for (int i=0; i<KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().size(); i++) {
+    			
+    			JCheckBox player_ing = new JCheckBox(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(i).toString());
+    			player_ing.setBounds(20, 30 + 30 * i, 200, 20); // should change
+    			checkboxes.add(player_ing);
+    			this.add(player_ing);
+                player_ing.addItemListener(this);
+                
+    		}
+            revalidate();
+            repaint();
+    	
+    	}
+    	
+		@Override
+		public void onIngChange() {
+			updatePanel();
+		}
+
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			// TODO Auto-generated method stub
+			if(checkboxes.contains(e.getSource())) {
+				if (e.getStateChange() == 1) {
+					System.out.println(ingrindex.toString());
+					System.out.println(checkboxes.size());
+					if (ingrindex.size()==2){
+						clickedcheckboxes.get(0).setSelected(false);
+						clickedcheckboxes.remove(0);
+						ingrindex.remove(0);
+					}
+					ingrindex.add(checkboxes.indexOf(e.getSource()));
+					clickedcheckboxes.add((JCheckBox) e.getSource());
+					if(ingrindex.size()==2) {
+						testBtn1.setVisible(true);
+						testBtn2.setVisible(true);
+						test.setVisible(true);
+					}
+				}
+				else {
+					System.out.println(ingrindex.toString());
+					if(clickedcheckboxes.contains(e.getSource())) {
+						ingrindex.remove(clickedcheckboxes.indexOf(e.getSource()));
+						clickedcheckboxes.remove(e.getSource());
+						if(ingrindex.size()!=2) {
+							testBtn1.setVisible(false);
+							testBtn2.setVisible(false);
+							test.setVisible(false);
+						}
+					}
+				}
+			}
+			if (e.getSource()== testBtn1 || e.getSource()==testBtn2) {
+				if (ingrindex.size()==2) {
+					makeExpBtn.setVisible(true);
+				}
+			}
+			
+		}
+    
+    }
+    
     
     
     

@@ -291,13 +291,13 @@ public class BoardPage extends JFrame implements ActionListener {
 			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerI().getReputation());
 		}
 		if (currentPlayer==2) {
-			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerII().getReputation());
+			reputation2.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerII().getReputation());
 		}
 		if (currentPlayer==3) {
-			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerIII().getReputation());
+			reputation3.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerIII().getReputation());
 		}
 		if (currentPlayer==4) {
-			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerIV().getReputation());
+			reputation4.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerIV().getReputation());
 		}
 	}
 	
@@ -692,10 +692,11 @@ public class BoardPage extends JFrame implements ActionListener {
     	ArrayList<JCheckBox> checkboxes;
     	ArrayList<JCheckBox> clickedcheckboxes;
     	ArrayList<Integer> ingrindex;
-    	JButton makeExpBtn;
-    	JRadioButton testBtn1;
-    	JRadioButton testBtn2;
-    	JLabel test;
+    	JButton sellPotBtn;
+    	JRadioButton predBtn1;
+    	JRadioButton predBtn2;
+    	JRadioButton predBtn3;
+    	JLabel pred;
 
 		
     	public void updatePanel() {
@@ -706,53 +707,74 @@ public class BoardPage extends JFrame implements ActionListener {
     		pa_text.setBounds(10, 5, 200, 20);
             this.add(pa_text);
             
-            test = new JLabel("Test on: ");
-    		test.setBounds(230, 15, 200, 20);
-            this.add(test);
-            test.setVisible(false);
+            pred = new JLabel("Make prediction: ");
+    		pred.setBounds(230, 15, 200, 20);
+            this.add(pred);
+            pred.setVisible(false);
             
-        	testBtn1= new JRadioButton("Yourself");
-        	testBtn1.setBounds(230, 45, 200, 20);
-        	testBtn1.addItemListener(this);
-        	this.add(testBtn1);
-        	testBtn1.setVisible(false);
+            //button for positive prediction
+            predBtn1= new JRadioButton("Positive");
+            predBtn1.setBounds(230, 45, 200, 20);
+            predBtn1.addItemListener(this);
+        	this.add(predBtn1);
+        	predBtn1.setVisible(false);
         	
-        	testBtn2= new JRadioButton("Student");
-        	testBtn2.setBounds(230, 75, 200, 20);
-        	testBtn2.addItemListener(this);
-        	this.add(testBtn2);
-        	testBtn2.setVisible(false);
+        	//button for positive/neutral prediction
+        	predBtn2= new JRadioButton("Positive/Neutral");
+        	predBtn2.setBounds(230, 75, 200, 20);
+        	predBtn2.addItemListener(this);
+        	this.add(predBtn2);
+        	predBtn2.setVisible(false);
+        	
+        	//button for 'may be negative' prediction
+        	predBtn3= new JRadioButton("May be Negative");
+        	predBtn3.setBounds(230, 105, 200, 20);
+        	predBtn3.addItemListener(this);
+        	this.add(predBtn3);
+        	predBtn3.setVisible(false);
         	
         	ButtonGroup testgroup = new ButtonGroup();
         	
-        	testgroup.add(testBtn1);
-        	testgroup.add(testBtn2);
+        	testgroup.add(predBtn1);
+        	testgroup.add(predBtn2);
+        	testgroup.add(predBtn3);
         	
-            makeExpBtn = new JButton("Make Experiment");
-            makeExpBtn.setBounds(140, 160, 150, 30);
-            this.add(makeExpBtn);
-            makeExpBtn.setVisible(false);
-            makeExpBtn.addActionListener(e -> {
-            	System.out.println("Experiment button in UI");
-            	String str = null;
-            	if (testBtn1.isSelected()) {
-            		str = "yourself";
+        	//final button to perform the sale of the potion
+        	sellPotBtn = new JButton("Sell Potion");
+        	sellPotBtn.setBounds(140, 160, 150, 30);
+            this.add(sellPotBtn);
+            sellPotBtn.setVisible(false);
+            
+            //when 'sell potion' button is pressed
+            sellPotBtn.addActionListener(e -> {
+            	System.out.println("SellPotion button in UI");
+            	
+            	int prediction = 9999;
+            	
+            	if (predBtn1.isSelected()) { //positive prediction
+            		prediction = 1;
             	}
-            	if(testBtn2.isSelected()) {
-            		str = "student";
+            	if(predBtn2.isSelected()) { //positive/neutral
+            		prediction = 0;
             	}
-            	HandlerFactory.getInstance().getMakeExperimentHandler().makeExperiment(
+            	if(predBtn3.isSelected()) { //'may be negative' prediction
+            		prediction = -1;
+            	}
+            	
+            	//transmit the massage to the specific controller
+            	HandlerFactory.getInstance().getSellPotionHandler().sellPotion(
             			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(0)),
             			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(1)),
-            			str, KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+            			prediction, KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
             	updateGoldUI();
-            	updateSicknessUI();
-                switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " made an experiment.");
+            	updateReputationUI();
+            	
+                switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " made a potion sale.");
             });
             
-            checkboxes = new ArrayList<JCheckBox>();
-            clickedcheckboxes = new ArrayList<JCheckBox>();
-            ingrindex = new ArrayList<Integer>();
+            checkboxes = new ArrayList<JCheckBox>(); //keeps all the ingredients
+            clickedcheckboxes = new ArrayList<JCheckBox>(); //keeps the chosen ingredients
+            ingrindex = new ArrayList<Integer>(); //keeps the indices of the chosen ingredients in the player's ingredient list
             
             for (int i=0; i<KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().size(); i++) {
     			
@@ -777,39 +799,47 @@ public class BoardPage extends JFrame implements ActionListener {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			// TODO Auto-generated method stub
-			if(checkboxes.contains(e.getSource())) {
-				if (e.getStateChange() == 1) {
-					System.out.println(ingrindex.toString());
-					System.out.println(checkboxes.size());
-					if (ingrindex.size()==2){
-						clickedcheckboxes.get(0).setSelected(false);
-						clickedcheckboxes.remove(0);
-						ingrindex.remove(0);
+			if(checkboxes.contains(e.getSource())) { //source of change is one of the checkboxes
+				if (e.getStateChange() == 1) { //the checkbox is selected
+					
+					if (ingrindex.size()==2){ //two ingredients were already chosen
+						clickedcheckboxes.get(0).setSelected(false); //discard the first chosen ingredient
+						clickedcheckboxes.remove(0); //discard the first chosen ingredient
+						ingrindex.remove(0); //discard the index of the first chosen ingredient
 					}
-					ingrindex.add(checkboxes.indexOf(e.getSource()));
-					clickedcheckboxes.add((JCheckBox) e.getSource());
-					if(ingrindex.size()==2) {
-						testBtn1.setVisible(true);
-						testBtn2.setVisible(true);
-						test.setVisible(true);
+					
+					ingrindex.add(checkboxes.indexOf(e.getSource())); //add the index of the new chosen ingredient
+					clickedcheckboxes.add((JCheckBox) e.getSource()); //add the new chosen ingredient
+					
+					if(ingrindex.size()==2) { //two ingredients are chosen --> show the prediction buttons
+						predBtn1.setVisible(true);
+						predBtn2.setVisible(true);
+						predBtn3.setVisible(true);
+						pred.setVisible(true);
 					}
 				}
-				else {
-					System.out.println(ingrindex.toString());
+				
+				else { //the checkbox is deselected
 					if(clickedcheckboxes.contains(e.getSource())) {
-						ingrindex.remove(clickedcheckboxes.indexOf(e.getSource()));
-						clickedcheckboxes.remove(e.getSource());
+						ingrindex.remove(clickedcheckboxes.indexOf(e.getSource())); //discard the deselected ingredient's index
+						clickedcheckboxes.remove(e.getSource()); //discard the deselected ingredient
+						
+						//number of selected ingredients is lower than 2 --> hide the prediction buttons
 						if(ingrindex.size()!=2) {
-							testBtn1.setVisible(false);
-							testBtn2.setVisible(false);
-							test.setVisible(false);
+							predBtn1.setVisible(false);
+							predBtn2.setVisible(false);
+							predBtn3.setVisible(false);
+							pred.setVisible(false);
 						}
 					}
 				}
 			}
-			if (e.getSource()== testBtn1 || e.getSource()==testBtn2) {
-				if (ingrindex.size()==2) {
-					makeExpBtn.setVisible(true);
+			
+			//source of change is one of the prediction buttons
+			if (e.getSource()== predBtn1 || e.getSource()==predBtn2 || e.getSource()==predBtn3) {
+				
+				if (ingrindex.size()==2) { //two ingredients are chosen --> show the final sell potion button
+					sellPotBtn.setVisible(true);
 				}
 			}
 			

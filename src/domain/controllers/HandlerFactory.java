@@ -17,6 +17,7 @@ public class HandlerFactory {
 	private ElixirOfInsightHandler elixirOfInsightHandler;
 	private MakeExperimentHandler makeExperimentHandler;
 	private PublicationHandler publicationHandler;
+	private SellPotionHandler sellPotionHandler;
 	
 	public static HandlerFactory getInstance() {
 		if (instance == null) {
@@ -35,6 +36,7 @@ public class HandlerFactory {
 		this.elixirOfInsightHandler = new ElixirOfInsightHandler();
 		this.makeExperimentHandler = new MakeExperimentHandler();
 		this.publicationHandler = new PublicationHandler();
+		this.sellPotionHandler = new SellPotionHandler();
 	}
 	
 	public PublicationHandler getPublicationHandler() {
@@ -96,6 +98,15 @@ public class HandlerFactory {
 	public void setMakeExperimentHandler(MakeExperimentHandler makeExperimentHandler) {
 		this.makeExperimentHandler = makeExperimentHandler;
 	}
+
+	public SellPotionHandler getSellPotionHandler() {
+		return sellPotionHandler;
+	}
+
+	public void setSellPotionHandler(SellPotionHandler sellPotionHandler) {
+		this.sellPotionHandler = sellPotionHandler;
+	}
+	
 	
 	
 }

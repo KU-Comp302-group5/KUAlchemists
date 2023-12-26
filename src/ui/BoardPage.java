@@ -651,13 +651,18 @@ public class BoardPage extends JFrame implements ActionListener {
 				if (e.getStateChange() == 1) {
 					System.out.println(ingrindex.toString());
 					System.out.println(checkboxes.size());
+					
 					if (ingrindex.size()==2){
-						clickedcheckboxes.get(0).setSelected(false);
+						JCheckBox temp = clickedcheckboxes.get(0);
 						clickedcheckboxes.remove(0);
 						ingrindex.remove(0);
+						temp.setSelected(false);
+						
 					}
+					
 					ingrindex.add(checkboxes.indexOf(e.getSource()));
 					clickedcheckboxes.add((JCheckBox) e.getSource());
+					
 					if(ingrindex.size()==2) {
 						testBtn1.setVisible(true);
 						testBtn2.setVisible(true);
@@ -673,6 +678,7 @@ public class BoardPage extends JFrame implements ActionListener {
 							testBtn1.setVisible(false);
 							testBtn2.setVisible(false);
 							test.setVisible(false);
+							makeExpBtn.setVisible(false);
 						}
 					}
 				}
@@ -803,9 +809,11 @@ public class BoardPage extends JFrame implements ActionListener {
 				if (e.getStateChange() == 1) { //the checkbox is selected
 					
 					if (ingrindex.size()==2){ //two ingredients were already chosen
-						clickedcheckboxes.get(0).setSelected(false); //discard the first chosen ingredient
+						JCheckBox temp = clickedcheckboxes.get(0);
 						clickedcheckboxes.remove(0); //discard the first chosen ingredient
 						ingrindex.remove(0); //discard the index of the first chosen ingredient
+						temp.setSelected(false); //discard the first chosen ingredient
+						
 					}
 					
 					ingrindex.add(checkboxes.indexOf(e.getSource())); //add the index of the new chosen ingredient
@@ -824,12 +832,13 @@ public class BoardPage extends JFrame implements ActionListener {
 						ingrindex.remove(clickedcheckboxes.indexOf(e.getSource())); //discard the deselected ingredient's index
 						clickedcheckboxes.remove(e.getSource()); //discard the deselected ingredient
 						
-						//number of selected ingredients is lower than 2 --> hide the prediction buttons
+						//number of selected ingredients is lower than 2 --> hide the prediction + 'sell potion' buttons
 						if(ingrindex.size()!=2) {
 							predBtn1.setVisible(false);
 							predBtn2.setVisible(false);
 							predBtn3.setVisible(false);
 							pred.setVisible(false);
+							sellPotBtn.setVisible(false);
 						}
 					}
 				}
@@ -968,6 +977,7 @@ public class BoardPage extends JFrame implements ActionListener {
 			currentPlayer++;
 		}
 		potionBrewing.updatePotionBrew();
+		sellPotionPanel.updatePanel();
 	}
 	
 	private void showHelpDialog() {

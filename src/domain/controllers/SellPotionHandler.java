@@ -8,10 +8,11 @@ public class SellPotionHandler {
 	
 	public void sellPotion(Ingredient ingr1, Ingredient ingr2, int prediction, Player p) {
 		PotionSale ps = new PotionSale(ingr1, ingr2, prediction);
-		updatePlayer(ps, p);
+		updatePlayerGoldReputation(ps, p);
+		p.discardIngredients(ingr1, ingr2);
 	}
 	
-	public void updatePlayer(PotionSale ps, Player p) {
+	public void updatePlayerGoldReputation(PotionSale ps, Player p) {
 		int quality = ps.getPotion().getQuality();
 		int prediction = ps.getPrediction();
 		

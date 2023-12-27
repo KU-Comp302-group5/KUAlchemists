@@ -419,8 +419,7 @@ public class BoardPage extends JFrame implements ActionListener {
     					player_art.addActionListener(e -> {
     						System.out.println("Elixir of Insight Artifact is used");
     						// to set the behavior (strategy) of UseArtifactHandler and to remove artifact card from player's list
-    						HandlerFactory.getInstance().getUseArtifactHandler().useArtifact(KUAlchemistsGame.getInstance().getPlayer(playerNum), 
-    	                			KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(temp));
+    						HandlerFactory.getInstance().getUseArtifactHandler().useArtifact(KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(temp));
     						
     						
 	    					ElixirOfInsightDialog dialog = new ElixirOfInsightDialog((Frame) this.parentWindow);
@@ -605,17 +604,20 @@ public class BoardPage extends JFrame implements ActionListener {
             			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(1)),
             			str, KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
             	
+            	
             	// if the player has magic mortar card
             	if (KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getArtifacts().contains(new ArtifactCard("Magic Mortar", 2, false))){
             		// TO DO
             		// show MagicMortarDialog to take input from user
             		// MagicMortarDialog takes which ingredient the user wants to be not discarded
             		System.out.println("magic mortar used");
+            		HandlerFactory.getInstance().getUseArtifactHandler().useArtifact(new ArtifactCard("Magic Mortar", 2, false));
             		MagicMortarDialog dialog = new MagicMortarDialog((Frame) this.parentWindow);
 					dialog.add(dialog.getPanelArtifact());
 					dialog.setSize(600,600);
 					dialog.setVisible(true);
             	}
+            	
             	updateGoldUI();
             	updateSicknessUI();
                 switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " made an experiment.");

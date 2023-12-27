@@ -2,9 +2,9 @@ package domain;
 
 import java.util.List;
 
-public class ElixirOfInsightArtifact implements ArtifactBehavior {
+public class ElixirOfInsightArtifact implements ArtifactBehavior<List<Ingredient>> {
 	@Override
-	public void useCard(List<?> list) { // list stores the clicked ingredients in order
+	public void useCard(List<Ingredient> list) { // list stores the clicked ingredients in order
 				
 		IngredientDeck ingrDeck = IngredientDeck.getInstance();
 		int cardNum = ingrDeck.getCardNum();
@@ -18,6 +18,7 @@ public class ElixirOfInsightArtifact implements ArtifactBehavior {
 		for (Ingredient ingr : (List <Ingredient>) list) {
 			ingrDeck.getIngredients().add(ingr);
 		}
+		
 		
 	}
 

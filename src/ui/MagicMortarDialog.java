@@ -76,7 +76,7 @@ public class MagicMortarDialog extends JDialog{
 		submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //HandlerFactory.getInstance().getUseArtifactHandler().performArtifact();
+                HandlerFactory.getInstance().getUseArtifactHandler().performArtifact(getSelectedIngr());
             	System.out.println("Magic mortar decision submitted");
             }
         });

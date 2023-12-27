@@ -5,6 +5,8 @@ import java.util.List;
 import domain.ArtifactBehavior;
 import domain.ArtifactCard;
 import domain.ElixirOfInsightArtifact;
+import domain.KUAlchemistsGame;
+import domain.MagicMortarArtifact;
 import domain.Player;
 
 public class UseArtifactHandler {
@@ -14,15 +16,24 @@ public class UseArtifactHandler {
 	}
 	
 	// sets the artifact behavior and removes the artifact from player's artifacts
-	public void useArtifact(Player player, ArtifactCard artifactCard) {
-		// will be done with if clauses for different artifact cards
-		artifactBehavior = new ElixirOfInsightArtifact();
+	public void useArtifact(ArtifactCard artifactCard) {
+		// if clauses for different artifact cards
+		if (artifactCard.getID() == 0) {
+			artifactBehavior = new ElixirOfInsightArtifact();
+		}
+		if (artifactCard.getID() == 2) {
+			artifactBehavior = new MagicMortarArtifact();
+		}
+		
+		int curP = KUAlchemistsGame.getInstance().getCurrentPlayer();
+		Player player = KUAlchemistsGame.getInstance().getPlayer(curP);
+		
 		player.removeArtifactCard(artifactCard);
 	}
 	
 	
-	public void performArtifact(List<?> list) {
-		artifactBehavior.useCard(list);
+	public <T> void performArtifact(T element) {
+		artifactBehavior.useCard(element);
 	}
 
 }

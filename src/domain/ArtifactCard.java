@@ -8,7 +8,7 @@ public class ArtifactCard {
     public ArtifactCard(String name, Integer ID, Boolean hasPanel) {
     	this.name = name;
     	this.ID = ID;
-    	this.setHasPanel(hasPanel);
+    	this.hasPanel = hasPanel;
     	
     }
 

@@ -73,6 +73,7 @@ public class Player {
 	
 	public void addIngredient(Ingredient ingr) {
 		this.ingredients.add(ingr);
+		publishIngEvent();
 	}
 		
 	public List<Ingredient> getIngredients() {

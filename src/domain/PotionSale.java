@@ -27,6 +27,11 @@ public class PotionSale{
 	}
 	
 public int findQuality(Ingredient ingr1, Ingredient ingr2) {
+	//REQUIRES: ingr1, ingr2, their attributes are not null		
+	//EFFECTS: for the same attribute of ingr1 and ingr2 if their size attributes are different
+	//		   and if their sign attributes are the same returns 1 if their sign attributes are 'true',
+	//		   -1 if their sign attributes are 'false',
+	//		   0 when there is no attribute of ingr1 and ingr2 with opposite size and identical sign attributes. 												
 	
 		boolean ingr1redsize = ingr1.getRedAspect().isCircleSize();
 		boolean ingr1redsign = ingr1.getRedAspect().isSign();

@@ -17,7 +17,7 @@ public class Ingredient {
 
 	@Override
 	public String toString() {
-		return "Ingredient [name=" + name + ", id=" + id + "]";
+		return name;
 	}
 
 	public String getName() {

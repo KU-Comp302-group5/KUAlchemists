@@ -415,7 +415,7 @@ public class BoardPage extends JFrame implements ActionListener {
         	    ImageIcon scaledIcon = new ImageIcon(scaledImage);
         	    
     			JButton player_art = new JButton(scaledIcon);
-    			player_art.setBounds(10+58*i, 20, 58, 80); // should change
+    			player_art.setBounds(15+58*i, 20, 58, 80); // should change
     			this.add(player_art);
     			int temp = i;
     			
@@ -480,8 +480,14 @@ public class BoardPage extends JFrame implements ActionListener {
             this.add(pi_text);
             
             for (int i = 0; i < KUAlchemistsGame.getInstance().getPlayer(playerNum).getIngredients().size(); i++) {
-                JButton player_ing = new JButton(KUAlchemistsGame.getInstance().getPlayer(playerNum).getIngredients().get(i).toString());
-                player_ing.setBounds(10, 20+9*i, 80, 30);
+            	// can be improved
+            	String nameArt = KUAlchemistsGame.getInstance().getPlayer(playerNum).getIngredients().get(i).toString();
+        	    ImageIcon imageIcon = new ImageIcon(nameArt + ".png");
+        	    Image scaledImage = imageIcon.getImage().getScaledInstance(58, 80, Image.SCALE_SMOOTH);
+        	    ImageIcon scaledIcon = new ImageIcon(scaledImage);
+            	
+            	JButton player_ing = new JButton(scaledIcon);
+                player_ing.setBounds(15+58*i, 20, 58, 80);
                 this.add(player_ing);
                 player_ing.addActionListener(e -> {
                 	System.out.println("Ingredient is transmuted.");

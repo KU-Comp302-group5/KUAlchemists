@@ -31,7 +31,7 @@ public class ArtifactCard {
 
 	@Override
 	public String toString() {
-		return "ArtifactCard [name=" + name + "]";
+		return name;
 	}
 	
 	@Override

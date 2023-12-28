@@ -407,9 +407,15 @@ public class BoardPage extends JFrame implements ActionListener {
             this.add(pa_text);
             
             for (int i=0; i<KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().size(); i++) {
-    			
-    			JButton player_art = new JButton(KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(i).toString());
-    			player_art.setBounds(10, 20+9*i, 60, 30); // should change
+            	
+            	// can be improved
+            	String nameArt = KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(i).toString();
+        	    ImageIcon imageIcon = new ImageIcon(nameArt + ".png");
+        	    Image scaledImage = imageIcon.getImage().getScaledInstance(58, 80, Image.SCALE_SMOOTH);
+        	    ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        	    
+    			JButton player_art = new JButton(scaledIcon);
+    			player_art.setBounds(10+58*i, 20, 58, 80); // should change
     			this.add(player_art);
     			int temp = i;
     			

@@ -1,19 +1,19 @@
 package domain;
 
 public class Potion {
-    private Ingredient ingr1;
-    private Ingredient ingr2;
+    //private Ingredient ingr1;
+    //private Ingredient ingr2;
     private int quality;
     
-	public Potion(Ingredient ingr1, Ingredient ingr2) {
+	public Potion(int quality) {
 		super();
-		this.ingr1 = ingr1;
-		this.ingr2 = ingr2;
-		int quality = this.findQuality();
+		//this.ingr1 = ingr1;
+		//this.ingr2 = ingr2;
+		//int quality = this.findQuality();
 		this.quality = quality;
 	}
 
-	public Ingredient getIngr1() {
+	/*public Ingredient getIngr1() {
 		return ingr1;
 	}
 
@@ -27,7 +27,7 @@ public class Potion {
 
 	public void setIngr2(Ingredient ingr2) {
 		this.ingr2 = ingr2;
-	}
+	}*/
 
 	public int getQuality() {
 		return quality;
@@ -37,7 +37,7 @@ public class Potion {
 		this.quality = quality;
 	}
 	
-	public int findQuality() {
+	/*public int findQuality() {
 		
 		Ingredient ingr1 = this.ingr1;
 		boolean ingr1redsize = ingr1.getRedAspect().isCircleSize();
@@ -90,7 +90,7 @@ public class Potion {
 			}
 		}
 		return quality;
-	}
+	}*/
 	
 	
 }

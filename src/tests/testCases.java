@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
 import domain.ArtifactCard;
+import domain.Ingredient;
 import domain.Player;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -28,6 +29,12 @@ public class testCases {
         
         System.out.println("testInitialSickness: done");
 
+    }
+    @Test
+    @DisplayName("Test initial gold")
+    public void testInitialGold() {
+        int initialGold = p.getGold();
+        assertEquals(10, initialGold, "Initial gold should be 10");
     }
     @Test
     @DisplayName("Test setting and getting username")

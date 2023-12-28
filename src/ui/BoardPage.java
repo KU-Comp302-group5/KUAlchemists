@@ -29,6 +29,7 @@ public class BoardPage extends JFrame implements ActionListener {
 				   player1_pot, player2_pot, player3_pot, player4_pot;
 	private static PotionBrew potionBrewing;
 	private static PublicationArea publicationArea;
+	private static SellPotionPanel sellPotionPanel;
 	private static JButton help, pause, deductionBoard, turnButton, ingrDeckButton, player_ing,
 	artifactDeckButton, player_art;
 	private JLabel gold, gold2, gold3, gold4,
@@ -94,6 +95,7 @@ public class BoardPage extends JFrame implements ActionListener {
 		getPanelBoard().add(pause);
 		
         potionBrewing = new PotionBrew();
+        sellPotionPanel = new SellPotionPanel();
         publicationArea = new PublicationArea();
         //publicationTrack = new JButton("Publication Track");
         deductionBoard = new JButton("Deduction Board");
@@ -101,19 +103,23 @@ public class BoardPage extends JFrame implements ActionListener {
         int buttonWidth = 200;
         int buttonHeight = 40;
         
-        potionBrewing.setBounds(100, 400, 500, 300);
+        potionBrewing.setBounds(100, 400, 500, 230);
         potionBrewing.setLayout(null);
         potionBrewing.setBackground(Color.BLUE);
         potionBrewing.updatePotionBrew();
-        //potionBrewing.setLayout(null);
         getPanelBoard().add(potionBrewing);
-        //revalidate();
-        //repaint();
         
         KUAlchemistsGame.getInstance().getPlayerI().addIngListener((PotionBrew) potionBrewing);
         KUAlchemistsGame.getInstance().getPlayerII().addIngListener((PotionBrew) potionBrewing);
         
-        //addPotionBrewingAreaProperties();
+        sellPotionPanel.setBounds(100, 630, 500, 230);
+        sellPotionPanel.setLayout(null);
+        sellPotionPanel.setBackground(Color.GREEN);
+        sellPotionPanel.updatePanel();
+        getPanelBoard().add(sellPotionPanel);
+        
+        KUAlchemistsGame.getInstance().getPlayerI().addIngListener((SellPotionPanel) sellPotionPanel);
+        KUAlchemistsGame.getInstance().getPlayerII().addIngListener((SellPotionPanel) sellPotionPanel);
 
         publicationArea.setBounds(700, 400, 300, 300);
         publicationArea.setLayout(null);
@@ -239,12 +245,14 @@ public class BoardPage extends JFrame implements ActionListener {
         if(LoginPage.playerNum==3) {
         	showPlayer3();
         	KUAlchemistsGame.getInstance().getPlayerIII().addIngListener((PotionBrew) potionBrewing);
+        	KUAlchemistsGame.getInstance().getPlayerIII().addIngListener((SellPotionPanel) sellPotionPanel);
         }
         
         if(LoginPage.playerNum==4) {
         	showPlayer3();
         	showPlayer4();
         	KUAlchemistsGame.getInstance().getPlayerIV().addIngListener((PotionBrew) potionBrewing);
+        	KUAlchemistsGame.getInstance().getPlayerIV().addIngListener((SellPotionPanel) sellPotionPanel);
         }
         
 
@@ -283,13 +291,13 @@ public class BoardPage extends JFrame implements ActionListener {
 			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerI().getReputation());
 		}
 		if (currentPlayer==2) {
-			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerII().getReputation());
+			reputation2.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerII().getReputation());
 		}
 		if (currentPlayer==3) {
-			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerIII().getReputation());
+			reputation3.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerIII().getReputation());
 		}
 		if (currentPlayer==4) {
-			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerIV().getReputation());
+			reputation4.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayerIV().getReputation());
 		}
 	}
 	
@@ -643,13 +651,18 @@ public class BoardPage extends JFrame implements ActionListener {
 				if (e.getStateChange() == 1) {
 					System.out.println(ingrindex.toString());
 					System.out.println(checkboxes.size());
+					
 					if (ingrindex.size()==2){
-						clickedcheckboxes.get(0).setSelected(false);
+						JCheckBox temp = clickedcheckboxes.get(0);
 						clickedcheckboxes.remove(0);
 						ingrindex.remove(0);
+						temp.setSelected(false);
+						
 					}
+					
 					ingrindex.add(checkboxes.indexOf(e.getSource()));
 					clickedcheckboxes.add((JCheckBox) e.getSource());
+					
 					if(ingrindex.size()==2) {
 						testBtn1.setVisible(true);
 						testBtn2.setVisible(true);
@@ -665,6 +678,7 @@ public class BoardPage extends JFrame implements ActionListener {
 							testBtn1.setVisible(false);
 							testBtn2.setVisible(false);
 							test.setVisible(false);
+							makeExpBtn.setVisible(false);
 						}
 					}
 				}
@@ -678,6 +692,170 @@ public class BoardPage extends JFrame implements ActionListener {
 		}
     
     }
+    
+    private class SellPotionPanel extends JPanel implements IngListener, ItemListener {
+    	
+    	ArrayList<JCheckBox> checkboxes;
+    	ArrayList<JCheckBox> clickedcheckboxes;
+    	ArrayList<Integer> ingrindex;
+    	JButton sellPotBtn;
+    	JRadioButton predBtn1;
+    	JRadioButton predBtn2;
+    	JRadioButton predBtn3;
+    	JLabel pred;
+
+		
+    	public void updatePanel() {
+			
+    		this.removeAll();
+    		
+    		JLabel pa_text = new JLabel("Available Ingredients: ");
+    		pa_text.setBounds(10, 5, 200, 20);
+            this.add(pa_text);
+            
+            pred = new JLabel("Make prediction: ");
+    		pred.setBounds(230, 15, 200, 20);
+            this.add(pred);
+            pred.setVisible(false);
+            
+            //button for positive prediction
+            predBtn1= new JRadioButton("Positive");
+            predBtn1.setBounds(230, 45, 200, 20);
+            predBtn1.addItemListener(this);
+        	this.add(predBtn1);
+        	predBtn1.setVisible(false);
+        	
+        	//button for positive/neutral prediction
+        	predBtn2= new JRadioButton("Positive/Neutral");
+        	predBtn2.setBounds(230, 75, 200, 20);
+        	predBtn2.addItemListener(this);
+        	this.add(predBtn2);
+        	predBtn2.setVisible(false);
+        	
+        	//button for 'may be negative' prediction
+        	predBtn3= new JRadioButton("May be Negative");
+        	predBtn3.setBounds(230, 105, 200, 20);
+        	predBtn3.addItemListener(this);
+        	this.add(predBtn3);
+        	predBtn3.setVisible(false);
+        	
+        	ButtonGroup testgroup = new ButtonGroup();
+        	
+        	testgroup.add(predBtn1);
+        	testgroup.add(predBtn2);
+        	testgroup.add(predBtn3);
+        	
+        	//final button to perform the sale of the potion
+        	sellPotBtn = new JButton("Sell Potion");
+        	sellPotBtn.setBounds(140, 160, 150, 30);
+            this.add(sellPotBtn);
+            sellPotBtn.setVisible(false);
+            
+            //when 'sell potion' button is pressed
+            sellPotBtn.addActionListener(e -> {
+            	System.out.println("SellPotion button in UI");
+            	
+            	int prediction = 9999;
+            	
+            	if (predBtn1.isSelected()) { //positive prediction
+            		prediction = 1;
+            	}
+            	if(predBtn2.isSelected()) { //positive/neutral
+            		prediction = 0;
+            	}
+            	if(predBtn3.isSelected()) { //'may be negative' prediction
+            		prediction = -1;
+            	}
+            	
+            	//transmit the massage to the specific controller
+            	HandlerFactory.getInstance().getSellPotionHandler().sellPotion(
+            			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(0)),
+            			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(1)),
+            			prediction, KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+            	updateGoldUI();
+            	updateReputationUI();
+            	
+                switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " made a potion sale.");
+            });
+            
+            checkboxes = new ArrayList<JCheckBox>(); //keeps all the ingredients
+            clickedcheckboxes = new ArrayList<JCheckBox>(); //keeps the chosen ingredients
+            ingrindex = new ArrayList<Integer>(); //keeps the indices of the chosen ingredients in the player's ingredient list
+            
+            for (int i=0; i<KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().size(); i++) {
+    			
+    			JCheckBox player_ing = new JCheckBox(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(i).toString());
+    			player_ing.setBounds(20, 30 + 30 * i, 200, 20); // should change
+    			checkboxes.add(player_ing);
+    			this.add(player_ing);
+                player_ing.addItemListener(this);
+                
+    		}
+            revalidate();
+            repaint();
+    	
+    	}
+    	
+		@Override
+		public void onIngChange() {
+			updatePanel();
+		}
+
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			// TODO Auto-generated method stub
+			if(checkboxes.contains(e.getSource())) { //source of change is one of the checkboxes
+				if (e.getStateChange() == 1) { //the checkbox is selected
+					
+					if (ingrindex.size()==2){ //two ingredients were already chosen
+						JCheckBox temp = clickedcheckboxes.get(0);
+						clickedcheckboxes.remove(0); //discard the first chosen ingredient
+						ingrindex.remove(0); //discard the index of the first chosen ingredient
+						temp.setSelected(false); //discard the first chosen ingredient
+						
+					}
+					
+					ingrindex.add(checkboxes.indexOf(e.getSource())); //add the index of the new chosen ingredient
+					clickedcheckboxes.add((JCheckBox) e.getSource()); //add the new chosen ingredient
+					
+					if(ingrindex.size()==2) { //two ingredients are chosen --> show the prediction buttons
+						predBtn1.setVisible(true);
+						predBtn2.setVisible(true);
+						predBtn3.setVisible(true);
+						pred.setVisible(true);
+					}
+				}
+				
+				else { //the checkbox is deselected
+					if(clickedcheckboxes.contains(e.getSource())) {
+						ingrindex.remove(clickedcheckboxes.indexOf(e.getSource())); //discard the deselected ingredient's index
+						clickedcheckboxes.remove(e.getSource()); //discard the deselected ingredient
+						
+						//number of selected ingredients is lower than 2 --> hide the prediction + 'sell potion' buttons
+						if(ingrindex.size()!=2) {
+							predBtn1.setVisible(false);
+							predBtn2.setVisible(false);
+							predBtn3.setVisible(false);
+							pred.setVisible(false);
+							sellPotBtn.setVisible(false);
+						}
+					}
+				}
+			}
+			
+			//source of change is one of the prediction buttons
+			if (e.getSource()== predBtn1 || e.getSource()==predBtn2 || e.getSource()==predBtn3) {
+				
+				if (ingrindex.size()==2) { //two ingredients are chosen --> show the final sell potion button
+					sellPotBtn.setVisible(true);
+				}
+			}
+			
+		}
+    
+    }
+    
     
     
     
@@ -799,6 +977,7 @@ public class BoardPage extends JFrame implements ActionListener {
 			currentPlayer++;
 		}
 		potionBrewing.updatePotionBrew();
+		sellPotionPanel.updatePanel();
 	}
 	
 	private void showHelpDialog() {

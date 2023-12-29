@@ -247,6 +247,19 @@ public class BoardPage extends JFrame implements ActionListener {
 			switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " did nothing.");
 		});
 		//getPanelBoard().add(turnButton);
+		
+		JButton dBoardButton = new JButton("Deduction Board");
+		dBoardButton.setBounds(500, 750, 150, 50);
+		dBoardButton.addActionListener(e -> {
+			DeductionBoardDialog dialog = new DeductionBoardDialog(this);
+			
+			dialog.setSize(900,700);
+			
+			dialog.setVisible(true);
+        });
+        getPanelBoard().add(dBoardButton);
+		
+		
 	}
 	
 	
@@ -415,16 +428,18 @@ public class BoardPage extends JFrame implements ActionListener {
     			
     			// if the artifact requires immediate user interaction through panel, such as elixir of insight
     			if (KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(temp).getHasPanel()) {
+    				
+    				// elixir of insight
     				if (KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(temp).getID() == 0) {
     					player_art.addActionListener(e -> {
     						System.out.println("Elixir of Insight Artifact is used");
     						// to set the behavior (strategy) of UseArtifactHandler and to remove artifact card from player's list
     						HandlerFactory.getInstance().getUseArtifactHandler().useArtifact(KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(temp));
     						
-    						
 	    					ElixirOfInsightDialog dialog = new ElixirOfInsightDialog((Frame) this.parentWindow);
 	    					dialog.add(dialog.getPanelArtifact());
-	    					dialog.setSize(600,600);
+	    					dialog.setSize(600,350);
+	    					
 	    					dialog.setVisible(true);
 	    					
 	    					//panel.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

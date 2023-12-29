@@ -11,6 +11,9 @@ public class Player {
 	private List<ArtifactCard> artifacts ;
 	private List<Potion> potions ;
 	private List<Theory> theories ;
+	
+	private DeductionBoard dBoard;
+	
 	private int gold;
 	private int reputation;
 	private int sickness;
@@ -194,6 +197,14 @@ public class Player {
 
 	public void setPotions(List<Potion> potions) {
 		this.potions = potions;
+	}
+	
+	public DeductionBoard getdBoard() {
+		return dBoard;
+	}
+
+	public void setdBoard(DeductionBoard dBoard) {
+		this.dBoard = dBoard;
 	}
 
 	@Override

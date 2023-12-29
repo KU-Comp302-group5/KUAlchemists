@@ -25,10 +25,12 @@ public class UseArtifactHandler {
 			artifactBehavior = new MagicMortarArtifact();
 		}
 		
-		int curP = KUAlchemistsGame.getInstance().getCurrentPlayer();
-		Player player = KUAlchemistsGame.getInstance().getPlayer(curP);
+		//int curP = KUAlchemistsGame.getInstance().getCurrentPlayer();
+		//Player player = KUAlchemistsGame.getInstance().getPlayer(curP);
 		
-		player.removeArtifactCard(artifactCard);
+		KUAlchemistsGame.getInstance().getCurrentPlayer().removeArtifactCard(artifactCard);
+		
+		//player.removeArtifactCard(artifactCard);
 	}
 	
 	

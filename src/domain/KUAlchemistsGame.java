@@ -17,7 +17,7 @@ public class KUAlchemistsGame {
 	private static List<Player> players = new ArrayList<Player>();
 
 	private static int numPlayers;
-	private static int currentPlayer = 1;
+	private static int currentPlayerNo = 1;
 
 
 	/**
@@ -64,17 +64,23 @@ public class KUAlchemistsGame {
     }
     
     
-    public Player getPlayer(int playerNo) {
+    public static Player getPlayer(int playerNo) {
     	return players.get(playerNo-1);
     }
     
 
-	public static int getCurrentPlayer() {
-		return currentPlayer;
+	public static Player getCurrentPlayer() {
+		//Player player = ;
+		return getPlayer(currentPlayerNo);
 	}
 
-	public static void setCurrentPlayer(int currentPlayer) {
-		KUAlchemistsGame.currentPlayer = currentPlayer;
+
+	public static int getCurrentPlayerNo() {
+		return currentPlayerNo;
+	}
+
+	public static void setCurrentPlayerNo(int currentPlayerNo) {
+		KUAlchemistsGame.currentPlayerNo = currentPlayerNo;
 	}
 	
 	public static List<Player> getPlayers() {

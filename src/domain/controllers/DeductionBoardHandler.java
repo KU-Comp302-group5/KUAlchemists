@@ -1,13 +1,19 @@
 package domain.controllers;
 
+import domain.DeductionBoard;
+import domain.KUAlchemistsGame;
+
 public class DeductionBoardHandler{
 
     public DeductionBoardHandler(){
     }
 
-    private void markResultsTriangle() {
+    public void markResultsTriangle() {
     }
 
-    private void markDeductionGrid() {
+    public void markDeductionGrid(int ingrIndex, int markerIndex) {
+    	DeductionBoard dbBoard = KUAlchemistsGame.getInstance().getCurrentPlayer().getdBoard();
+    	dbBoard.markDeductionGrid(ingrIndex, markerIndex);
+    	
     }
 }

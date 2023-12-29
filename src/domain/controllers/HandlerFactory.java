@@ -14,7 +14,7 @@ public class HandlerFactory {
 	private UseArtifactHandler useArtifactHandler;
 	private ForageIngHandler forageIngHandler;
 	private TransmuteIngredientHandler transmuteIngHandler;
-	
+	private DeductionBoardHandler deductionBoardHandler;
 	private MakeExperimentHandler makeExperimentHandler;
 	
 	public static HandlerFactory getInstance() {
@@ -31,6 +31,7 @@ public class HandlerFactory {
 		this.transmuteIngHandler= new TransmuteIngredientHandler();
 		this.useArtifactHandler= new UseArtifactHandler();
 		this.loginHandler= new LoginHandler();
+		this.deductionBoardHandler = new DeductionBoardHandler();
 		this.makeExperimentHandler = new MakeExperimentHandler(); 
 	}
 
@@ -75,6 +76,14 @@ public class HandlerFactory {
 		this.loginHandler = loginHandler;
 	}
 
+	public DeductionBoardHandler getDeductionBoardHandler() {
+		return deductionBoardHandler;
+	}
+
+	public void setDeductionBoardHandler(DeductionBoardHandler deductionBoardHandler) {
+		this.deductionBoardHandler = deductionBoardHandler;
+	}
+	
 	public MakeExperimentHandler getMakeExperimentHandler() {
 		return makeExperimentHandler;
 	}

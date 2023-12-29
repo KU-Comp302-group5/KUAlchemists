@@ -78,6 +78,7 @@ public class MagicMortarDialog extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 HandlerFactory.getInstance().getUseArtifactHandler().performArtifact(getSelectedIngr());
             	System.out.println("Magic mortar decision submitted");
+            	dispose();
             }
         });
 		
@@ -100,11 +101,6 @@ public class MagicMortarDialog extends JDialog{
 		getPanelArtifact().add(submitButton);
 		getPanelArtifact().add(ingrButton1);
 		getPanelArtifact().add(ingrButton2);
-		
-		
-		
-		
-		
-				
+						
 	}
 }

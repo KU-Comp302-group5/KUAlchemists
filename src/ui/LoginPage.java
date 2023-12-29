@@ -55,6 +55,7 @@ public class LoginPage extends JFrame implements ActionListener{
 					panelLogin.repaint();
 					displayPlayer(4);
 					playerNum++;
+					avatarsChosen.add(1);
 			}
 		});
 		
@@ -73,6 +74,7 @@ public class LoginPage extends JFrame implements ActionListener{
 					displayPlayer(3);
 					playerNum++;
 					panelLogin.add(addPlayerBtn2);
+					avatarsChosen.add(1);
 			}
 		});
 		panelLogin.add(addPlayerBtn);
@@ -124,12 +126,7 @@ public class LoginPage extends JFrame implements ActionListener{
 		//label11 = new JLabel("Player 1 Username");
 		JLabel usernameLabel = new JLabel("Player Username");
 		
-		
-		//avatar11 = new JButton("avatar1");
-		//avatar11 = new JButton(Avatar.getAvatarImage(1));
-		//avatar12 = new JButton(Avatar.getAvatarImage(2));
-		//avatar13 = new JButton(Avatar.getAvatarImage(3));
-		
+				
 		// a list & more avatars are needed
 		List<JButton> innerlistAvatarButtons = new ArrayList<>();
 		for (i = 1; i < availableAvatarNum+1; i++) {
@@ -138,28 +135,16 @@ public class LoginPage extends JFrame implements ActionListener{
 		}
 		avatarButtons.add(innerlistAvatarButtons);
 		
-		
-		//label11.setBounds(160, 300, 150, 20);
-		//panelLogin.add(label11);	
-		
+				
 		usernameLabel.setBounds(160 + 275*(playerNo -1), 300, 150, 20);
 		panelLogin.add(usernameLabel);
 		
-		
-		//userName1 = new JTextField();
-		//userName1.setBounds(150, 325, 150, 20);
-		//panelLogin.add(userName1);
 		
 		JTextField username = new JTextField();
 		username.setBounds(160 + 275*(playerNo -1), 325, 150, 20);
 		textfields.add(username);
 		panelLogin.add(username);
 		
-		
-		
-		//label12 = new JLabel("Choose your avatar");
-		//label12.setBounds(160, 360, 150, 20);
-		//panelLogin.add(label12);
 		
 		JLabel avatarLabel = new JLabel("Choose your avatar");
 		avatarLabel.setBounds( 160 + 275*(playerNo -1), 360, 150, 20);

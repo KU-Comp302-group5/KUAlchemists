@@ -66,18 +66,22 @@ public class ElixirOfInsightDialog extends JDialog{
                 
                 if (clickedButton == firstTop) {
                 	getClickedIngredientOrder().add(topThreeIngredientsList.get(0));
+                	firstTop.setVisible(false);
                 }
                 else if (clickedButton == secondTop) {
                 	getClickedIngredientOrder().add(topThreeIngredientsList.get(1));
+                	secondTop.setVisible(false);
                 }
                 else if (clickedButton == thirdTop) {
                 	getClickedIngredientOrder().add(topThreeIngredientsList.get(2));
+                	thirdTop.setVisible(false);
                 }
 
                 // Pass the clickedButtonOrder list to the controller
                 // Call the controller method to handle the order
                 if (getClickedIngredientOrder().size() == 3) {
                 	HandlerFactory.getInstance().getUseArtifactHandler().performArtifact(clickedIngredientOrder);
+                	dispose();
                 }
                 
             }

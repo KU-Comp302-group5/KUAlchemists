@@ -3,10 +3,13 @@ package domain;
 public class ArtifactCard {
     private String name;
     private Integer ID;
+    private Boolean hasPanel;
     
-    public ArtifactCard(String name, Integer ID) {
+    public ArtifactCard(String name, Integer ID, Boolean hasPanel) {
     	this.name = name;
     	this.ID = ID;
+    	this.hasPanel = hasPanel;
+    	
     }
 
 	public String getName() {
@@ -24,10 +27,25 @@ public class ArtifactCard {
 	public void setID(Integer iD) {
 		ID = iD;
 	}
+	
 
 	@Override
 	public String toString() {
 		return "ArtifactCard [name=" + name + "]";
+	}
+	
+	@Override
+   public boolean equals(Object obj) { // implemented for the "contains" functionality of Lists
+      ArtifactCard ac = (ArtifactCard)obj;
+      return this.ID == ac.ID && this.name.equalsIgnoreCase(ac.name) && this.hasPanel == ac.hasPanel;
+   }
+
+	public Boolean getHasPanel() {
+		return hasPanel;
+	}
+
+	public void setHasPanel(Boolean hasPanel) {
+		this.hasPanel = hasPanel;
 	}
 	
 	// now in UseArtifactHandler

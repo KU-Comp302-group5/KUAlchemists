@@ -14,7 +14,7 @@ public class HandlerFactory {
 	private UseArtifactHandler useArtifactHandler;
 	private ForageIngHandler forageIngHandler;
 	private TransmuteIngredientHandler transmuteIngHandler;
-	private ElixirOfInsightHandler elixirOfInsightHandler;
+	private DeductionBoardHandler deductionBoardHandler;
 	private MakeExperimentHandler makeExperimentHandler;
 	private PublicationHandler publicationHandler;
 	private SellPotionHandler sellPotionHandler;
@@ -33,7 +33,7 @@ public class HandlerFactory {
 		this.transmuteIngHandler= new TransmuteIngredientHandler();
 		this.useArtifactHandler= new UseArtifactHandler();
 		this.loginHandler= new LoginHandler();
-		this.elixirOfInsightHandler = new ElixirOfInsightHandler();
+		this.deductionBoardHandler = new DeductionBoardHandler();
 		this.makeExperimentHandler = new MakeExperimentHandler();
 		this.publicationHandler = new PublicationHandler();
 		this.sellPotionHandler = new SellPotionHandler();
@@ -75,13 +75,6 @@ public class HandlerFactory {
 		this.transmuteIngHandler = transmuteIngHandler;
 	}
 	
-	public ElixirOfInsightHandler getElixirOfInsightHandler() {
-		return elixirOfInsightHandler;
-	}
-
-	public void setTransmuteIngHandler(ElixirOfInsightHandler elixirOfInsightHandler) {
-		this.elixirOfInsightHandler = elixirOfInsightHandler;
-	}
 
 	public LoginHandler getLoginHandler() {
 		return loginHandler;
@@ -91,6 +84,14 @@ public class HandlerFactory {
 		this.loginHandler = loginHandler;
 	}
 
+	public DeductionBoardHandler getDeductionBoardHandler() {
+		return deductionBoardHandler;
+	}
+
+	public void setDeductionBoardHandler(DeductionBoardHandler deductionBoardHandler) {
+		this.deductionBoardHandler = deductionBoardHandler;
+	}
+	
 	public MakeExperimentHandler getMakeExperimentHandler() {
 		return makeExperimentHandler;
 	}

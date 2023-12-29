@@ -1,43 +1,47 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import domain.KUAlchemistsGame;
 import domain.Ingredient;
+import domain.IngredientDeck;
 import domain.controllers.HandlerFactory;
 
-public class ElixirOfInsightPanel extends JFrame{
+public class ElixirOfInsightDialog extends JDialog{
 	static private JButton firstTop, secondTop, thirdTop;
 	static private JLabel labelDescription;
 	private static JPanel panelArtifact;
 	
 	//public static int;
-	public static List<Ingredient> topThreeIngredientList;
+	
 	private List<Ingredient> clickedIngredientOrder; // List to store the order of clicked buttons
 	
 	
-	public ElixirOfInsightPanel(List<Ingredient> topThreeIngredientList) {
-		super("Elixir of Insight");
+	public ElixirOfInsightDialog(Frame parent) {
+		
+		super(parent, "Elixir of Insight", true);
 		setPanelArtifact(new JPanel());
 		getPanelArtifact().setLayout(null);
 		
-		setTopThreeIngredientList(topThreeIngredientList);
+		List<Ingredient> topThreeIngredientsList = IngredientDeck.getInstance().getTopThreeCards();
 		clickedIngredientOrder = new ArrayList<>();
 		
 		
 		labelDescription = new JLabel("Click the Ingredients in the order from bottom to top");
-		firstTop = new JButton(getTopThreeIngredientList().get(0).getName());
-		secondTop = new JButton(getTopThreeIngredientList().get(1).getName());
-		thirdTop = new JButton(getTopThreeIngredientList().get(2).getName());
+		firstTop = new JButton(topThreeIngredientsList.get(0).getName());
+		secondTop = new JButton(topThreeIngredientsList.get(1).getName());
+		thirdTop = new JButton(topThreeIngredientsList.get(2).getName());
 		
 		firstTop.setBounds(70, 170, 100, 60);
 		firstTop.setForeground(Color.BLACK);
@@ -61,19 +65,23 @@ public class ElixirOfInsightPanel extends JFrame{
                 JButton clickedButton = (JButton) e.getSource();
                 
                 if (clickedButton == firstTop) {
-                	getClickedIngredientOrder().add(getTopThreeIngredientList().get(0));
+                	getClickedIngredientOrder().add(topThreeIngredientsList.get(0));
+                	firstTop.setVisible(false);
                 }
                 else if (clickedButton == secondTop) {
-                	getClickedIngredientOrder().add(getTopThreeIngredientList().get(1));
+                	getClickedIngredientOrder().add(topThreeIngredientsList.get(1));
+                	secondTop.setVisible(false);
                 }
                 else if (clickedButton == thirdTop) {
-                	getClickedIngredientOrder().add(getTopThreeIngredientList().get(2));
+                	getClickedIngredientOrder().add(topThreeIngredientsList.get(2));
+                	thirdTop.setVisible(false);
                 }
 
                 // Pass the clickedButtonOrder list to the controller
                 // Call the controller method to handle the order
                 if (getClickedIngredientOrder().size() == 3) {
-                	HandlerFactory.getInstance().getElixirOfInsightHandler().handleClickedIngredientOrder(clickedIngredientOrder);
+                	HandlerFactory.getInstance().getUseArtifactHandler().performArtifact(clickedIngredientOrder);
+                	dispose();
                 }
                 
             }
@@ -99,20 +107,9 @@ public class ElixirOfInsightPanel extends JFrame{
     }
 
     public void setPanelArtifact(JPanel panelArtifact) {
-    	ElixirOfInsightPanel.panelArtifact = panelArtifact;
+    	ElixirOfInsightDialog.panelArtifact = panelArtifact;
     }
 
-    /*
-    // Getter and Setter for newPlace int variable
-    public int getNewPlace() {
-        return newPlace;
-    }
-
-    public void setNewPlace(int newPlace) {
-    	ElixirOfInsightPanel.newPlace = newPlace;
-    }
-    */
-    
     // Getter method for clickedButtonOrder
     public List<Ingredient> getClickedIngredientOrder() {
         return clickedIngredientOrder;
@@ -123,12 +120,5 @@ public class ElixirOfInsightPanel extends JFrame{
         this.clickedIngredientOrder = clickedIngredientOrder;
     }
     
-    public static List<Ingredient> getTopThreeIngredientList() {
-        return topThreeIngredientList;
-    }
-
-    public static void setTopThreeIngredientList(List<Ingredient> topThreeIngredientList) {
-    	ElixirOfInsightPanel.topThreeIngredientList = topThreeIngredientList;
-    }
 	
 }

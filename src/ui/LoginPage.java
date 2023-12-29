@@ -53,6 +53,7 @@ public class LoginPage extends JFrame implements ActionListener{
 					panelLogin.remove(addPlayerBtn2);
 					panelLogin.revalidate();
 					panelLogin.repaint();
+					avatarsChosen.add(1);
 					displayPlayer(4);
 					playerNum++;
 					avatarsChosen.add(1);
@@ -71,6 +72,7 @@ public class LoginPage extends JFrame implements ActionListener{
 					panelLogin.remove(addPlayerBtn);
 					panelLogin.revalidate();
 					panelLogin.repaint();
+					avatarsChosen.add(1);
 					displayPlayer(3);
 					playerNum++;
 					panelLogin.add(addPlayerBtn2);

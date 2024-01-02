@@ -76,13 +76,6 @@ public class FindQualityTest {
 		assertEquals(0, ps.findQuality(ingr7, ingr8));
 	}
 	
-	
-/*  Aspect a = new Aspect(true, true);
-	Aspect b = new Aspect(false, true);
-	Aspect c = new Aspect(true, false);
-	Aspect d = new Aspect(false, false);
-*/
-	
 	@Test //test with aspects of different size same sign --> 1 if sign == true, -1 if sign == false
 	public void testWithSameSign() {
 		Ingredient ingr1 = new Ingredient("1", 0 , a, b, a);
@@ -105,8 +98,4 @@ public class FindQualityTest {
 		Ingredient ingr10 = new Ingredient("10", 0 , b, c, d);
 		assertEquals(1, ps.findQuality(ingr9, ingr10));
 	}
-	
-	
-	//test with more than one aspect with different size same sign (which aspect determines quality?)
-
 }

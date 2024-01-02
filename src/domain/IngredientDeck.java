@@ -20,6 +20,7 @@ public class IngredientDeck {
     
 	// The rep invariant is 
 	// c.ingredients not null &&
+    // cardNum >= 0 &&
 	// all elements of c.ingredients are Ingredients
     
     public static IngredientDeck getInstance() {
@@ -31,11 +32,14 @@ public class IngredientDeck {
 	}
 
     public IngredientDeck() {
+    	// EFFECTS: Initializes this to be empty
     	this.ingredients = new ArrayList<Ingredient>();
     	this.cardNum = 0;
 	}
     
     public void populateIngredientDeck() {
+    	// MODIFIES: this.ingredients, this.cardNum
+    	// EFFECTS: adds ingredients to this.ingredient
 		
 		Aspect as1 = new Aspect(true, true);
 		Aspect as2 = new Aspect(true, false);
@@ -67,6 +71,7 @@ public class IngredientDeck {
     
     // for Elixir of insight
     public List<Ingredient> getTopThreeCards(){
+    	// EFFECTS: returns a list of top three elements of this.ingredients
     	if (cardNum < 3) {
     		return null;
     	}
@@ -82,6 +87,8 @@ public class IngredientDeck {
     }
     
 	public Ingredient pop() {
+		// MODIFIES: this.ingredients, this.cardNum
+		// EFFECTS: Removes top ingredient from this.ingredients, returns top ingredient
 		if (cardNum > 0) {
 			Ingredient ingr = ingredients.get(cardNum-1);
 			this.ingredients.remove(cardNum - 1);
@@ -95,16 +102,21 @@ public class IngredientDeck {
     }
 	
 	public void putCard(Ingredient ingr) {
+		// MODIFIES: this.ingredients, this.cardNum
+		// EFFECTS: Adds ingr to the elements of this.ingredients
 		this.ingredients.add(ingr);
 		this.cardNum++;
 	}
 	
 	public void removeCard(Ingredient ingr) {
+		// MODIFIES: this.ingredients, this.cardNum
+		// EFFECTS: Removes ingr from this.ingredients
 		this.ingredients.remove(ingr);
 		this.cardNum--;
 	}
 	
 	public boolean isIn(Ingredient ingr) {
+		// EFFECTS: Returns true if ingr is in this.ingredients else returns false.
 		return this.ingredients.contains(ingr);
 	}
 	
@@ -119,7 +131,7 @@ public class IngredientDeck {
         this.ingredients = ingredients;
     }
     
- // Getter method for cardNum
+    // Getter method for cardNum
     public int getCardNum() {
         return cardNum;
     }
@@ -134,5 +146,13 @@ public class IngredientDeck {
 		return "IngredientDeck [cardNum=" + cardNum + ", ingredients=" + ingredients + "]";
 	}
 	
-
+	public boolean repOk() {
+		if (this.ingredients == null) return false;
+		if (this.cardNum < 0) return false;
+		for (int i = 0; i < this.cardNum; i++) {
+			Object x = this.ingredients.get(i);
+			if (!(x instanceof Ingredient)) return false;
+			}
+		return true;
+	}
 }

@@ -11,30 +11,35 @@ import domain.PotionSale;
 
 public class FindQualityTest {
 	
-	PotionSale ps = new PotionSale(null, null, 0);
+	Aspect a = new Aspect(true, true);
+	Aspect b = new Aspect(false, true);
+	Aspect c = new Aspect(true, false);
+	Aspect d = new Aspect(false, false);
+	
+	PotionSale ps = new PotionSale(new Ingredient("", 0 , a, a, a), new Ingredient("", 0 , a, a, a), 0);
 	
 	@Test
 	public void expectedNullPointerException() {
 		assertThrows(NullPointerException.class, ()-> {
 		    ps.findQuality(null, null); 
 		});
+		Ingredient ingr1 = new Ingredient(null, 0 ,null, null, null);
+		Ingredient ingr2 = new Ingredient("", 0 ,a, b, c);
 		assertThrows(NullPointerException.class, ()-> {
-		    ps.findQuality(new Ingredient(null, 0 ,null, null, null) , new Ingredient(null, 0 ,null, null, null)); 
+		    ps.findQuality(ingr1, ingr2); 
+		});
+		assertThrows(NullPointerException.class, ()-> {
+		    ps.findQuality(ingr1, ingr1); 
 		});
 	}
 	
 	@Test
 	public void testWithSameIngredient() {
-		Aspect a = new Aspect(true, true);
 		assertEquals(0, ps.findQuality(new Ingredient("", 0 , a, a, a) , new Ingredient("", 0 , a, a, a)));
 	}
 	
 	@Test
 	public void testWithSameSize() {
-		Aspect a = new Aspect(true, true);
-		Aspect b = new Aspect(false, true);
-		Aspect c = new Aspect(true, false);
-		Aspect d = new Aspect(false, false);
 		assertEquals(0, ps.findQuality(new Ingredient("", 0 , a, b, a) , new Ingredient("", 0 , c, d, c)));
 	}
 	

@@ -39,12 +39,18 @@ public class FindQualityTest {
 		Ingredient ingr2 = new Ingredient("2", 0 , a, b, c);
 		Ingredient ingr3 = new Ingredient("3", 0 , a, b, c);
 		assertEquals(0, ps.findQuality(ingr1, ingr1));
-		assertEquals(0, ps.findQuality(ingr1, ingr3));
+		assertEquals(0, ps.findQuality(ingr2, ingr3));
 	}
 	
 	@Test
 	public void testWithSameSize() {
-		assertEquals(0, ps.findQuality(new Ingredient("", 0 , a, b, a) , new Ingredient("", 0 , c, d, c)));
+		Ingredient ingr1 = new Ingredient("1", 0 , a, b, a);
+		Ingredient ingr2 = new Ingredient("2", 0 , c, d, c);
+		assertEquals(0, ps.findQuality(ingr1, ingr2));
+		
+		Ingredient ingr3 = new Ingredient("3", 0 , a, c, c);
+		Ingredient ingr4 = new Ingredient("4", 0 , c, a, c);
+		assertEquals(0, ps.findQuality(ingr3, ingr4));
 	}
 	
 	//test with different size different sign --> return 0

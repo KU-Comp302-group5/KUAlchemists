@@ -64,7 +64,7 @@ public class Player {
 	}
 	
 	public void forageIngredient() {
-		Ingredient ingr = IngredientDeck.getInstance().getTopCard();
+		Ingredient ingr = IngredientDeck.getInstance().pop();
 		if (ingr != null) {
 			addIngredient(ingr);
 			System.out.println("\n"+ this.getUsername()+" got ingredient card: "+ ingr.getName());

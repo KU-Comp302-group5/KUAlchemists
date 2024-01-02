@@ -35,7 +35,11 @@ public class FindQualityTest {
 	
 	@Test
 	public void testWithSameIngredient() {
-		assertEquals(0, ps.findQuality(new Ingredient("", 0 , a, a, a) , new Ingredient("", 0 , a, a, a)));
+		Ingredient ingr1 = new Ingredient("1", 0 , a, a, a);
+		Ingredient ingr2 = new Ingredient("2", 0 , a, b, c);
+		Ingredient ingr3 = new Ingredient("3", 0 , a, b, c);
+		assertEquals(0, ps.findQuality(ingr1, ingr1));
+		assertEquals(0, ps.findQuality(ingr1, ingr3));
 	}
 	
 	@Test

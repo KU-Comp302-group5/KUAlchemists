@@ -37,10 +37,13 @@ public class IngredientDeck {
     	this.cardNum = 0;
 	}
     
-    public void populateIngredientDeck() {
+    public void initializeIngredientDeck() {
     	// MODIFIES: this.ingredients, this.cardNum
     	// EFFECTS: adds ingredients to this.ingredient
 		
+    	this.ingredients = new ArrayList<Ingredient>();
+    	this.cardNum = 0;
+    	
 		Aspect as1 = new Aspect(true, true);
 		Aspect as2 = new Aspect(true, false);
 		Aspect as3 = new Aspect(false, false);
@@ -108,12 +111,12 @@ public class IngredientDeck {
 		this.cardNum++;
 	}
 	
-	public void removeCard(Ingredient ingr) {
-		// MODIFIES: this.ingredients, this.cardNum
-		// EFFECTS: Removes ingr from this.ingredients
-		this.ingredients.remove(ingr);
-		this.cardNum--;
-	}
+//	public void removeCard(Ingredient ingr) {
+//		// MODIFIES: this.ingredients, this.cardNum
+//		// EFFECTS: Removes ingr from this.ingredients
+//		this.ingredients.remove(ingr);
+//		this.cardNum--;
+//	}
 	
 	public boolean isIn(Ingredient ingr) {
 		// EFFECTS: Returns true if ingr is in this.ingredients else returns false.

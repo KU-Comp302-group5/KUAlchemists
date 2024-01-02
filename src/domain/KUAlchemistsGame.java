@@ -58,7 +58,7 @@ public class KUAlchemistsGame {
      */
     private void init() {
     	PublicationTrack.getInstance().populateTrack();
-    	IngredientDeck.getInstance().populateIngredientDeck();
+    	IngredientDeck.getInstance().initializeIngredientDeck();
     }
     
     /**

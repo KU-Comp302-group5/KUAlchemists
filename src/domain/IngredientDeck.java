@@ -3,12 +3,24 @@ package domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Queue;
 
+/**
+ * Overview: This class provides a List of Ingredients to store all ingredient cards found in the Ingredient Deck.
+ *
+ */
 public class IngredientDeck {
-	private static IngredientDeck instance;
 	
+	private static IngredientDeck instance;
     private int cardNum;
     private List<Ingredient> ingredients ;
+    
+    // Abstraction Function
+    // AF(c) = { c.ingredients[i].ingredient | 0 <= i < c.cardNum }
+    
+	// The rep invariant is 
+	// c.ingredients not null &&
+	// all elements of c.ingredients are Ingredients
     
     public static IngredientDeck getInstance() {
     	
@@ -19,9 +31,11 @@ public class IngredientDeck {
 	}
 
     public IngredientDeck() {
-		this.cardNum = 8;
-		
-		List<Ingredient> ingrs = new ArrayList<Ingredient>();
+    	this.ingredients = new ArrayList<Ingredient>();
+    	this.cardNum = 0;
+	}
+    
+    public void populateIngredientDeck() {
 		
 		Aspect as1 = new Aspect(true, true);
 		Aspect as2 = new Aspect(true, false);
@@ -38,20 +52,17 @@ public class IngredientDeck {
 		Ingredient flower = new Ingredient("flower", 7, as4, as3, as1);
 		Ingredient root = new Ingredient("root", 8, as2, as3, as4);
 		
-		ingrs.add(toad);
-		ingrs.add(claw);
-		ingrs.add(scorpion);
-		ingrs.add(fern);
-		ingrs.add(feather);
-		ingrs.add(mushroom);
-		ingrs.add(flower);
-		ingrs.add(root);
+		putCard(toad);
+		putCard(claw);
+		putCard(scorpion);
+		putCard(fern);
+		putCard(feather);
+		putCard(mushroom);
+		putCard(flower);
+		putCard(root);
 		
-		Collections.shuffle(ingrs);
-		
-		this.ingredients = ingrs;
-		
-	}
+		Collections.shuffle(this.ingredients);
+    }
 
     
     // for Elixir of insight
@@ -70,11 +81,11 @@ public class IngredientDeck {
     	}
     }
     
-	public Ingredient getTopCard() {
+	public Ingredient pop() {
 		if (cardNum > 0) {
 			Ingredient ingr = ingredients.get(cardNum-1);
-	    	ingredients.remove(cardNum-1);
-	    	cardNum--;
+			this.ingredients.remove(cardNum - 1);
+			this.cardNum--;
 	    	return ingr;
 		}
 		else {
@@ -82,6 +93,21 @@ public class IngredientDeck {
 			return null;
 		}
     }
+	
+	public void putCard(Ingredient ingr) {
+		this.ingredients.add(ingr);
+		this.cardNum++;
+	}
+	
+	public void removeCard(Ingredient ingr) {
+		this.ingredients.remove(ingr);
+		this.cardNum--;
+	}
+	
+	public boolean isIn(Ingredient ingr) {
+		return this.ingredients.contains(ingr);
+	}
+	
 	
 	// getter for ingredients
 	public List<Ingredient> getIngredients() {
@@ -107,5 +133,6 @@ public class IngredientDeck {
 	public String toString() {
 		return "IngredientDeck [cardNum=" + cardNum + ", ingredients=" + ingredients + "]";
 	}
+	
 
 }

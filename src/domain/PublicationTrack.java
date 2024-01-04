@@ -23,11 +23,21 @@ public class PublicationTrack {
 	}
     
 	public PublicationTrack() {
-		populateTrack();
+		this.availableAlchemies = new ArrayList<AlchemyMarker>();
+		this.availableIngredients = new ArrayList<Ingredient>();
 		this.publishedTheories = new ArrayList<Theory>();
 		this.pubListeners = new ArrayList<PubListener>();
 	}
 	
+	/**
+	 * REQUIRES: Ingredient instance, AlchemyMarker instance, playerNo as int.
+	 * MODIFIES: publishedTheories, availableIngredients, publishedTheories
+	 * EFFECTS: A new Theory instance is created.
+	 * 			This theory instance is added to the publishedTheories.
+	 * 			Ingredient used in the Theory is removed from availableIngredients.
+	 * 			AlchemyMarker used in the Theory is removed from availableAlchemies.
+	 * 			Publication Event is published to PubListeners.
+	 */
 	public void publishTheory(Ingredient ingr, AlchemyMarker marker, int playerNo) {
 		Theory publishedTheory = new Theory(ingr, marker, playerNo);
 		publishedTheories.add(publishedTheory);
@@ -52,7 +62,7 @@ public class PublicationTrack {
 		
 	}
 
-	private void populateTrack() {
+	public void populateTrack() {
 		populateAvailableAlchemies();
 		populateAvailableIngredients();
 	}

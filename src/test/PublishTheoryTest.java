@@ -103,11 +103,39 @@ class PublishTheoryTest {
 	}
 	
 	@Test // This tests 
-	final void test() {
+	final void testMultipleTheories() {
 		
 		Aspect as1 = new Aspect(true, true);
 		Aspect as2 = new Aspect(true, false);
 		Aspect as3 = new Aspect(false, false);
 		Aspect as4 = new Aspect(false, true);
+		
+		Ingredient scorpion = new Ingredient("scorpion", 3, as3, as1, as4);
+		Ingredient fern = new Ingredient("fern", 4, as2, as2, as2);
+		Ingredient feather = new Ingredient("feather", 5, as1, as4, as3);
+		
+		AlchemyMarker marker1 = new AlchemyMarker(as3, as1, as4, 1);
+		AlchemyMarker marker2 = new AlchemyMarker(as1, as1, as1, 2);
+		AlchemyMarker marker3 = new AlchemyMarker(as3, as1, as4, 3);
+		
+		int playerNo = 4;
+		
+		publicationTrack.publishTheory(scorpion, marker2, playerNo);
+		publicationTrack.publishTheory(fern, marker1, playerNo);
+		publicationTrack.publishTheory(feather, marker3, playerNo);
+		
+		assertEquals(publicationTrack.getPublishedTheories().get(0).getIngredient(), scorpion);
+		assertEquals(publicationTrack.getPublishedTheories().get(0).getMarker(), marker2);
+		assertEquals(publicationTrack.getPublishedTheories().get(0).getPlayerNo(), playerNo);
+		
+		assertEquals(publicationTrack.getPublishedTheories().get(1).getIngredient(), fern);
+		assertEquals(publicationTrack.getPublishedTheories().get(1).getMarker(), marker1);
+		assertEquals(publicationTrack.getPublishedTheories().get(1).getPlayerNo(), playerNo);
+		
+		assertEquals(publicationTrack.getPublishedTheories().get(2).getIngredient(), feather);
+		assertEquals(publicationTrack.getPublishedTheories().get(2).getMarker(), marker3);
+		assertEquals(publicationTrack.getPublishedTheories().get(2).getPlayerNo(), playerNo);
+		
 
+	}
 }

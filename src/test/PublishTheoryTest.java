@@ -1,5 +1,6 @@
 package test;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
@@ -35,7 +36,7 @@ class PublishTheoryTest {
     // JUnit 5 setup before each test
 	@BeforeEach
 	void setUp(){
-		publicationTrack = PublicationTrack.getInstance();
+		publicationTrack = new PublicationTrack();
 		publicationTrack.populateTrack();
 		assertNotNull(publicationTrack, "getInstance() returns null");
 		assertTrue(publicationTrack instanceof PublicationTrack, "getInstance() does not return PublicationTrack");
@@ -62,9 +63,43 @@ class PublishTheoryTest {
 		assertEquals(publicationTrack.getPublishedTheories().get(0).getPlayerNo(), playerNo);
 	}
 	
-	@Test //
+	@Test // This tests that the correct Ingredient is removed from availableIngredients.
+	final void testRemoveAvaliableIngredient() {
+		
+		Aspect as1 = new Aspect(true, true);
+		Aspect as2 = new Aspect(true, false);
+		Aspect as3 = new Aspect(false, false);
+		Aspect as4 = new Aspect(false, true);
+		
+		Ingredient flower = new Ingredient("flower", 7, as4, as3, as1);
+		
+		AlchemyMarker marker7 = new AlchemyMarker(as4, as3, as1, 7);
+		
+		int playerNo = 4;
+		
+		publicationTrack.publishTheory(flower, marker7, playerNo);
+		
+		assertFalse(publicationTrack.getAvailableIngredients().contains(flower));
+		
+	}
+	
+	@Test // This tests that the correct AlchemyMarker is removed from availableAlchemies.
 	final void test() {
 		
+		Aspect as1 = new Aspect(true, true);
+		Aspect as2 = new Aspect(true, false);
+		Aspect as3 = new Aspect(false, false);
+		Aspect as4 = new Aspect(false, true);
+		
+		Ingredient root = new Ingredient("root", 8, as2, as3, as4);
+		
+		AlchemyMarker marker6 = new AlchemyMarker(as4, as2, as3, 6);
+		
+		int playerNo = 3;
+		
+		publicationTrack.publishTheory(root, marker6, playerNo);
+		
+		assertFalse(publicationTrack.getAvailableAlchemies().contains(marker6));
 	}
 	
 

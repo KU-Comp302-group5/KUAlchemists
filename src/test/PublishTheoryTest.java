@@ -64,7 +64,7 @@ class PublishTheoryTest {
 	}
 	
 	@Test // This tests that the correct Ingredient is removed from availableIngredients.
-	final void testRemoveAvaliableIngredient() {
+	final void testRemoveAvailableIngredient() {
 		
 		Aspect as1 = new Aspect(true, true);
 		Aspect as2 = new Aspect(true, false);
@@ -84,7 +84,7 @@ class PublishTheoryTest {
 	}
 	
 	@Test // This tests that the correct AlchemyMarker is removed from availableAlchemies.
-	final void test() {
+	final void testRemoveAvailableAlchemies() {
 		
 		Aspect as1 = new Aspect(true, true);
 		Aspect as2 = new Aspect(true, false);
@@ -102,5 +102,12 @@ class PublishTheoryTest {
 		assertFalse(publicationTrack.getAvailableAlchemies().contains(marker6));
 	}
 	
+	@Test // This tests 
+	final void test() {
+		
+		Aspect as1 = new Aspect(true, true);
+		Aspect as2 = new Aspect(true, false);
+		Aspect as3 = new Aspect(false, false);
+		Aspect as4 = new Aspect(false, true);
 
 }

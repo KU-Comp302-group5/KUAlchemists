@@ -30,6 +30,9 @@ public class ElixirofInsightTest {
 	    ingredients.add(scorpion);
 	    
 	    IngredientDeck ingrDeck = IngredientDeck.getInstance();
+	    //ingrDeck.getIngredients().add(scorpion);
+	    //ingrDeck.getIngredients().add(toad);
+	    //ingrDeck.getIngredients().add(claw);
 	    int initialCardNum = ingrDeck.getCardNum();
 	    
 	    ElixirOfInsightArtifact artifactObject = new ElixirOfInsightArtifact();
@@ -76,6 +79,50 @@ public class ElixirofInsightTest {
 	    assertThrows(IllegalArgumentException.class, () -> {
         	ElixirOfInsightArtifact artifactObject = new ElixirOfInsightArtifact();
     	    artifactObject.useCard(ingredients);
+        });
+	}
+	
+	@Test
+	public void testUseCard_LackingIngredients() {
+		Aspect as1 = new Aspect(true, true);
+		Aspect as2 = new Aspect(true, false);
+		Aspect as3 = new Aspect(false, false);
+		Aspect as4 = new Aspect(false, true);
+		Ingredient toad = new Ingredient("toad", 1, as3, as1, as4);
+		Ingredient claw = new Ingredient("claw", 2, as1, as1, as1);
+		Ingredient scorpion = new Ingredient("scorpion", 3, as3, as1, as4);
+		Ingredient fern = new Ingredient("fern", 4, as2, as2, as2);
+	    List<Ingredient> ingredients = new ArrayList<>();
+	    ingredients.add(toad);
+	    ingredients.add(claw);
+	    
+	    assertThrows(IllegalArgumentException.class, () -> {
+        	ElixirOfInsightArtifact artifactObject = new ElixirOfInsightArtifact();
+    	    artifactObject.useCard(ingredients);
+        });
+	}
+	
+	@Test
+	public void testUseCard_EmptyDeck() {
+		Aspect as1 = new Aspect(true, true);
+		Aspect as2 = new Aspect(true, false);
+		Aspect as3 = new Aspect(false, false);
+		Aspect as4 = new Aspect(false, true);
+		Ingredient toad = new Ingredient("toad", 1, as3, as1, as4);
+		Ingredient claw = new Ingredient("claw", 2, as1, as1, as1);
+		Ingredient scorpion = new Ingredient("scorpion", 3, as3, as1, as4);
+	    List<Ingredient> ingredients = new ArrayList<>();
+	    ingredients.add(toad);
+	    ingredients.add(claw);
+	    ingredients.add(scorpion);
+	    
+	    IngredientDeck ingrDeck = IngredientDeck.getInstance();
+	    ingrDeck.setCardNum(2);
+	    
+	    ElixirOfInsightArtifact artifactObject = new ElixirOfInsightArtifact();
+	    
+	    assertThrows(IllegalStateException.class, () -> {
+        	artifactObject.useCard(ingredients);
         });
 	}
 	

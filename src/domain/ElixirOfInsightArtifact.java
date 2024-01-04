@@ -20,6 +20,17 @@ public class ElixirOfInsightArtifact implements ArtifactBehavior<List<Ingredient
 		IngredientDeck ingrDeck = IngredientDeck.getInstance();
 		int cardNum = ingrDeck.getCardNum();
 		
+		if (cardNum < 3) {
+			throw new IllegalStateException("Invalid state: Ingredient Deck Cannot have less that 3 cards");
+		}
+		if (list == null) {
+			throw new IllegalArgumentException("List must have 3 elements");
+		}
+		int listSize = list.size();
+		if (listSize != 3) {
+			throw new IllegalArgumentException("List must have 3 elements");
+		}
+		
 		// remove the top three ingredients from ingredient deck
 		for (int i = 1; i < 4; i++) {
 			ingrDeck.getIngredients().remove(cardNum - i);
@@ -30,8 +41,6 @@ public class ElixirOfInsightArtifact implements ArtifactBehavior<List<Ingredient
 			ingrDeck.getIngredients().add(ingr);
 		}
 		
-		
 	}
-
 
 }

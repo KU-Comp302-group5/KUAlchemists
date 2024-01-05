@@ -71,6 +71,7 @@ public class KUAlchemistsGame {
 
 	public static Player getCurrentPlayer() {
 		//Player player = ;
+		System.out.println("current player no: " + currentPlayerNo);
 		return KUAlchemistsGame.getInstance().getPlayer(currentPlayerNo);
 	}
 

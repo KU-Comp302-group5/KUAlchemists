@@ -49,13 +49,14 @@ public class DeductionBoard {
 
 	public void markResultsTriangle(int index, Potion pt) {
 		resultsTriangle[index] = pt;
-		// notify listeners
+		System.out.println("db received from handler and set the array");
+		publishDBEvent();
     }
 
     public void markDeductionGrid(int ingrIndex, int markerIndex) {
     	deductionGrid[ingrIndex][markerIndex] = !deductionGrid[ingrIndex][markerIndex];
     	System.out.println("deduction grid marked");
-    	// notify listeners
+    	publishDBEvent();
     }
     
     public void addDBListener(DBListener lis) {
@@ -63,7 +64,10 @@ public class DeductionBoard {
 	}
     
     public void publishDBEvent() {
-		for(DBListener l: DBListeners)
+    	
+		for(DBListener l: DBListeners) {
 			l.onDBChange();
+			System.out.println("published by db");
+		}
 	}
 }

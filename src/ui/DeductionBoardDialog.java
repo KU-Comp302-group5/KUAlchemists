@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import domain.DBListener;
 import domain.DeductionBoard;
@@ -43,9 +44,10 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 		
 		this.add(getResultsTriangle());
 		
+		
 		setDeductionGridJPanel(new JPanel());
-		getDeductionGridJPanel().setLayout(new GridLayout(8,8));
-		getDeductionGridJPanel().setBounds(0,300,400,300);
+		getDeductionGridJPanel().setLayout(null);
+		getDeductionGridJPanel().setBounds(0,350,400,400);
 		configureDeductionGrid();
 		
 		this.add(getDeductionGridJPanel());
@@ -75,34 +77,30 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 			int tempi = i;
 			for (int j = 0; j < 8; j++) {	//iterate over ingredients
 				int tempj = j;
-				JLabel label = new JLabel();
-                label.setOpaque(true); // Set opaque to true to see the background color
+				JButton button = new JButton();
+				button.setOpaque(true); // Set opaque to true to see the background color
                 if (dGrid[j][i]) {
-                	label.setBackground(Color.RED); // set red if marked by user 
+                	button.setBackground(Color.RED); // set red if marked by user 
                 }
                 else{
-                	label.setBackground(Color.WHITE); // Set initial background color
+                	button.setBackground(Color.WHITE); // Set initial background color
                 }
-                label.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for clarity
+                button.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for clarity
+                button.setBounds(j * 50, i * 50, 50, 50);
                 
-                // Add a MouseListener to each label
-                label.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                    	
-                        HandlerFactory.getInstance().getDeductionBoardHandler().markDeductionGrid(tempj, tempi);
-                        
-                    }
+                button.addActionListener(e -> {
+        			HandlerFactory.getInstance().getDeductionBoardHandler().markDeductionGrid(tempj, tempi);
                 });
                 
-                label.setText("Alchemy marker #" + i);
-                getDeductionGridJPanel().add(label); // Add label to the frame
+                button.setText("Alchemy marker #" + i);
+                getDeductionGridJPanel().add(button); // Add label to the frame
                 
 			}
 		}
 	}
 	
 	public void configureResultsTriangle() {
+		
 		Potion[] rTriangle = dBoard.getResultsTriangle();
 		
 		JButton positiveButton = new JButton("+");
@@ -183,13 +181,14 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 	            }
 	            label.setFont(label.getFont().deriveFont(8f)); // Set the font size
 	            label.setHorizontalAlignment(SwingConstants.CENTER); // Center text horizontally
-	            
+	            label.setFocusable(true);
 	            label.addMouseListener(new MouseAdapter() {
 	                @Override
 	                public void mouseClicked(MouseEvent e) {
 	                    if (selectedQuality != 2) {
 	                    	HandlerFactory.getInstance().getDeductionBoardHandler().markResultsTriangle(tempindex, selectedQuality);
 	                    	selectedQuality = 2;
+	                    	System.out.println("results triangle mark sent to handler by ui");
 	                    }
 	                }
 	            });
@@ -205,9 +204,18 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 
 	@Override
 	public void onDBChange() {
-		// TODO Auto-generated method stub
-		configureDeductionGrid();
-		configureResultsTriangle();
+		SwingUtilities.invokeLater(() -> {
+			getDeductionGridJPanel().removeAll();
+			getResultsTriangle().removeAll();
+	        configureDeductionGrid();
+	        configureResultsTriangle();
+	        // Remove and re-add components to the dialog's content pane
+	        this.getContentPane().removeAll();
+	        this.getContentPane().add(getResultsTriangle());
+	        this.getContentPane().add(getDeductionGridJPanel());
+	        revalidate(); // Revalidate the container to update the layout
+	        repaint(); // Repaint to reflect the changes
+	    });
 	}
 
 }

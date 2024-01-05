@@ -32,6 +32,7 @@ public class Player {
 		this.gold = 10;
 		this.reputation = 0;
 		this.sickness = 0;
+		this.dBoard = new DeductionBoard();
 	}
 	
 	public void addIngListener(IngListener lis) {

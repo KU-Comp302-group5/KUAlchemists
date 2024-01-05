@@ -274,7 +274,7 @@ public class BoardPage extends JFrame implements ActionListener {
 		dBoardButton.addActionListener(e -> {
 			DeductionBoardDialog dialog = new DeductionBoardDialog(this);
 			
-			dialog.setSize(900,700);
+			dialog.setSize(400,600);
 			
 			dialog.setVisible(true);
         });

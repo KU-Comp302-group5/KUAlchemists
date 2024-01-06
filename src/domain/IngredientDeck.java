@@ -3,12 +3,25 @@ package domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Queue;
 
+/**
+ * Overview: This class provides a List of Ingredients to store all ingredient cards found in the Ingredient Deck.
+ *
+ */
 public class IngredientDeck {
-	private static IngredientDeck instance;
 	
+	private static IngredientDeck instance;
     private int cardNum;
     private List<Ingredient> ingredients ;
+    
+    // Abstraction Function
+    // AF(c) = { c.ingredients[i].ingredient | 0 <= i < c.cardNum }
+    
+	// The rep invariant is 
+	// c.ingredients not null &&
+    // cardNum >= 0 &&
+	// all elements of c.ingredients are Ingredients
     
     public static IngredientDeck getInstance() {
     	
@@ -19,10 +32,18 @@ public class IngredientDeck {
 	}
 
     public IngredientDeck() {
-		this.cardNum = 8;
+    	// EFFECTS: Initializes this to be empty
+    	this.ingredients = new ArrayList<Ingredient>();
+    	this.cardNum = 0;
+	}
+    
+    public void initializeIngredientDeck() {
+    	// MODIFIES: this.ingredients, this.cardNum
+    	// EFFECTS: adds ingredients to this.ingredient
 		
-		List<Ingredient> ingrs = new ArrayList<Ingredient>();
-		
+    	this.ingredients = new ArrayList<Ingredient>();
+    	this.cardNum = 0;
+    	
 		Aspect as1 = new Aspect(true, true);
 		Aspect as2 = new Aspect(true, false);
 		Aspect as3 = new Aspect(false, false);
@@ -38,24 +59,22 @@ public class IngredientDeck {
 		Ingredient flower = new Ingredient("flower", 7, as4, as3, as1);
 		Ingredient root = new Ingredient("root", 8, as2, as3, as4);
 		
-		ingrs.add(toad);
-		ingrs.add(claw);
-		ingrs.add(scorpion);
-		ingrs.add(fern);
-		ingrs.add(feather);
-		ingrs.add(mushroom);
-		ingrs.add(flower);
-		ingrs.add(root);
+		putCard(toad);
+		putCard(claw);
+		putCard(scorpion);
+		putCard(fern);
+		putCard(feather);
+		putCard(mushroom);
+		putCard(flower);
+		putCard(root);
 		
-		Collections.shuffle(ingrs);
-		
-		this.ingredients = ingrs;
-		
-	}
+		Collections.shuffle(this.ingredients);
+    }
 
     
     // for Elixir of insight
     public List<Ingredient> getTopThreeCards(){
+    	// EFFECTS: returns a list of top three elements of this.ingredients
     	if (cardNum < 3) {
     		return null;
     	}
@@ -70,11 +89,13 @@ public class IngredientDeck {
     	}
     }
     
-	public Ingredient getTopCard() {
+	public Ingredient pop() {
+		// MODIFIES: this.ingredients, this.cardNum
+		// EFFECTS: Removes top ingredient from this.ingredients, returns top ingredient
 		if (cardNum > 0) {
 			Ingredient ingr = ingredients.get(cardNum-1);
-	    	ingredients.remove(cardNum-1);
-	    	cardNum--;
+			this.ingredients.remove(cardNum - 1);
+			this.cardNum--;
 	    	return ingr;
 		}
 		else {
@@ -82,6 +103,26 @@ public class IngredientDeck {
 			return null;
 		}
     }
+	
+	public void putCard(Ingredient ingr) {
+		// MODIFIES: this.ingredients, this.cardNum
+		// EFFECTS: Adds ingr to the elements of this.ingredients
+		this.ingredients.add(ingr);
+		this.cardNum++;
+	}
+	
+//	public void removeCard(Ingredient ingr) {
+//		// MODIFIES: this.ingredients, this.cardNum
+//		// EFFECTS: Removes ingr from this.ingredients
+//		this.ingredients.remove(ingr);
+//		this.cardNum--;
+//	}
+	
+	public boolean isIn(Ingredient ingr) {
+		// EFFECTS: Returns true if ingr is in this.ingredients else returns false.
+		return this.ingredients.contains(ingr);
+	}
+	
 	
 	// getter for ingredients
 	public List<Ingredient> getIngredients() {
@@ -93,7 +134,7 @@ public class IngredientDeck {
         this.ingredients = ingredients;
     }
     
- // Getter method for cardNum
+    // Getter method for cardNum
     public int getCardNum() {
         return cardNum;
     }
@@ -107,5 +148,14 @@ public class IngredientDeck {
 	public String toString() {
 		return "IngredientDeck [cardNum=" + cardNum + ", ingredients=" + ingredients + "]";
 	}
-
+	
+	public boolean repOk() {
+		if (this.ingredients == null) return false;
+		if (this.cardNum < 0) return false;
+		for (int i = 0; i < this.cardNum; i++) {
+			Object x = this.ingredients.get(i);
+			if (!(x instanceof Ingredient)) return false;
+			}
+		return true;
+	}
 }

@@ -2,40 +2,40 @@ package domain.controllers;
 
 import java.util.List;
 
-import javax.swing.JFrame;
-
+import domain.ArtifactBehavior;
 import domain.ArtifactCard;
-import domain.Ingredient;
-import domain.IngredientDeck;
+import domain.ElixirOfInsightArtifact;
+import domain.KUAlchemistsGame;
+import domain.MagicMortarArtifact;
 import domain.Player;
-import ui.ElixirOfInsightPanel;
-import ui.LoginPage;
 
 public class UseArtifactHandler {
-	// to be used if needed with artifacts requiring UI
-	// can be replaced by a general "interface" such as ArtifactPanel
-	private static ElixirOfInsightPanel panel;  	
-	public void useArtifact(Player player, ArtifactCard artifactCard) {
-		player.removeArtifactCard(artifactCard);
-		obtainAbility(artifactCard);
+	ArtifactBehavior artifactBehavior;
+	
+	public UseArtifactHandler() {
 	}
 	
-	public void obtainAbility(ArtifactCard artifactCard) {
-		if(artifactCard.getID() == 0) {
-			List<Ingredient> topIngredients = IngredientDeck.getInstance().getTopThreeCards();
-			// UI : IngredientDeckUI.showTopThreeCards()
-			// and IngredientDeckUI.rearrange() --> IngredientDeck.rearrange()
-			panel = new ElixirOfInsightPanel(topIngredients);
-			panel.add(panel.getPanelArtifact());
-			panel.setSize(600,600);
-			panel.setVisible(true);
-			panel.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-			
+	// sets the artifact behavior and removes the artifact from player's artifacts
+	public void useArtifact(ArtifactCard artifactCard) {
+		// if clauses for different artifact cards
+		if (artifactCard.getID() == 0) {
+			artifactBehavior = new ElixirOfInsightArtifact();
 		}
-		if (artifactCard.getID() == 1) {
-			// UI : DeductionBoardUI.swap() --> DeductionBoard.swap(alchemyMarker1, alchemyMarker2)
-			// buradan emin olamad�m, bu sadece UI funvtionality de olabilir.
+		if (artifactCard.getID() == 2) {
+			artifactBehavior = new MagicMortarArtifact();
 		}
+		
+		//int curP = KUAlchemistsGame.getInstance().getCurrentPlayer();
+		//Player player = KUAlchemistsGame.getInstance().getPlayer(curP);
+		
+		KUAlchemistsGame.getInstance().getCurrentPlayer().removeArtifactCard(artifactCard);
+		
+		//player.removeArtifactCard(artifactCard);
+	}
+	
+	
+	public <T> void performArtifact(T element) {
+		artifactBehavior.useCard(element);
 	}
 
 }

@@ -1,5 +1,8 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JFrame;
 
 import ui.LoginPage;
@@ -10,10 +13,11 @@ import ui.LoginPage;
 public class KUAlchemistsGame {
 	private static KUAlchemistsGame game;
 	private static LoginPage loginPage;
-	private static Player playerI;
-	private static Player playerII;
-	private static Player playerIII;
-	private static Player playerIV;
+	
+	private static List<Player> players = new ArrayList<Player>();
+
+	private static int numPlayers;
+	private static int currentPlayerNo = 1;
 
 
 	/**
@@ -54,64 +58,41 @@ public class KUAlchemistsGame {
 		loginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
-    public void createPlayerI(String username, int avatar) {
-    	KUAlchemistsGame.playerI = new Player(username, avatar);
+    public void createPlayer(String username, int avatar) {
+    	players.add(new Player(username, avatar));
+    	numPlayers++;
     }
     
-    public void createPlayerII(String username, int avatar) {
-    	KUAlchemistsGame.playerII = new Player(username, avatar);
+    
+    public Player getPlayer(int playerNo) {
+    	return players.get(playerNo-1);
     }
     
-    public void createPlayerIII(String username, int avatar) {
-    	KUAlchemistsGame.playerIII = new Player(username, avatar);
-    }
-    
-    public void createPlayerIV(String username, int avatar) {
-    	KUAlchemistsGame.playerIV = new Player(username, avatar);
-    }
-    
-    public Player getPlayer(int no) {
-    	if (no == 1) {
-    		return playerI;
-    	}
-    	else if (no == 2) {
-    		return playerII;
-    	}else if (no == 3) {
-    		return playerIII;
-    	} else {
-    		return playerIV;
-    	}
-    }
 
-	public Player getPlayerI() {
-		return playerI;
+	public static Player getCurrentPlayer() {
+		//Player player = ;
+		System.out.println("current player no: " + currentPlayerNo);
+		return KUAlchemistsGame.getInstance().getPlayer(currentPlayerNo);
 	}
 
-	public void setPlayerI(Player playerI) {
-		KUAlchemistsGame.playerI = playerI;
+
+	public static int getCurrentPlayerNo() {
+		return currentPlayerNo;
 	}
 
-	public Player getPlayerII() {
-		return playerII;
-	}
-
-	public void setPlayerII(Player playerII) {
-		KUAlchemistsGame.playerII = playerII;
+	public static void setCurrentPlayerNo(int currentPlayerNo) {
+		KUAlchemistsGame.currentPlayerNo = currentPlayerNo;
 	}
 	
-	public Player getPlayerIII() {
-		return playerIII;
+	public static List<Player> getPlayers() {
+		return players;
 	}
 
-	public void setPlayerIII(Player playerIII) {
-		KUAlchemistsGame.playerIII = playerIII;
+	public static int getNumPlayers() {
+		return numPlayers;
 	}
 
-	public Player getPlayerIV() {
-		return playerIV;
-	}
-
-	public void setPlayerIV(Player playerIV) {
-		KUAlchemistsGame.playerIV = playerIV;
+	public static void setNumPlayers(int numPlayers) {
+		KUAlchemistsGame.numPlayers = numPlayers;
 	}
 }

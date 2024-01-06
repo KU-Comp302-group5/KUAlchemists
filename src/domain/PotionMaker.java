@@ -1,15 +1,24 @@
 package domain;
 
 public class PotionMaker {
+	private static PotionMaker pm;
+	Ingredient ingr1;
+	Ingredient ingr2;
     private Potion potion;
     //private int ID;
 
     
     public PotionMaker() {
 	}
+    
+    public static PotionMaker getInstance() {
+		if (pm == null) pm = new PotionMaker();
+        return pm;
+	}
 
-	public Potion mixIngredients(Ingredient ingr1, Ingredient ingr2) {	
+		
 		//Ingredient ingr1 = this.ingr1;
+	public Potion mixIngredients() {
 		boolean ingr1redsize = ingr1.getRedAspect().isCircleSize();
 		boolean ingr1redsign = ingr1.getRedAspect().isSign();
 		boolean ingr1greensize = ingr1.getGreenAspect().isCircleSize();
@@ -80,5 +89,21 @@ public class PotionMaker {
 		
 		return -1; //positive or neutral potion
 		
+	}
+	
+	public Ingredient getIngr1() {
+		return ingr1;
+	}
+
+	public void setIngr1(Ingredient ingr1) {
+		this.ingr1 = ingr1;
+	}
+
+	public Ingredient getIngr2() {
+		return ingr2;
+	}
+
+	public void setIngr2(Ingredient ingr2) {
+		this.ingr2 = ingr2;
 	}
 }

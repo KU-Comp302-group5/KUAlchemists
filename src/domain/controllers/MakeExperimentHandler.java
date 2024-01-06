@@ -13,18 +13,20 @@ public class MakeExperimentHandler {
     public void makeExperiment(Ingredient ingr1, Ingredient ingr2, String experimental, Player player) {
     	
     	System.out.println("in exp handler: ingr1: "+ingr1.toString()+"ingr 2: " +ingr2.toString());
-    	PotionMaker pm = new PotionMaker();
+    	PotionMaker.getInstance().setIngr1(ingr1);
+    	PotionMaker.getInstance().setIngr2(ingr2);
     	
-		Potion potion = pm.mixIngredients(ingr1, ingr2);
+		Potion potion = PotionMaker.getInstance().mixIngredients();
 		
-		int tryResult = pm.tryPotion(experimental);
+		int tryResult = PotionMaker.getInstance().tryPotion(experimental);
 		if(tryResult==0) {
 			player.decreaseGold(1);
 		}
 		if(tryResult==1) {
 			player.increaseSickness(1);
 		}
-		player.discardIngredients(ingr1, ingr2);
+		player.discardIngredients(ingr1, ingr2); // change to implement magic mortar
 		player.addPotion(potion);
     }
+    
 }

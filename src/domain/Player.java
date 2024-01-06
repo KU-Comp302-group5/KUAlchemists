@@ -9,6 +9,9 @@ public class Player {
 	private List<Ingredient> ingredients ;
 	private List<ArtifactCard> artifacts ;
 	private List<Potion> potions ;
+	
+	private DeductionBoard dBoard;
+	
 	private int gold;
 	private int reputation;
 	private int sickness;
@@ -16,7 +19,7 @@ public class Player {
 	private List<ArtListener> artListeners;
 	private List<PotListener> potListeners;
 	
-	public Player(String username, int avatar) {
+	public Player(String username, Integer avatar) {
 		
 		this.username = username;
 		this.avatar = avatar;
@@ -29,6 +32,7 @@ public class Player {
 		this.gold = 10;
 		this.reputation = 0;
 		this.sickness = 0;
+		this.dBoard = new DeductionBoard();
 	}
 	
 	public void addIngListener(IngListener lis) {
@@ -70,6 +74,7 @@ public class Player {
 	
 	public void addIngredient(Ingredient ingr) {
 		this.ingredients.add(ingr);
+		publishIngEvent();
 	}
 		
 	public List<Ingredient> getIngredients() {
@@ -194,6 +199,14 @@ public class Player {
 
 	public void setPotions(List<Potion> potions) {
 		this.potions = potions;
+	}
+	
+	public DeductionBoard getdBoard() {
+		return dBoard;
+	}
+
+	public void setdBoard(DeductionBoard dBoard) {
+		this.dBoard = dBoard;
 	}
 
 	@Override

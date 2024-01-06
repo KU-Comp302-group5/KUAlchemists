@@ -25,6 +25,7 @@ public class KUAlchemistsGame {
 	private static int turnCounter;
 	
 	private static List<TurnListener> turnListeners;
+	private static List<EndListener> endListeners;
 
 
 	/**
@@ -32,8 +33,9 @@ public class KUAlchemistsGame {
 	 */
 	private KUAlchemistsGame() {
 		this.currentPlayerNo = 1;
-		this.turnCounter = 0;
+		this.turnCounter = 1;
 		this.turnListeners = new ArrayList<TurnListener>(); 
+		this.endListeners = new ArrayList<EndListener>();
 	}
 	
 	public static void main(String[] args) {
@@ -68,6 +70,15 @@ public class KUAlchemistsGame {
 		loginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
+    public void addEndListener(EndListener lis) {
+		endListeners.add(lis);
+	}
+    
+    public static void publishEndEvent() {
+		for(EndListener l: endListeners)
+			l.onEndChange();
+	}
+    
     public void addTurnListener(TurnListener lis) {
 		turnListeners.add(lis);
 	}
@@ -76,6 +87,7 @@ public class KUAlchemistsGame {
 		for(TurnListener l: turnListeners)
 			l.onTurnChange();
 	}
+    
     
     public void createPlayer(String username, int avatar) {
     	players.add(new Player(username, avatar));
@@ -89,7 +101,6 @@ public class KUAlchemistsGame {
     
 
 	public static Player getCurrentPlayer() {
-		//Player player = ;
 		System.out.println("current player no: " + currentPlayerNo);
 		return KUAlchemistsGame.getInstance().getPlayer(currentPlayerNo);
 	}
@@ -98,10 +109,12 @@ public class KUAlchemistsGame {
 	    currentPlayerNo = (currentPlayerNo % numPlayers) + 1;
 	    if (currentPlayerNo == 1) { // if all players took turns, game finishes when everyone has taken 9 turns
 	    	turnCounter++;
+	    	System.out.println("TURN COUNTER IS: " + turnCounter);
 	    }
 	    
 	    if (turnCounter == 10) {
-	    	// end game
+	    	// TO DO: calculate results
+	    	publishEndEvent();
 	    }
 	    
 	    publishTurnEvent();

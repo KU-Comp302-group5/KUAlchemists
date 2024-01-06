@@ -3,6 +3,7 @@ package ui;
 import javax.swing.*;
 
 import domain.Avatar;
+import domain.KUAlchemistsGame;
 import domain.Player;
 import domain.controllers.HandlerFactory;
 import java.awt.*;
@@ -102,6 +103,7 @@ public class LoginPage extends JFrame implements ActionListener{
 				
 				
 				BoardPage boardPage = new BoardPage();
+				KUAlchemistsGame.getInstance().addEndListener(boardPage);
 				boardPage.setVisible(true);
 				boardPage.add(BoardPage.getPanelBoard());
 				//boardPage.setSize(Toolkit.getDefaultToolkit().getScreenSize());

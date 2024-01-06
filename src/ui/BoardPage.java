@@ -6,6 +6,7 @@ import domain.AlchemyMarker;
 import domain.ArtListener;
 import domain.ArtifactCard;
 import domain.Avatar;
+import domain.EndListener;
 import domain.IngListener;
 import domain.Ingredient;
 import domain.KUAlchemistsGame;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-public class BoardPage extends JFrame implements ActionListener {
+public class BoardPage extends JFrame implements ActionListener, EndListener {
 	
 	private static JPanel panelBoard, player1_ingr, player2_ingr, player3_ingr, player4_ingr,
 				   player1_arts, player2_arts, player3_arts, player4_arts,
@@ -297,7 +298,38 @@ public class BoardPage extends JFrame implements ActionListener {
 	}
 	
 	
+	@Override
+	public void onEndChange() {
+		// Create the dialog
+	    JDialog endGameDialog = new JDialog();
+	    endGameDialog.setTitle("End Game");
+	    endGameDialog.setSize(300, 150);
+	    endGameDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+	    endGameDialog.setLayout(new BorderLayout());
+	    endGameDialog.setLocationRelativeTo(null);
+	    endGameDialog.setModal(true);
 
+	    // Create a label for the message
+	    JLabel messageLabel = new JLabel("End of the game.");
+	    endGameDialog.add(messageLabel, BorderLayout.CENTER);
+
+	    // Create a button to exit the program
+	    JButton exitButton = new JButton("Exit");
+	    exitButton.addActionListener(e -> {
+	        System.exit(0); // Terminate program execution
+	    });
+
+	    // Add the exit button to the dialog
+	    JPanel buttonPanel = new JPanel();
+	    buttonPanel.add(exitButton);
+	    endGameDialog.add(buttonPanel, BorderLayout.SOUTH);
+
+	    // Make the dialog visible
+	    endGameDialog.setVisible(true);
+		
+	}
+	
+	
 	private void updateGoldUI() {
 		int currentPlayer = KUAlchemistsGame.getInstance().getCurrentPlayerNo();
 		if (currentPlayer==1) {

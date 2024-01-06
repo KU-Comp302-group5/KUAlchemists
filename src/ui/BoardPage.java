@@ -125,8 +125,8 @@ public class BoardPage extends JFrame implements ActionListener {
         sellPotionPanel.updatePanel();
         getPanelBoard().add(sellPotionPanel);
         
-        KUAlchemistsGame.getInstance().getPlayer(1).addIngListener((SellPotionPanel) sellPotionPanel);
-        KUAlchemistsGame.getInstance().getPlayer(2).addIngListener((SellPotionPanel) sellPotionPanel);
+        //KUAlchemistsGame.getInstance().getPlayer(1).addIngListener((SellPotionPanel) sellPotionPanel);
+        //KUAlchemistsGame.getInstance().getPlayer(2).addIngListener((SellPotionPanel) sellPotionPanel);
 
         publicationArea.setBounds(700, 400, 300, 300);
         publicationArea.setLayout(null);
@@ -254,14 +254,14 @@ public class BoardPage extends JFrame implements ActionListener {
         if(LoginPage.playerNum==3) {
         	showPlayer3();
         	//KUAlchemistsGame.getInstance().getPlayer(3).addIngListener((PotionBrew) potionBrewing);
-        	KUAlchemistsGame.getInstance().getPlayer(3).addIngListener((SellPotionPanel) sellPotionPanel);
+        	//KUAlchemistsGame.getInstance().getPlayer(3).addIngListener((SellPotionPanel) sellPotionPanel);
         }
         
         if(LoginPage.playerNum==4) {
         	showPlayer3();
         	showPlayer4();
         	//KUAlchemistsGame.getInstance().getPlayer(4).addIngListener((PotionBrew) potionBrewing);
-        	KUAlchemistsGame.getInstance().getPlayer(4).addIngListener((SellPotionPanel) sellPotionPanel);
+        	//KUAlchemistsGame.getInstance().getPlayer(4).addIngListener((SellPotionPanel) sellPotionPanel);
         }
         
 
@@ -664,13 +664,13 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             		str = "student";
             	}
             	HandlerFactory.getInstance().getMakeExperimentHandler().makeExperiment(
-            			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(0)),
-            			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(1)),
-            			str, KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+            			KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(ingrindex.get(0)),
+            			KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(ingrindex.get(1)),
+            			str, KUAlchemistsGame.getInstance().getCurrentPlayer());
             	
             	
             	// if the player has magic mortar card
-            	if (KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getArtifacts().contains(new ArtifactCard("Magic Mortar", 2, false))){
+            	if (KUAlchemistsGame.getInstance().getCurrentPlayer().getArtifacts().contains(new ArtifactCard("Magic Mortar", 2, false))){
             		// TO DO
             		// show MagicMortarDialog to take input from user
             		// MagicMortarDialog takes which ingredient the user wants to be not discarded
@@ -691,9 +691,9 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             clickedcheckboxes = new ArrayList<JCheckBox>();
             ingrindex = new ArrayList<Integer>();
             
-            for (int i=0; i<KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().size(); i++) {
+            for (int i=0; i<KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().size(); i++) {
     			
-    			JCheckBox player_ing = new JCheckBox(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(i).toString());
+    			JCheckBox player_ing = new JCheckBox(KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).toString());
     			player_ing.setBounds(20, 30 + 30 * i, 200, 20); // should change
     			checkboxes.add(player_ing);
     			this.add(player_ing);
@@ -760,7 +760,7 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
     
     }
     
-    private class SellPotionPanel extends JPanel implements IngListener, ItemListener, TurnListener {
+    private class SellPotionPanel extends JPanel implements ItemListener, TurnListener {
     	
     	ArrayList<JCheckBox> checkboxes;
     	ArrayList<JCheckBox> clickedcheckboxes;
@@ -836,9 +836,9 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             	
             	//transmit the massage to the specific controller
             	HandlerFactory.getInstance().getSellPotionHandler().sellPotion(
-            			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(0)),
-            			KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(ingrindex.get(1)),
-            			prediction, KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+            			KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(ingrindex.get(0)),
+            			KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(ingrindex.get(1)),
+            			prediction, KUAlchemistsGame.getInstance().getCurrentPlayer());
             	updateGoldUI();
             	updateReputationUI();
             	
@@ -849,9 +849,9 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             clickedcheckboxes = new ArrayList<JCheckBox>(); //keeps the chosen ingredients
             ingrindex = new ArrayList<Integer>(); //keeps the indices of the chosen ingredients in the player's ingredient list
             
-            for (int i=0; i<KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().size(); i++) {
+            for (int i=0; i<KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().size(); i++) {
     			
-    			JCheckBox player_ing = new JCheckBox(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getIngredients().get(i).toString());
+    			JCheckBox player_ing = new JCheckBox(KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).toString());
     			player_ing.setBounds(20, 30 + 30 * i, 200, 20); // should change
     			checkboxes.add(player_ing);
     			this.add(player_ing);
@@ -868,11 +868,6 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
     		updatePanel();
     	};
     	
-		@Override
-		public void onIngChange() {
-			updatePanel();
-		}
-
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {

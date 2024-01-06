@@ -40,13 +40,13 @@ public class BoardPage extends JFrame implements ActionListener {
 				   name, avatar, name2, avatar2, name3, avatar3, name4, avatar4;
 				   //p1a_text, p2a_text, p3a_text, p4a_text,
 				   //p1i_text, p2i_text, p3i_text, p4i_text
-	private int currentPlayer;
+	//private int currentPlayer;
 	
 	public BoardPage() {
 		super("KUAlchemists");
 		setPanelBoard(new JPanel());
 		getPanelBoard().setLayout(null);
-		currentPlayer = 1;
+		
 		
 		help = new JButton("Help");
 		pause = new JButton("Pause");
@@ -58,13 +58,15 @@ public class BoardPage extends JFrame implements ActionListener {
 		ingrDeckButton.setForeground(Color.BLUE);
 		ingrDeckButton.addActionListener(e -> {
         	System.out.println("ingrDeckButton clicked");
-        	System.out.println("curr player before switch turn:" + KUAlchemistsGame.getInstance().getCurrentPlayerNo());
+        	//System.out.println("curr player before switch turn:" + KUAlchemistsGame.getInstance().getCurrentPlayerNo());
         	HandlerFactory.getInstance().getForageIngHandler().forageIngredient();
         	updateGoldUI();
+        	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " foraged an ingredient.");
         	KUAlchemistsGame.getInstance().switchTurns();
-        	System.out.println("curr player after switch turn:" + KUAlchemistsGame.getInstance().getCurrentPlayerNo());
+        	//System.out.println("curr player after switch turn:" + KUAlchemistsGame.getInstance().getCurrentPlayerNo());
         	revalidate();
         	repaint();
+        	
         });
         getPanelBoard().add(ingrDeckButton);
         
@@ -73,9 +75,10 @@ public class BoardPage extends JFrame implements ActionListener {
 		artifactDeckButton.addActionListener(e -> {
         	System.out.println("artifactDeckButton clicked");
         	//again gold UI update without observer
-        	HandlerFactory.getInstance().getBuyArtifactHandler().buyArtifact(KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+        	HandlerFactory.getInstance().getBuyArtifactHandler().buyArtifact();
         	updateGoldUI();
-        	System.out.println(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getArtifacts());
+        	System.out.println(KUAlchemistsGame.getInstance().getCurrentPlayer().getArtifacts());
+        	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " bought an artifact.");
         	KUAlchemistsGame.getInstance().switchTurns();
         });
         getPanelBoard().add(artifactDeckButton);
@@ -181,7 +184,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		panelBoard.add(player1_arts);
 		((PlayerArts) player1_arts).updateArts();
 		
-		KUAlchemistsGame.getInstance().getPlayer(1).addArtListener((PlayerArts) player1_arts);
+		//KUAlchemistsGame.getInstance().getPlayer(1).addArtListener((PlayerArts) player1_arts);
+		KUAlchemistsGame.getInstance().addTurnListener((PlayerArts) player1_arts);
 		
 		player1_ingr = new PlayerIngs(1);
 		player1_ingr.setLayout(null);
@@ -230,8 +234,9 @@ public class BoardPage extends JFrame implements ActionListener {
 		panelBoard.add(player2_arts);
 		((PlayerArts) player2_arts).updateArts();
 
-		KUAlchemistsGame.getInstance().getPlayer(2).addArtListener((PlayerArts) player2_arts);
-			
+		//KUAlchemistsGame.getInstance().getPlayer(2).addArtListener((PlayerArts) player2_arts);
+		KUAlchemistsGame.getInstance().addTurnListener((PlayerArts) player2_arts);
+		
 		player2_ingr = new PlayerIngs(2);
 		player2_ingr.setLayout(null);
 		player2_ingr.setBounds(355, 180, 250, 60);
@@ -269,13 +274,13 @@ public class BoardPage extends JFrame implements ActionListener {
         
   
         //Just added to show turn of players able to change. Just for demonstration.
-        turnButton.setMargin(new Insets(0, 0, 0, 0));
-        turnButton.setFocusPainted(false);
-		turnButton.setBounds(400, 0, 50, 20);
-		turnButton.addActionListener(e -> {
-			KUAlchemistsGame.getInstance().switchTurns();
-		});
-		//getPanelBoard().add(turnButton);
+//        turnButton.setMargin(new Insets(0, 0, 0, 0));
+//        turnButton.setFocusPainted(false);
+//		turnButton.setBounds(400, 0, 50, 20);
+//		turnButton.addActionListener(e -> {
+//			KUAlchemistsGame.getInstance().switchTurns();
+//		});
+//		//getPanelBoard().add(turnButton);
 		
 		JButton dBoardButton = new JButton("Deduction Board");
 		dBoardButton.setBounds(500, 750, 150, 50);
@@ -294,6 +299,7 @@ public class BoardPage extends JFrame implements ActionListener {
 	
 
 	private void updateGoldUI() {
+		int currentPlayer = KUAlchemistsGame.getInstance().getCurrentPlayerNo();
 		if (currentPlayer==1) {
 			gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(1).getGold());
 		}
@@ -309,6 +315,7 @@ public class BoardPage extends JFrame implements ActionListener {
 	}
 	
 	private void updateReputationUI() {
+		int currentPlayer = KUAlchemistsGame.getInstance().getCurrentPlayerNo();
 		if (currentPlayer==1) {
 			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(1).getReputation());
 		}
@@ -324,6 +331,7 @@ public class BoardPage extends JFrame implements ActionListener {
 	}
 	
 	private void updateSicknessUI() {
+		int currentPlayer = KUAlchemistsGame.getInstance().getCurrentPlayerNo();
 		if (currentPlayer==1) {
 			sickness.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(1).getSickness());
 		}
@@ -367,7 +375,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		panelBoard.add(player3_arts);
 		((PlayerArts) player3_arts).updateArts();
 		
-		KUAlchemistsGame.getInstance().getPlayer(3).addArtListener((PlayerArts) player3_arts);
+		//KUAlchemistsGame.getInstance().getPlayer(3).addArtListener((PlayerArts) player3_arts);
+		KUAlchemistsGame.getInstance().addTurnListener((PlayerArts) player3_arts);
 		
 		player3_ingr = new PlayerIngs(3);
 		player3_ingr.setLayout(null);
@@ -419,7 +428,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		panelBoard.add(player4_arts);
 		((PlayerArts) player4_arts).updateArts();
 		
-		KUAlchemistsGame.getInstance().getPlayer(4).addArtListener((PlayerArts) player4_arts);
+		//KUAlchemistsGame.getInstance().getPlayer(4).addArtListener((PlayerArts) player4_arts);
+		KUAlchemistsGame.getInstance().addTurnListener((PlayerArts) player4_arts);
 		
 		player4_ingr = new PlayerIngs(4);
 		player4_ingr.setLayout(null);
@@ -447,7 +457,7 @@ public class BoardPage extends JFrame implements ActionListener {
      *
      * Inner class implementing ArtListener for PlayerArts
      */
-    private class PlayerArts extends JPanel implements ArtListener {
+    private class PlayerArts extends JPanel implements TurnListener {
     	
     	private int playerNum;
     	private Window parentWindow; //  = SwingUtilities.getWindowAncestor(this);
@@ -489,6 +499,7 @@ public class BoardPage extends JFrame implements ActionListener {
 	    					dialog.setVisible(true);
 	    					
 	    					//panel.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	    					showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " used an artifact.");
 	    					KUAlchemistsGame.getInstance().switchTurns();
     					});
     				}
@@ -506,7 +517,7 @@ public class BoardPage extends JFrame implements ActionListener {
     	}
         
         @Override
-    	public void onArtChange() {
+    	public void onTurnChange() {
     		updateArts();
     	}
     }
@@ -542,6 +553,7 @@ public class BoardPage extends JFrame implements ActionListener {
                 	System.out.println("Ingredient is transmuted.");
                 	HandlerFactory.getInstance().getTransmuteIngHandler().transmuteIngredient(KUAlchemistsGame.getInstance().getPlayer(playerNum));
                     gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(playerNum).getGold());
+                    showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " transmuted an ingredient.");
                     KUAlchemistsGame.getInstance().switchTurns();
                 });
             }
@@ -684,6 +696,7 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             	
             	updateGoldUI();
             	updateSicknessUI();
+            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made an experiment.");
                 KUAlchemistsGame.getInstance().switchTurns();
             });
             
@@ -842,6 +855,7 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             	updateGoldUI();
             	updateReputationUI();
             	
+            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made a potion sale.");
                 KUAlchemistsGame.getInstance().switchTurns();
             });
             
@@ -998,9 +1012,10 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
                     }
                 }
             	
-            	HandlerFactory.getInstance().getPublicationHandler().makePublication(ingrName, markerName, currentPlayer);
+            	HandlerFactory.getInstance().getPublicationHandler().makePublication(ingrName, markerName, KUAlchemistsGame.getInstance().getCurrentPlayerNo());
             	updateGoldUI();
             	updateReputationUI();
+            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made a publication.");
                 KUAlchemistsGame.getInstance().switchTurns();
             });
     		
@@ -1020,6 +1035,23 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
 		}
     
     }
+    
+    private void showTurnMessage(String message) {
+	    JDialog turn = new JDialog(
+	    		this,
+	    		"Turn",
+	    		true);
+	    turn.setSize(300, 100);
+	    turn.setModal(false);
+	    JLabel turnText = new JLabel(message + " Next player's turn!");
+	    turn.add(turnText, BorderLayout.CENTER);
+	    JButton ok = new JButton("OK");
+	    ok.addActionListener(e -> turn.dispose());
+	    turn.add(ok, BorderLayout.SOUTH);
+	    
+	    turn.setLocationRelativeTo(turnText);
+	    turn.setVisible(true);
+	}
 	
 	
 	

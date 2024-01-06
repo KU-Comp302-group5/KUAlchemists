@@ -12,6 +12,7 @@ import domain.KUAlchemistsGame;
 import domain.PotListener;
 import domain.PubListener;
 import domain.PublicationTrack;
+import domain.TurnListener;
 import domain.controllers.HandlerFactory;
 
 import java.awt.*;
@@ -57,10 +58,13 @@ public class BoardPage extends JFrame implements ActionListener {
 		ingrDeckButton.setForeground(Color.BLUE);
 		ingrDeckButton.addActionListener(e -> {
         	System.out.println("ingrDeckButton clicked");
-        	//is it a must to implement gold with observer?
-        	HandlerFactory.getInstance().getForageIngHandler().forageIngredient(KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
+        	System.out.println("curr player before switch turn:" + KUAlchemistsGame.getInstance().getCurrentPlayerNo());
+        	HandlerFactory.getInstance().getForageIngHandler().forageIngredient();
         	updateGoldUI();
-        	switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " foraged an ingredient.");
+        	KUAlchemistsGame.getInstance().switchTurns();
+        	System.out.println("curr player after switch turn:" + KUAlchemistsGame.getInstance().getCurrentPlayerNo());
+        	revalidate();
+        	repaint();
         });
         getPanelBoard().add(ingrDeckButton);
         
@@ -72,7 +76,7 @@ public class BoardPage extends JFrame implements ActionListener {
         	HandlerFactory.getInstance().getBuyArtifactHandler().buyArtifact(KUAlchemistsGame.getInstance().getPlayer(currentPlayer));
         	updateGoldUI();
         	System.out.println(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getArtifacts());
-        	switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " bought an artifact.");
+        	KUAlchemistsGame.getInstance().switchTurns();
         });
         getPanelBoard().add(artifactDeckButton);
 		
@@ -97,6 +101,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		
         potionBrewing = new PotionBrew();
         sellPotionPanel = new SellPotionPanel();
+        KUAlchemistsGame.getInstance().addTurnListener(potionBrewing);
+        KUAlchemistsGame.getInstance().addTurnListener(sellPotionPanel);
         publicationArea = new PublicationArea();
         //publicationTrack = new JButton("Publication Track");
         deductionBoard = new JButton("Deduction Board");
@@ -110,8 +116,8 @@ public class BoardPage extends JFrame implements ActionListener {
         potionBrewing.updatePotionBrew();
         getPanelBoard().add(potionBrewing);
         
-        KUAlchemistsGame.getInstance().getPlayer(1).addIngListener((PotionBrew) potionBrewing);
-        KUAlchemistsGame.getInstance().getPlayer(2).addIngListener((PotionBrew) potionBrewing);
+        //KUAlchemistsGame.getInstance().getPlayer(1).addIngListener((PotionBrew) potionBrewing);
+        //KUAlchemistsGame.getInstance().getPlayer(2).addIngListener((PotionBrew) potionBrewing);
         
         sellPotionPanel.setBounds(100, 630, 500, 230);
         sellPotionPanel.setLayout(null);
@@ -184,7 +190,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		panelBoard.add(player1_ingr);
 		((PlayerIngs) player1_ingr).updateIngs();
 		
-		KUAlchemistsGame.getInstance().getPlayer(1).addIngListener((PlayerIngs) player1_ingr);
+		//KUAlchemistsGame.getInstance().getPlayer(1).addIngListener((PlayerIngs) player1_ingr);
+		KUAlchemistsGame.getInstance().addTurnListener((PlayerIngs) player1_ingr);
 		
 		player1_pot = new PlayerPot(1);
 		player1_pot.setLayout(null);
@@ -232,7 +239,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		panelBoard.add(player2_ingr);
 		((PlayerIngs) player2_ingr).updateIngs();
 
-		KUAlchemistsGame.getInstance().getPlayer(2).addIngListener((PlayerIngs) player2_ingr);
+		//KUAlchemistsGame.getInstance().getPlayer(2).addIngListener((PlayerIngs) player2_ingr);
+		KUAlchemistsGame.getInstance().addTurnListener((PlayerIngs) player2_ingr);
 		
 		player2_pot = new PlayerPot(2);
 		player2_pot.setLayout(null);
@@ -245,14 +253,14 @@ public class BoardPage extends JFrame implements ActionListener {
         
         if(LoginPage.playerNum==3) {
         	showPlayer3();
-        	KUAlchemistsGame.getInstance().getPlayer(3).addIngListener((PotionBrew) potionBrewing);
+        	//KUAlchemistsGame.getInstance().getPlayer(3).addIngListener((PotionBrew) potionBrewing);
         	KUAlchemistsGame.getInstance().getPlayer(3).addIngListener((SellPotionPanel) sellPotionPanel);
         }
         
         if(LoginPage.playerNum==4) {
         	showPlayer3();
         	showPlayer4();
-        	KUAlchemistsGame.getInstance().getPlayer(4).addIngListener((PotionBrew) potionBrewing);
+        	//KUAlchemistsGame.getInstance().getPlayer(4).addIngListener((PotionBrew) potionBrewing);
         	KUAlchemistsGame.getInstance().getPlayer(4).addIngListener((SellPotionPanel) sellPotionPanel);
         }
         
@@ -265,7 +273,7 @@ public class BoardPage extends JFrame implements ActionListener {
         turnButton.setFocusPainted(false);
 		turnButton.setBounds(400, 0, 50, 20);
 		turnButton.addActionListener(e -> {
-			switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " did nothing.");
+			KUAlchemistsGame.getInstance().switchTurns();
 		});
 		//getPanelBoard().add(turnButton);
 		
@@ -368,7 +376,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		panelBoard.add(player3_ingr);
 		((PlayerIngs) player3_ingr).updateIngs();
 		
-		KUAlchemistsGame.getInstance().getPlayer(3).addIngListener((PlayerIngs) player3_ingr);
+		//KUAlchemistsGame.getInstance().getPlayer(3).addIngListener((PlayerIngs) player3_ingr);
+		KUAlchemistsGame.getInstance().addTurnListener((PlayerIngs) player3_ingr);
 		
 		player3_pot = new PlayerPot(3);
 		player3_pot.setLayout(null);
@@ -419,7 +428,8 @@ public class BoardPage extends JFrame implements ActionListener {
 		panelBoard.add(player4_ingr);
 		((PlayerIngs) player4_ingr).updateIngs();
 		
-		KUAlchemistsGame.getInstance().getPlayer(4).addIngListener((PlayerIngs) player4_ingr);
+		//KUAlchemistsGame.getInstance().getPlayer(4).addIngListener((PlayerIngs) player4_ingr);
+		KUAlchemistsGame.getInstance().addTurnListener((PlayerIngs) player4_ingr);
 		
 		player4_pot = new PlayerPot(4);
 		player4_pot.setLayout(null);
@@ -479,7 +489,7 @@ public class BoardPage extends JFrame implements ActionListener {
 	    					dialog.setVisible(true);
 	    					
 	    					//panel.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-	    					switchTurns(KUAlchemistsGame.getInstance().getPlayer(playerNum).getUsername() + " used an artifact.");
+	    					KUAlchemistsGame.getInstance().switchTurns();
     					});
     				}
     			}
@@ -507,7 +517,7 @@ public class BoardPage extends JFrame implements ActionListener {
      *
      * Inner class implementing IngListener for PlayerIngs.
      */
-    private class PlayerIngs extends JPanel implements IngListener {
+    private class PlayerIngs extends JPanel implements TurnListener {
     	
     	private int playerNum;
 
@@ -532,7 +542,7 @@ public class BoardPage extends JFrame implements ActionListener {
                 	System.out.println("Ingredient is transmuted.");
                 	HandlerFactory.getInstance().getTransmuteIngHandler().transmuteIngredient(KUAlchemistsGame.getInstance().getPlayer(playerNum));
                     gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(playerNum).getGold());
-                    switchTurns(KUAlchemistsGame.getInstance().getPlayer(playerNum).getUsername() + " transmuted an ingredient.");
+                    KUAlchemistsGame.getInstance().switchTurns();
                 });
             }
             this.revalidate();  //need to revise
@@ -540,7 +550,8 @@ public class BoardPage extends JFrame implements ActionListener {
     	}
     	
 		@Override
-		public void onIngChange() {
+		public void onTurnChange() {
+			System.out.println("updating playering on ing change");
 			updateIngs();
 		}
     }
@@ -596,7 +607,9 @@ public class BoardPage extends JFrame implements ActionListener {
 		}
     }
     
-    private class PotionBrew extends JPanel implements IngListener, ItemListener {
+//    
+
+private class PotionBrew extends JPanel implements TurnListener, ItemListener {
     	
     	ArrayList<JCheckBox> checkboxes;
     	ArrayList<JCheckBox> clickedcheckboxes;
@@ -671,7 +684,7 @@ public class BoardPage extends JFrame implements ActionListener {
             	
             	updateGoldUI();
             	updateSicknessUI();
-                switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " made an experiment.");
+                KUAlchemistsGame.getInstance().switchTurns();
             });
             
             checkboxes = new ArrayList<JCheckBox>();
@@ -693,7 +706,7 @@ public class BoardPage extends JFrame implements ActionListener {
     	}
     	
 		@Override
-		public void onIngChange() {
+		public void onTurnChange() {
 			updatePotionBrew();
 		}
 
@@ -747,7 +760,7 @@ public class BoardPage extends JFrame implements ActionListener {
     
     }
     
-    private class SellPotionPanel extends JPanel implements IngListener, ItemListener {
+    private class SellPotionPanel extends JPanel implements IngListener, ItemListener, TurnListener {
     	
     	ArrayList<JCheckBox> checkboxes;
     	ArrayList<JCheckBox> clickedcheckboxes;
@@ -829,7 +842,7 @@ public class BoardPage extends JFrame implements ActionListener {
             	updateGoldUI();
             	updateReputationUI();
             	
-                switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " made a potion sale.");
+                KUAlchemistsGame.getInstance().switchTurns();
             });
             
             checkboxes = new ArrayList<JCheckBox>(); //keeps all the ingredients
@@ -849,6 +862,11 @@ public class BoardPage extends JFrame implements ActionListener {
             repaint();
     	
     	}
+    	
+    	@Override
+    	public void onTurnChange() {
+    		updatePanel();
+    	};
     	
 		@Override
 		public void onIngChange() {
@@ -988,7 +1006,7 @@ public class BoardPage extends JFrame implements ActionListener {
             	HandlerFactory.getInstance().getPublicationHandler().makePublication(ingrName, markerName, currentPlayer);
             	updateGoldUI();
             	updateReputationUI();
-                switchTurns(KUAlchemistsGame.getInstance().getPlayer(currentPlayer).getUsername() + " made a publication.");
+                KUAlchemistsGame.getInstance().switchTurns();
             });
     		
     		revalidate();
@@ -1008,31 +1026,7 @@ public class BoardPage extends JFrame implements ActionListener {
     
     }
 	
-	private void switchTurns(String message) {
-	    JDialog turn = new JDialog(
-	    		this,
-	    		"Turn",
-	    		true);
-	    turn.setSize(300, 100);
-	    turn.setModal(false);
-	    JLabel turnText = new JLabel(message + " Next player's turn!");
-	    turn.add(turnText, BorderLayout.CENTER);
-	    JButton ok = new JButton("OK");
-	    ok.addActionListener(e -> turn.dispose());
-	    turn.add(ok, BorderLayout.SOUTH);
-	    
-	    turn.setLocationRelativeTo(turnText);
-	    turn.setVisible(true);
-	    
-		if (currentPlayer == LoginPage.playerNum) {
-			currentPlayer = 1;
-		} 
-		else {
-			currentPlayer++;
-		}
-		potionBrewing.updatePotionBrew();
-		sellPotionPanel.updatePanel();
-	}
+	
 	
 	private void showHelpDialog() {
 	    JDialog help = new JDialog(

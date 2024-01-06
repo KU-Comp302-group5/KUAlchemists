@@ -1,9 +1,13 @@
 package domain;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import ui.LoginPage;
 
@@ -17,13 +21,19 @@ public class KUAlchemistsGame {
 	private static List<Player> players = new ArrayList<Player>();
 
 	private static int numPlayers;
-	private static int currentPlayerNo = 1;
+	private static int currentPlayerNo;
+	private static int turnCounter;
+	
+	private static List<TurnListener> turnListeners;
 
 
 	/**
 	 * Private constructor for the game.
 	 */
 	private KUAlchemistsGame() {
+		this.currentPlayerNo = 1;
+		this.turnCounter = 0;
+		this.turnListeners = new ArrayList<TurnListener>(); 
 	}
 	
 	public static void main(String[] args) {
@@ -58,6 +68,15 @@ public class KUAlchemistsGame {
 		loginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
+    public void addTurnListener(TurnListener lis) {
+		turnListeners.add(lis);
+	}
+    
+    public static void publishTurnEvent() {
+		for(TurnListener l: turnListeners)
+			l.onTurnChange();
+	}
+    
     public void createPlayer(String username, int avatar) {
     	players.add(new Player(username, avatar));
     	numPlayers++;
@@ -75,6 +94,18 @@ public class KUAlchemistsGame {
 		return KUAlchemistsGame.getInstance().getPlayer(currentPlayerNo);
 	}
 
+	public static void switchTurns() {
+	    currentPlayerNo = (currentPlayerNo % numPlayers) + 1;
+	    if (currentPlayerNo == 1) { // if all players took turns, game finishes when everyone has taken 9 turns
+	    	turnCounter++;
+	    }
+	    
+	    if (turnCounter == 10) {
+	    	// end game
+	    }
+	    
+	    publishTurnEvent();
+	}
 
 	public static int getCurrentPlayerNo() {
 		return currentPlayerNo;

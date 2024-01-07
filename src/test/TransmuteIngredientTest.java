@@ -10,7 +10,7 @@ import domain.Player;
 
 public class TransmuteIngredientTest {
     
-	Player testPlayer = new Player("mert", 1);
+	Player testPlayer = new Player("test", 1);
 	
 	Aspect as1 = new Aspect(true, true);
 	Aspect as2 = new Aspect(true, false);

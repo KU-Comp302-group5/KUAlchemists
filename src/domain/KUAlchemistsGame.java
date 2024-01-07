@@ -57,6 +57,8 @@ public class KUAlchemistsGame {
      * init method to do assignments and checks.
      */
     private void init() {
+    	PublicationTrack.getInstance().populateTrack();
+    	IngredientDeck.getInstance().initializeIngredientDeck();
     }
     
     /**

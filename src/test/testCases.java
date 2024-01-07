@@ -63,11 +63,11 @@ public class testCases {
        @Test
     @DisplayName("Test removing a potion")
     public void testRemovePotion() {
-        assertThrows(UnsupportedOperationException.class, () -> {
+        assertThrows(IndexOutOfBoundsException.class, () -> {
         	
             p.getPotions().remove(0);
         }, 
-        		"Removing potion should throw UnsupportedOperationException");
+        		"Removing potion should throw IndexOutOfBoundsException");
         
         System.out.println("testRemovePotion: 'we do not have any potion initially' done");
     }

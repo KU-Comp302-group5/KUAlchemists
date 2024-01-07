@@ -61,7 +61,7 @@ public int findQuality(Ingredient ingr1, Ingredient ingr2) {
 			}
 		}
 		
-		else if (ingr1greensize == !ingr2greensize) {
+		if (ingr1greensize == !ingr2greensize) {
 			if(ingr1greensign == ingr2greensign) {
 				if(ingr1greensign) {
 					quality=1;
@@ -72,7 +72,7 @@ public int findQuality(Ingredient ingr1, Ingredient ingr2) {
 			}
 		}
 		
-		else if (ingr1bluesize == !ingr2bluesize) {
+		if (ingr1bluesize == !ingr2bluesize) {
 			if(ingr1bluesign == ingr2bluesign) {
 				if(ingr1bluesign) {
 					quality=1;

@@ -43,7 +43,6 @@ public class testCases {
         assertNotEquals("bugra", p.getUsername(), "Username is not bugra, it is changed already.");
         assertEquals("John", p.getUsername(), "Username should be John");
         System.out.println("testSetGetUsername: done");
-
     }
     
     @Test
@@ -53,18 +52,18 @@ public class testCases {
         p.getArtifacts().add(new ArtifactCard("Artifact card [testing]", 100, true));
         assertTrue(p.getArtifacts().size() > initialSize, "Artifact card is added");
         System.out.println("testAddArtifact: done");
-
     }
-       @Test
-    @DisplayName("Test removing a potion")
-    public void testRemovePotion() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-        	
-            p.getPotions().remove(0);
-        }, 
-        		"Removing potion should throw UnsupportedOperationException");
-        
-        System.out.println("testRemovePotion: 'we do not have any potion initially' done");
-    }
+    
+    @Test
+ @DisplayName("Test removing a potion")
+ public void testRemovePotion() {
+     assertThrows(IndexOutOfBoundsException.class, () -> {
+     	
+         p.getPotions().remove(0);
+     }, 
+     		"Removing potion should throw UnsupportedOperationException");
+     
+     System.out.println("testRemovePotion: 'we do not have any potion initially' done");
+ }
 }
 

@@ -33,6 +33,7 @@ public class ElixirofInsightTest {
 	    ingredients.add(scorpion);
 	    
 	    IngredientDeck ingrDeck = IngredientDeck.getInstance();
+	    ingrDeck.initializeIngredientDeck();
 	    //ingrDeck.getIngredients().add(scorpion);
 	    //ingrDeck.getIngredients().add(toad);
 	    //ingrDeck.getIngredients().add(claw);
@@ -55,6 +56,8 @@ public class ElixirofInsightTest {
 	
 	@Test
 	public void testUseCard_NullInput() {
+		IngredientDeck ingrDeck = IngredientDeck.getInstance();
+	    ingrDeck.initializeIngredientDeck();
 		
 	    List<Ingredient> ingredients = null;
         assertThrows(IllegalArgumentException.class, () -> {
@@ -79,6 +82,9 @@ public class ElixirofInsightTest {
 	    ingredients.add(scorpion);
 	    ingredients.add(fern);
 	    
+	    IngredientDeck ingrDeck = IngredientDeck.getInstance();
+	    ingrDeck.initializeIngredientDeck();
+	    
 	    assertThrows(IllegalArgumentException.class, () -> {
         	ElixirOfInsightArtifact artifactObject = new ElixirOfInsightArtifact();
     	    artifactObject.useCard(ingredients);
@@ -98,6 +104,9 @@ public class ElixirofInsightTest {
 	    List<Ingredient> ingredients = new ArrayList<>();
 	    ingredients.add(toad);
 	    ingredients.add(claw);
+	    
+	    IngredientDeck ingrDeck = IngredientDeck.getInstance();
+	    ingrDeck.initializeIngredientDeck();
 	    
 	    assertThrows(IllegalArgumentException.class, () -> {
         	ElixirOfInsightArtifact artifactObject = new ElixirOfInsightArtifact();
@@ -120,6 +129,7 @@ public class ElixirofInsightTest {
 	    ingredients.add(scorpion);
 	    
 	    IngredientDeck ingrDeck = IngredientDeck.getInstance();
+	    ingrDeck.initializeIngredientDeck();
 	    ingrDeck.setCardNum(2);
 	    
 	    ElixirOfInsightArtifact artifactObject = new ElixirOfInsightArtifact();

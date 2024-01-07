@@ -84,8 +84,15 @@ public class Player {
 		return ingredients.get(ingredients.size()-1);
 	}
 	
+	/**
+	 * REQUIRES: Ingredient ingr, gold_num as int.
+	 * MODIFIES: player.ingredients, player.gold
+	 * EFFECTS: The given ingredients is removed from player's ingredient list if it has.
+	 * 			The gold number of player increased by gold_num.
+	 * 			publishIngEvent is notified.
+	 */
 	public void transmuteIngredient(Ingredient ingr, int gold_num) {
-		if (this.ingredients.contains(ingr)) {
+		if (this.ingredients.contains(ingr) && gold_num > 0) {
 			this.ingredients.remove(ingr);
 			increaseGold(gold_num);
 			System.out.println("\n"+ this.getUsername()+" transmuted ingredient card: "+ ingr.getName());

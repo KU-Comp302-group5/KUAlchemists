@@ -8,6 +8,11 @@ import domain.Aspect;
 import domain.Ingredient;
 import domain.Player;
 
+/**
+ * @author Mert Kucukerdem
+ */
+
+
 public class TransmuteIngredientTest {
     
 	Player testPlayer = new Player("test", 1);

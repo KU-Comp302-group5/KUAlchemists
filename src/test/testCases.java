@@ -1,4 +1,4 @@
-package tests;
+package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
@@ -6,6 +6,11 @@ import org.junit.jupiter.api.*;
 import domain.ArtifactCard;
 import domain.Ingredient;
 import domain.Player;
+
+
+/**
+ * @author Bugrahan Efe
+ */
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class testCases {

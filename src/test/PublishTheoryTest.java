@@ -22,6 +22,8 @@ import domain.Theory;
 
 /**
  * This class is for testing publishTheory method of PublicationTrack class
+ * 
+ * @author Yiğit Can Ateş
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PublishTheoryTest {

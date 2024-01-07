@@ -1,6 +1,7 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,10 @@ import org.junit.jupiter.api.Test;
 import domain.Aspect;
 import domain.Ingredient;
 import domain.PotionSale;
+
+/**
+ * @author Eray Cakar
+ */
 
 public class FindQualityTest {
 	

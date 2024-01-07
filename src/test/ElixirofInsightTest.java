@@ -12,6 +12,9 @@ import domain.ElixirOfInsightArtifact;
 import domain.Ingredient;
 import domain.IngredientDeck;
 
+/**
+ * @author Tolga Ermis
+ */
 
 public class ElixirofInsightTest {
 	@Test

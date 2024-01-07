@@ -10,7 +10,7 @@ import domain.Player;
 
 public class TransmuteIngredientTest {
     
-	Player playerMert = new Player("mert", 1);
+	Player testPlayer = new Player("mert", 1);
 	
 	Aspect as1 = new Aspect(true, true);
 	Aspect as2 = new Aspect(true, false);
@@ -22,33 +22,65 @@ public class TransmuteIngredientTest {
 	
     @Test
     @DisplayName("Test for a succesful transmute")
-    public void testSuccesfulTransmute() {
-    	playerMert.addIngredient(toad);
-    	playerMert.addIngredient(claw);
-    	playerMert.addIngredient(scorpion);
+    public void testASuccesfulTransmute() {
+    	testPlayer.addIngredient(toad);
+    	testPlayer.addIngredient(claw);
+    	testPlayer.addIngredient(scorpion);
     	
-    	playerMert.transmuteIngredient(claw, 1);
+    	testPlayer.transmuteIngredient(claw, 1);
     	
-        assertEquals(2, playerMert.getIngredients().size(), "Size should be 2.");
-        assertEquals(11, playerMert.getGold(), "Gold should be 11.");
+        assertEquals(2, testPlayer.getIngredients().size(), "Size should be 2.");
+        assertEquals(11, testPlayer.getGold(), "Gold should be 11.");
     }
     
     @Test
-    @DisplayName("Test for a unsuccesful transmute")
-    public void testUnsuccesfulTransmute() {
-    	playerMert.addIngredient(toad);
-    	playerMert.addIngredient(scorpion);
+    @DisplayName("Test for an unsuccesful transmute")
+    public void testAnUnsuccesfulTransmute() {
+    	testPlayer.addIngredient(toad);
     	
-    	playerMert.transmuteIngredient(claw, 1);
+    	testPlayer.transmuteIngredient(claw, 1);
     	
-        assertEquals(2, playerMert.getIngredients().size(), "Size should be 2.");
-        assertEquals(10, playerMert.getGold(), "Gold should be 10.");
+        assertEquals(1, testPlayer.getIngredients().size(), "Size should be 1.");
+        assertEquals(10, testPlayer.getGold(), "Gold should be 10.");
     }
     
+    @Test
+    @DisplayName("Test for negative gold number")
+    public void testMultipleSuccesfulTransmute() {
+    	testPlayer.addIngredient(toad);
+    	testPlayer.addIngredient(scorpion);
+    	
+    	testPlayer.transmuteIngredient(toad, -1);
+    	
+        assertEquals(2, testPlayer.getIngredients().size(), "Size should be 2.");
+        assertEquals(10, testPlayer.getGold(), "Gold should be 10.");
+    }
     
+    @Test
+    @DisplayName("Test for multiple succesful transmute of same ingredient")
+    public void testMultipleUnsuccesfulTransmute() {
+    	testPlayer.addIngredient(toad);
+    	testPlayer.addIngredient(toad);
+    	testPlayer.addIngredient(claw);
+    	
+    	testPlayer.transmuteIngredient(toad, 1);
+    	testPlayer.transmuteIngredient(toad, 1);
+    	
+        assertEquals(1, testPlayer.getIngredients().size(), "Size should be 1.");
+        assertEquals(12, testPlayer.getGold(), "Gold should be 12.");
+    }
     
-    
-    
-    
-    
+    @Test
+    @DisplayName("Test for a succesful and an unsuccesful transmute")
+    public void testSuccesfulAndUnsuccesfulTransmute() {
+    	testPlayer.addIngredient(toad);
+    	testPlayer.addIngredient(claw);
+    	testPlayer.addIngredient(scorpion);
+    	
+    	testPlayer.transmuteIngredient(claw, 1);
+    	testPlayer.transmuteIngredient(claw, 1);
+    	
+        assertEquals(2, testPlayer.getIngredients().size(), "Size should be 2.");
+        assertEquals(11, testPlayer.getGold(), "Gold should be 11.");
+    } 
 }

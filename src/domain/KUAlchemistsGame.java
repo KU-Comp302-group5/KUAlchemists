@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import ui.GameModePage;
 import ui.LoginPage;
 
 /**
@@ -16,6 +17,7 @@ import ui.LoginPage;
  */
 public class KUAlchemistsGame {
 	private static KUAlchemistsGame game;
+	private static GameModePage gameModePage;
 	private static LoginPage loginPage;
 	
 	private static List<Player> players = new ArrayList<Player>();
@@ -40,7 +42,7 @@ public class KUAlchemistsGame {
 	
 	public static void main(String[] args) {
 		getInstance().init();
-		getInstance().startLoginView();
+		getInstance().startGameModeView();
 	}
 	
 	/**
@@ -59,6 +61,17 @@ public class KUAlchemistsGame {
     private void init() {
     	PublicationTrack.getInstance().populateTrack();
     	IngredientDeck.getInstance().initializeIngredientDeck();
+    }
+    
+    /**
+     * A method to start the GameModeView.
+     */
+    public void startGameModeView() {
+		gameModePage = new GameModePage(); 	
+		gameModePage.add(gameModePage.getPanel());
+		gameModePage.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		gameModePage.setVisible(true);
+		gameModePage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
     /**

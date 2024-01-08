@@ -23,11 +23,11 @@ public class GameModePage extends JFrame{
 		
 		//two radiobuttons shown in the game mode page for online and offline options		
 		onlineBtn = new JRadioButton("ONLINE");
-		onlineBtn.setBounds(200, 200, 200, 200);
+		onlineBtn.setBounds(200, 200, 200, 40);
 		panel.add(onlineBtn);
 		
 		offlineBtn = new JRadioButton("OFFLINE");
-		offlineBtn.setBounds(400, 200, 200, 200);
+		offlineBtn.setBounds(400, 200, 200, 40);
 		panel.add(offlineBtn);
     	
     	ButtonGroup btngroup = new ButtonGroup();
@@ -38,7 +38,7 @@ public class GameModePage extends JFrame{
     	
     	//the button that will lead to the login page according to the game mode chosen
     	goBtn = new JButton("GO!");
-    	goBtn.setBounds(300, 400, 200, 200);
+    	goBtn.setBounds(300, 300, 80, 40);
     	goBtn.addActionListener(e -> {
     		if (onlineBtn.isSelected()) {
     			HandlerFactory.getInstance().getGameModeHandler().setGameMode("online");
@@ -48,6 +48,7 @@ public class GameModePage extends JFrame{
     			HandlerFactory.getInstance().getGameModeHandler().setGameMode("offline");
     			
     		}
+    		dispose();
     	});
 		panel.add(goBtn);
 		

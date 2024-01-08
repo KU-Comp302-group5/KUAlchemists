@@ -1,5 +1,10 @@
 package domain;
 
+import javax.swing.JFrame;
+
+import ui.LoginPage;
+import ui.OnlineLoginPage;
+
 public class OnlineAdapter implements IGameAdapter{
 
 	//will create a new login page with 1 player + host or join button
@@ -7,7 +12,12 @@ public class OnlineAdapter implements IGameAdapter{
 	
 	@Override
 	public void startLoginView() {
-		// TODO Auto-generated method stub
+		
+		OnlineLoginPage onlineLoginPage = new OnlineLoginPage(); 	
+		onlineLoginPage.add(onlineLoginPage.getPanel());
+		onlineLoginPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		onlineLoginPage.setVisible(true);
+		onlineLoginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
 

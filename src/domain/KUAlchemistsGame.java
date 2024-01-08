@@ -17,8 +17,10 @@ import ui.LoginPage;
  */
 public class KUAlchemistsGame {
 	private static KUAlchemistsGame game;
-	private static GameModePage gameModePage;
+	private static GameModePage gameModePage; //the initial window of the game 
 	private static LoginPage loginPage;
+	
+	private static IGameAdapter gameMode; //adapter pattern here
 	
 	private static List<Player> players = new ArrayList<Player>();
 
@@ -42,7 +44,7 @@ public class KUAlchemistsGame {
 	
 	public static void main(String[] args) {
 		getInstance().init();
-		getInstance().startGameModeView();
+		getInstance().startGameModeView(); //initial page is now the gamemodepage instead of the loginpage
 	}
 	
 	/**
@@ -76,13 +78,11 @@ public class KUAlchemistsGame {
     
     /**
      * A method to start the LoginView.
+     * This method now uses adapters to start the appropriate page. 
      */
     public void startLoginView() {
-		loginPage = new LoginPage(); 	
-		loginPage.add(loginPage.getPanelLogin());
-		loginPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		loginPage.setVisible(true);
-		loginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	
+    	gameMode.startLoginView();
     }
     
     public void addEndListener(EndListener lis) {
@@ -153,5 +153,16 @@ public class KUAlchemistsGame {
 
 	public static void setNumPlayers(int numPlayers) {
 		KUAlchemistsGame.numPlayers = numPlayers;
+	}
+	
+	//determines the adapter -the mode of the game- according to the input from the UI transmitted through GameModeHandler 
+	public void setGameMode(String gamemode) {
+		if (gamemode.equals("online")) {
+			gameMode = new OnlineAdapter();
+		}
+		if (gamemode.equals("offline")) {
+			gameMode = new OfflineAdapter();
+		}
+		
 	}
 }

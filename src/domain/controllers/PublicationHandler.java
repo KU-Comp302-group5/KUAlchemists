@@ -3,10 +3,12 @@ package domain.controllers;
 import java.util.List;
 
 import domain.AlchemyMarker;
+import domain.Aspect;
 import domain.Ingredient;
 import domain.KUAlchemistsGame;
 import domain.Player;
 import domain.PublicationTrack;
+import domain.Theory;
 
 public class PublicationHandler {
 	
@@ -26,5 +28,28 @@ public class PublicationHandler {
 
 	public List<Ingredient> getAvailableIngredients() {
 		return PublicationTrack.getInstance().getAvailableIngredients();
+	}
+	
+	//theory: published theory chosen to debunk
+	//num: represents the aspect that is targeted to be proven wrong
+	//num=1 --> redAspect, num==2 -->greenAspect, num==3 --> blueAspect
+	public void debunkTheory(Theory theory, int num, int debunkingPlayerNo) {
+		int result = theory.tryDebunk(num); //the chosen aspect is checked here 
+		
+		int debunkedPlayerNo = theory.getPlayerNo();
+		
+		//successful debunk 
+		if (result==1) {
+			KUAlchemistsGame.getInstance().getPlayer(debunkingPlayerNo).increaseReputation(2);
+			KUAlchemistsGame.getInstance().getPlayer(debunkedPlayerNo).increaseReputation(-1);
+			
+			PublicationTrack.getInstance().removeTheory(theory); //removes the published theory since its debunked 
+		}
+		
+		//unsuccessful debunk 
+		if (result==-1) {
+			KUAlchemistsGame.getInstance().getPlayer(debunkingPlayerNo).increaseReputation(-1);
+		}
+		
 	}
 }

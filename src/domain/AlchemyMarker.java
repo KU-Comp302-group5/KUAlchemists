@@ -2,11 +2,11 @@ package domain;
 
 public class AlchemyMarker {
     private Aspect redAspect;
-    private Aspect blueAspect;
     private Aspect greenAspect;
+    private Aspect blueAspect;
     private int ID;
     
-	public AlchemyMarker(Aspect redAspect, Aspect blueAspect, Aspect greenAspect, int ID) {
+	public AlchemyMarker(Aspect redAspect, Aspect greenAspect, Aspect blueAspect, int ID) {
 		this.redAspect = redAspect;
 		this.blueAspect = blueAspect;
 		this.greenAspect = greenAspect;

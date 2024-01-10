@@ -176,4 +176,14 @@ public class PublicationTrack {
 	public void addPubListener(PubListener e) {
 		pubListeners.add(e);
 	}
+	
+	public void removeTheory(Theory theory) {
+		AlchemyMarker tempAlchMark = theory.getMarker();
+		Ingredient tempIngr = theory.getIngredient();
+		
+		publishedTheories.remove(theory);
+		availableAlchemies.add(tempAlchMark);
+		availableIngredients.add(tempIngr);
+		
+	}
 }

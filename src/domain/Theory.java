@@ -15,7 +15,7 @@ public class Theory {
 	//num: represents the aspect that is targeted to be proven wrong
 	public int tryDebunk(int num) {
 		if(num==1) { //redAspect was chosen to debunk
-			if (this.ingredient.getRedAspect()==this.marker.getRedAspect()) {
+			if (this.ingredient.getRedAspect().isSign()==this.marker.getRedAspect().isSign()) {
 				return -1; // unsuccessful debunk
 			}
 			else {
@@ -23,7 +23,7 @@ public class Theory {
 			}
 		}
 		if(num==2) { //greenAspect was chosen to debunk
-			if (this.ingredient.getGreenAspect()==this.marker.getGreenAspect()) {
+			if (this.ingredient.getGreenAspect().isSign()==this.marker.getGreenAspect().isSign()) {
 				return -1; // unsuccessful debunk
 			}
 			else {
@@ -31,7 +31,7 @@ public class Theory {
 			}
 		}
 		if(num==3) { //blueAspect was chosen to debunk
-			if (this.ingredient.getBlueAspect()==this.marker.getBlueAspect()) {
+			if (this.ingredient.getBlueAspect().isSign()==this.marker.getBlueAspect().isSign()) {
 				return -1; // unsuccessful debunk
 			}
 			else {

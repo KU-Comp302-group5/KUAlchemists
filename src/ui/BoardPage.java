@@ -133,7 +133,7 @@ public class BoardPage extends JFrame implements ActionListener, EndListener {
         //KUAlchemistsGame.getInstance().getPlayer(1).addIngListener((SellPotionPanel) sellPotionPanel);
         //KUAlchemistsGame.getInstance().getPlayer(2).addIngListener((SellPotionPanel) sellPotionPanel);
 
-        publicationArea.setBounds(700, 400, 500, 300);
+        publicationArea.setBounds(700, 400, 550, 300);
         publicationArea.setLayout(null);
         publicationArea.setBackground(Color.RED);
         publicationArea.updatePublicationArea();
@@ -980,6 +980,10 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
      */
     private class PublicationArea extends JPanel implements PubListener, ItemListener {
     	
+    	List<JRadioButton> theoryButtons;
+    	JButton debunkBtn;
+    	List<JRadioButton> aspectButtons;
+    	
     	public void updatePublicationArea() {
     		
     		this.removeAll();
@@ -1000,6 +1004,7 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             ButtonGroup ingrGroup = new ButtonGroup();
             ButtonGroup markerGroup = new ButtonGroup();
             ButtonGroup theoryGroup = new ButtonGroup();
+            ButtonGroup aspectGroup = new ButtonGroup();
             
             List<Ingredient> ingrs = HandlerFactory.getInstance().getPublicationHandler().getAvailableIngredients();
             
@@ -1027,16 +1032,46 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             
             List<Theory> theories = HandlerFactory.getInstance().getPublicationHandler().getPublishedTheories();
             
+            theoryButtons = new ArrayList<JRadioButton>();
+            		
             for (int i=0; i<theories.size(); i++) {
             	
             	JRadioButton theoryBtn = new JRadioButton(theories.get(i).getIngredient().getName() + " --> " + Integer.toString(theories.get(i).getMarker().getID()));
-            	theoryBtn.setBounds(310, 30 + 30*i, 100, 20);
+            	theoryButtons.add(theoryBtn);
+            	theoryBtn.setBounds(310, 30 + 30*i, 200, 20);
             	theoryBtn.addItemListener(this);
             	theoryGroup.add(theoryBtn);
             	this.add(theoryBtn);
             	theoryBtn.setVisible(true);
+            	
             }
+
+    		aspectButtons = new ArrayList<JRadioButton>();
+    		
+            JRadioButton as1 = new JRadioButton("Red");
+            aspectButtons.add(as1);
+            as1.setBounds(290, 240, 50, 20);
+            as1.addItemListener(this);
+            aspectGroup.add(as1);
+            this.add(as1);
+            as1.setVisible(false);
             
+    		JRadioButton as2 = new JRadioButton("Green");
+    		aspectButtons.add(as2);
+    		as2.setBounds(345, 240, 65, 20);
+    		as2.addItemListener(this);
+    		aspectGroup.add(as2);
+    		this.add(as2);
+    		as2.setVisible(false);
+    		
+    		JRadioButton as3 = new JRadioButton("Blue");
+    		aspectButtons.add(as3);
+    		as3.setBounds(415, 240, 60, 20);
+    		as3.addItemListener(this);
+    		aspectGroup.add(as3);
+    		this.add(as3);
+    		as3.setVisible(false);
+    		
             JButton publishBtn = new JButton("Publish Theory");
             publishBtn.setBounds(100, 270, 150, 20);
             this.add(publishBtn);
@@ -1069,6 +1104,74 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made a publication.");
                 KUAlchemistsGame.getInstance().switchTurns();
             });
+            
+            debunkBtn = new JButton("Debunk");
+            debunkBtn.setBounds(310, 270, 150, 20);
+            this.add(debunkBtn);
+            debunkBtn.setVisible(false);
+            debunkBtn.addActionListener(e -> {
+            	System.out.println("Debunk button in UI");
+            	
+            	int theoryIndex = -1;
+            	int aspectIndex = -1;
+            	
+            	for (JRadioButton theoryBtn : theoryButtons) {
+            		if (theoryBtn.isSelected()) {
+            			theoryIndex = theoryButtons.indexOf(theoryBtn); 
+            		}
+            	}
+            	
+            	for (JRadioButton as : aspectButtons) {
+            		if (as.isSelected()) {
+            			aspectIndex = aspectButtons.indexOf(as); 
+            		}
+            	}
+            	
+            	String aspect = null;
+            	String aspectSign = null;
+            	
+            	if (aspectIndex==0) {
+            		aspect = "Red Aspect:";
+            		if (theories.get(theoryIndex).getIngredient().getRedAspect().isSign()) {
+            			aspectSign = "+";
+            		}
+            		else {
+            			aspectSign = "-";
+            		}
+            	}
+            	if (aspectIndex==1) {
+            		aspect = "Green Aspect:";
+            		if (theories.get(theoryIndex).getIngredient().getGreenAspect().isSign()) {
+            			aspectSign = "+";
+            		}
+            		else {
+            			aspectSign = "-";
+            		}
+            	}
+            	if (aspectIndex==2) {
+            		aspect = "Blue Aspect:";
+            		if (theories.get(theoryIndex).getIngredient().getBlueAspect().isSign()) {
+            			aspectSign = "+";
+            		}
+            		else {
+            			aspectSign = "-";
+            		}
+            	}
+            	
+            	//theoryButtons.get(theoryIndex).setText(theoryButtons.get(theoryIndex).getText() + " " + aspect +
+            			//aspectSign);
+            	
+            	String ingrName = theories.get(theoryIndex).getIngredient().getName();
+            	
+            	HandlerFactory.getInstance().getPublicationHandler().debunkTheory(theories.get(theoryIndex), aspectIndex + 1,
+            			KUAlchemistsGame.getInstance().getCurrentPlayerNo());
+            	
+            	updateReputationUI();
+            	
+            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made a debunk." + " "
+            	+ ingrName + "'s" + " " + aspect + aspectSign);
+                KUAlchemistsGame.getInstance().switchTurns();
+            });
     		
     		revalidate();
             repaint();
@@ -1076,8 +1179,14 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			
-			
+			if (theoryButtons.contains(e.getSource())) {
+				for (JRadioButton asBtn : aspectButtons) {
+					asBtn.setVisible(true);
+				}
+			}
+			if(aspectButtons.contains(e.getSource())) {
+				debunkBtn.setVisible(true);
+			}
 		}
 
 		@Override
@@ -1093,7 +1202,7 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
 	    		this,
 	    		"Turn",
 	    		true);
-	    turn.setSize(300, 100);
+	    turn.setSize(300, 150);
 	    turn.setModal(false);
 	    JLabel turnText = new JLabel(message + " Next player's turn!");
 	    turn.add(turnText, BorderLayout.CENTER);

@@ -184,6 +184,7 @@ public class PublicationTrack {
 		publishedTheories.remove(theory);
 		availableAlchemies.add(tempAlchMark);
 		availableIngredients.add(tempIngr);
+		publishPublicationEvent();
 		
 	}
 }

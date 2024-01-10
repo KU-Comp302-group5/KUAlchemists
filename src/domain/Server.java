@@ -8,53 +8,110 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class Server extends Thread {
+public class Server implements Runnable {
 
-	private ServerSocket serverSocket;
-
-	public Server(int port) throws IOException {
-		serverSocket = new ServerSocket(port);
+	private ArrayList<ConnectionHandler> connections;
+	private ServerSocket server;
+	private boolean accepting;
+	private ExecutorService pool;
+	
+	public Server() {
+		connections = new ArrayList<ConnectionHandler>();
+		accepting = true;
 	}
-	
-	
-public void startServer() {
-		// Port number
-		int port = 6066;
+
+	@Override
+	public void run() {
 		
 		try {
-			
-			// Server thread
-			Thread t = new Server(port);
-			t.start();
+			while(accepting) {
+				server = new ServerSocket(9999);
+				pool = Executors.newCachedThreadPool();
+				Socket client = server.accept();
+				ConnectionHandler connectionHandler = new ConnectionHandler(client);
+				connections.add(connectionHandler);
+				pool.execute(connectionHandler);
+			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 	}
-
-public void run() {
-	while (true) {
-		try {
-			
-			// Create server socket for connection
-			System.out.println("Waiting for players on port " + serverSocket.getLocalPort() + "...");
-			Socket clientPlayer = serverSocket.accept();
-            System.out.println("A player connected.");
-            
-            ObjectOutputStream objectOutput = new ObjectOutputStream(clientPlayer.getOutputStream());
-            
-            serverSocket.close();
-
-
-		} catch (SocketTimeoutException s) {
-			System.out.println("Socket timed out!");
-			break;
-		} catch (IOException e) {
-			e.printStackTrace();
-			break;
+	
+	public void broadcastGameState() {
+		for (ConnectionHandler ch: connections) {
+			if (ch != null) {
+				ch.sendGameState();
+			}
 		}
 	}
-}
+	
+	public void shutdown() {
+		accepting = false;
+		if (! server.isClosed()) {
+			try {
+				server.close();
+				
+				for (ConnectionHandler ch: connections) {
+					ch.shutdown();
+				}
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	class ConnectionHandler implements Runnable {
+		
+		private Socket client;
+		private BufferedReader in; //should change
+		private PrintWriter out; //should change
+		
+		public ConnectionHandler(Socket client) {
+			this.client = client;
+		}
 
+		@Override
+		public void run() {
+			
+			try {
+				out = new PrintWriter(client.getOutputStream());
+				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+				// get Game State here
+				while (true) {
+					broadcastGameState();
+				}
+				//shutdown();
+			} catch (IOException e) {
+				
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	
+		public void sendGameState() {
+		
+		}
+		
+		public void shutdown() {
+			if (! client.isClosed()) {
+				try {
+					in.close();
+					out.close();
+					client.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }

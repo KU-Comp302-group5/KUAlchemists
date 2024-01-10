@@ -30,6 +30,10 @@ public class PublicationHandler {
 		return PublicationTrack.getInstance().getAvailableIngredients();
 	}
 	
+	public List<Theory> getPublishedTheories() {
+		return PublicationTrack.getInstance().getPublishedTheories();
+	}
+	
 	//theory: published theory chosen to debunk
 	//num: represents the aspect that is targeted to be proven wrong
 	//num=1 --> redAspect, num==2 -->greenAspect, num==3 --> blueAspect

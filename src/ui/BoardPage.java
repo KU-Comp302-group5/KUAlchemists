@@ -13,6 +13,7 @@ import domain.KUAlchemistsGame;
 import domain.PotListener;
 import domain.PubListener;
 import domain.PublicationTrack;
+import domain.Theory;
 import domain.TurnListener;
 import domain.controllers.HandlerFactory;
 
@@ -132,7 +133,7 @@ public class BoardPage extends JFrame implements ActionListener, EndListener {
         //KUAlchemistsGame.getInstance().getPlayer(1).addIngListener((SellPotionPanel) sellPotionPanel);
         //KUAlchemistsGame.getInstance().getPlayer(2).addIngListener((SellPotionPanel) sellPotionPanel);
 
-        publicationArea.setBounds(700, 400, 300, 300);
+        publicationArea.setBounds(700, 400, 500, 300);
         publicationArea.setLayout(null);
         publicationArea.setBackground(Color.RED);
         publicationArea.updatePublicationArea();
@@ -984,15 +985,21 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
     		this.removeAll();
     		
     		JLabel marker_text = new JLabel("Ingredients: ");
-    		marker_text.setBounds(10, 5, 200, 20);
+    		marker_text.setBounds(10, 5, 100, 20);
             this.add(marker_text);
             
             JLabel ingr_text = new JLabel("Alchemy Marker: ");
     		ingr_text.setBounds(160, 5, 200, 20);
             this.add(ingr_text);
             
+            //label of the new area for published theories
+            JLabel theory_text = new JLabel("Publications: ");
+    		theory_text.setBounds(310, 5, 200, 20);
+            this.add(theory_text);
+            
             ButtonGroup ingrGroup = new ButtonGroup();
             ButtonGroup markerGroup = new ButtonGroup();
+            ButtonGroup theoryGroup = new ButtonGroup();
             
             List<Ingredient> ingrs = HandlerFactory.getInstance().getPublicationHandler().getAvailableIngredients();
             
@@ -1016,6 +1023,18 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             	markerGroup.add(markerBtn);
             	this.add(markerBtn);
             	markerBtn.setVisible(true);
+            }
+            
+            List<Theory> theories = HandlerFactory.getInstance().getPublicationHandler().getPublishedTheories();
+            
+            for (int i=0; i<theories.size(); i++) {
+            	
+            	JRadioButton theoryBtn = new JRadioButton(theories.get(i).getIngredient().getName() + " --> " + Integer.toString(theories.get(i).getMarker().getID()));
+            	theoryBtn.setBounds(310, 30 + 30*i, 100, 20);
+            	theoryBtn.addItemListener(this);
+            	theoryGroup.add(theoryBtn);
+            	this.add(theoryBtn);
+            	theoryBtn.setVisible(true);
             }
             
             JButton publishBtn = new JButton("Publish Theory");
@@ -1057,6 +1076,7 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
+			
 			
 		}
 

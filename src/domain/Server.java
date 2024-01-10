@@ -3,6 +3,7 @@ package domain;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -26,7 +27,6 @@ public class Server implements Runnable {
 
 	@Override
 	public void run() {
-		
 		try {
 			while(accepting) {
 				server = new ServerSocket(9999);
@@ -36,17 +36,15 @@ public class Server implements Runnable {
 				connections.add(connectionHandler);
 				pool.execute(connectionHandler);
 			}
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
-	public void broadcastGameState() {
+	public void broadcastGameState(GameState gameState) {
 		for (ConnectionHandler ch: connections) {
 			if (ch != null) {
-				ch.sendGameState();
+				ch.sendGameState(gameState);
 			}
 		}
 	}
@@ -56,13 +54,10 @@ public class Server implements Runnable {
 		if (! server.isClosed()) {
 			try {
 				server.close();
-				
 				for (ConnectionHandler ch: connections) {
 					ch.shutdown();
 				}
-				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -71,8 +66,8 @@ public class Server implements Runnable {
 	class ConnectionHandler implements Runnable {
 		
 		private Socket client;
-		private BufferedReader in; //should change
-		private PrintWriter out; //should change
+		private ObjectInputStream in;
+		private ObjectOutputStream out;
 		
 		public ConnectionHandler(Socket client) {
 			this.client = client;
@@ -80,25 +75,31 @@ public class Server implements Runnable {
 
 		@Override
 		public void run() {
-			
 			try {
-				out = new PrintWriter(client.getOutputStream());
-				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-				// get Game State here
-				while (true) {
-					broadcastGameState();
-				}
-				//shutdown();
-			} catch (IOException e) {
+				out = new ObjectOutputStream(client.getOutputStream());
+				in = new ObjectInputStream(client.getInputStream());
 				
-				// TODO Auto-generated catch block
+				GameState gameState;
+				try {
+					while (( gameState = (GameState)in.readObject() ) != null) {
+						broadcastGameState(gameState);
+					}
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 		
 	
-		public void sendGameState() {
-		
+		public void sendGameState(GameState state) {
+			try {
+				out.writeObject(state);
+				out.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		public void shutdown() {
@@ -108,7 +109,6 @@ public class Server implements Runnable {
 					out.close();
 					client.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

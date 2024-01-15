@@ -29,4 +29,7 @@ public class JoinHandler {
 		broadcastGameState(true, false, false);
 	}
 	
+	public void startGame() {
+		broadcastGameState(false, true, false);
+	}
 }

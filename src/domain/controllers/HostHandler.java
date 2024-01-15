@@ -18,7 +18,6 @@ public class HostHandler {
 	public void startServer() {
 		server = new Server();
 		port = 9999;
-		
 		pool = Executors.newCachedThreadPool();
 		pool.execute(server);
 	}

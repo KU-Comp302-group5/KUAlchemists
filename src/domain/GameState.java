@@ -67,6 +67,10 @@ public class GameState implements Serializable  {
 		
 		else {
 			
+			if (startGame) {
+				//handle here
+			}
+			
 			// KUAlchemistsGame related
 			KUAlchemistsGame.setPlayers(players);
 			KUAlchemistsGame.setNumPlayers(numPlayers);

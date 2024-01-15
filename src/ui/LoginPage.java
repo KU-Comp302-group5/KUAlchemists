@@ -26,7 +26,6 @@ public class LoginPage extends JFrame implements ActionListener{
 	private static List<List<JButton>> avatarButtons = new ArrayList<List<JButton>>(); // stores 3 avatar buttons for n (numPlayers) players
 	private static List<JTextField> textfields = new ArrayList<JTextField>(); // stores n (numPlayers) JTextField instances
 	
-
 	public  LoginPage() {
 		super("Login Page");		
 		panelLogin = new JPanel();
@@ -39,14 +38,13 @@ public class LoginPage extends JFrame implements ActionListener{
 		avatarsChosen.add(1);
 		avatarsChosen.add(1);
 
-		
 		addPlayerBtn2 = new JButton("Add player.");
 		addPlayerBtn2.setBounds(1045, 350, 120, 40);
 		addPlayerBtn2.setForeground(Color.BLACK);
 		addPlayerBtn2.setBackground(Color.WHITE);
 		addPlayerBtn2.addActionListener(
 				new ActionListener() 
-				{ 
+				{
 			@Override
 				public void actionPerformed(ActionEvent arg0) {
 				
@@ -80,7 +78,6 @@ public class LoginPage extends JFrame implements ActionListener{
 			}
 		});
 		panelLogin.add(addPlayerBtn);
-		
 		
 		openBoard = new JButton("Open Game!");
 		
@@ -118,7 +115,6 @@ public class LoginPage extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {		
 	}
 
-	
 	public void displayPlayer(Integer playerNo) {
 		
 		int i;

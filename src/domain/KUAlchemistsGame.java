@@ -32,7 +32,6 @@ public class KUAlchemistsGame {
 	private static List<TurnListener> turnListeners;
 	private static List<EndListener> endListeners;
 
-
 	/**
 	 * Private constructor for the game.
 	 */
@@ -110,6 +109,7 @@ public class KUAlchemistsGame {
     }
     
     public void addPlayer(Player player) {
+    	System.out.println("Player added.");
     	players.add(player);
     	numPlayers++;
     }

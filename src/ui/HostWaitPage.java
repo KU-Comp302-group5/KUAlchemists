@@ -26,7 +26,7 @@ public class HostWaitPage extends JFrame {
 		JLabel label2 = new JLabel("Port: " +  Integer.toString(HandlerFactory.getInstance().getHostHandler().getPort()));
 		label2.setBounds(200, 300, 200, 30);
 		
-		JLabel label3 = new JLabel("Current Number of Players: ");
+		JLabel label3 = new JLabel("Current Number of Players: "); // to do observer pattern for current number of players.
 		label3.setBounds(200, 400, 200, 30);
 		
 		JButton goBtn = new JButton("Go");
@@ -45,5 +45,4 @@ public class HostWaitPage extends JFrame {
 	public void setPanel(JPanel panel) {
 		this.panel = panel;
 	}
-
 }

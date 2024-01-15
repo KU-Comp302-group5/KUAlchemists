@@ -1,5 +1,6 @@
 package ui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import domain.AlchemyMarker;
@@ -22,6 +23,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -46,7 +50,8 @@ public class BoardPage extends JFrame implements ActionListener, EndListener {
 	
 	public BoardPage() {
 		super("KUAlchemists");
-		setPanelBoard(new JPanel());
+		
+		setPanelBoard(new BackgroundPanel("pixil-frame-0.png"));
 		getPanelBoard().setLayout(null);
 		
 		

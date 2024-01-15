@@ -1,5 +1,6 @@
 package ui;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import domain.Avatar;
@@ -9,6 +10,9 @@ import domain.controllers.HandlerFactory;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +105,7 @@ public class LoginPage extends JFrame implements ActionListener{
 				}
 				HandlerFactory.getInstance().getLoginHandler().login(usernamesChosen, avatarsChosen, playerNum);
 				
-				
+
 				BoardPage boardPage = new BoardPage();
 				KUAlchemistsGame.getInstance().addEndListener(boardPage);
 				boardPage.setVisible(true);

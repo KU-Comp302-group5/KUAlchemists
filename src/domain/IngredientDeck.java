@@ -52,7 +52,7 @@ public class IngredientDeck {
 		//Ingredient(name, ID, red, green, blue)
 		Ingredient toad = new Ingredient("toad", 1, as3, as1, as4);
 		Ingredient claw = new Ingredient("claw", 2, as1, as1, as1);
-		Ingredient scorpion = new Ingredient("scorpion", 3, as3, as1, as4);
+		Ingredient scorpion = new Ingredient("scorpion", 3, as3, as4, as2);
 		Ingredient fern = new Ingredient("fern", 4, as2, as2, as2);
 		Ingredient feather = new Ingredient("feather", 5, as1, as4, as3);
 		Ingredient mushroom = new Ingredient("mushroom", 6, as4, as2, as3);

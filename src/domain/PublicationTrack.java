@@ -103,7 +103,7 @@ public class PublicationTrack {
 		//Ingredient(name, ID, red, green, blue)
 		Ingredient toad = new Ingredient("toad", 1, as3, as1, as4);
 		Ingredient claw = new Ingredient("claw", 2, as1, as1, as1);
-		Ingredient scorpion = new Ingredient("scorpion", 3, as3, as1, as4);
+		Ingredient scorpion = new Ingredient("scorpion", 3, as3, as4, as2);
 		Ingredient fern = new Ingredient("fern", 4, as2, as2, as2);
 		Ingredient feather = new Ingredient("feather", 5, as1, as4, as3);
 		Ingredient mushroom = new Ingredient("mushroom", 6, as4, as2, as3);
@@ -134,7 +134,7 @@ public class PublicationTrack {
 		//AlchemyMarker(red, green, blue, id)
 		AlchemyMarker marker1 = new AlchemyMarker(as3, as1, as4, 1);
 		AlchemyMarker marker2 = new AlchemyMarker(as1, as1, as1, 2);
-		AlchemyMarker marker3 = new AlchemyMarker(as3, as1, as4, 3);
+		AlchemyMarker marker3 = new AlchemyMarker(as3, as4, as2, 3);
 		AlchemyMarker marker4 = new AlchemyMarker(as2, as2, as2, 4);
 		AlchemyMarker marker5 = new AlchemyMarker(as1, as4, as3, 5);
 		AlchemyMarker marker6 = new AlchemyMarker(as4, as2, as3, 6);

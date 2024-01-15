@@ -48,8 +48,20 @@ public class OnlineLoginPage extends JFrame{
 		btngroup.add(av2);
 		btngroup.add(av3);
 		
+		JLabel label3 = new JLabel("IP Address");
+		label3.setBounds(200, 400, 200, 30);
+		
+		JTextField IPaddress = new JTextField();
+		IPaddress.setBounds(200, 435, 200, 30);
+		
+		JLabel label4 = new JLabel("Port Number");
+		label4.setBounds(200, 500, 200, 30);
+		
+		JTextField portNo = new JTextField();
+		portNo.setBounds(200, 535, 200, 30);
+		
 		JButton hostBtn = new JButton("Host");
-		hostBtn.setBounds(200, 460, 80, 30);
+		hostBtn.setBounds(200, 600, 80, 30);
 		hostBtn.addActionListener( 
 				new ActionListener() { 
 					@Override
@@ -69,7 +81,24 @@ public class OnlineLoginPage extends JFrame{
 				);
 		
 		JButton joinBtn = new JButton("Join");
-		joinBtn.setBounds(300, 460, 80, 30);
+		joinBtn.setBounds(300, 600, 80, 30);
+		joinBtn.addActionListener(
+				new ActionListener() { 
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						HandlerFactory.getInstance().getJoinHandler().connectToServer(IPaddress.getText(), portNo.getText());
+						HandlerFactory.getInstance().getJoinHandler().login(username.getText(), 1);
+						
+						JoinWaitPage joinPage = new JoinWaitPage();
+						joinPage.setVisible(true);
+						joinPage.add(joinPage.getPanel());
+						joinPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
+						joinPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				
+						dispose();
+					}
+				}
+				);
 		
 		panel.add(label);
 		panel.add(username);
@@ -77,6 +106,10 @@ public class OnlineLoginPage extends JFrame{
 		panel.add(av1);
 		panel.add(av2);
 		panel.add(av3);
+		panel.add(label3);
+		panel.add(IPaddress);
+		panel.add(label4);
+		panel.add(portNo);
 		panel.add(hostBtn);
 		panel.add(joinBtn);
 	}

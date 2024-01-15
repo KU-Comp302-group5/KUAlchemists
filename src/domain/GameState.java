@@ -30,7 +30,7 @@ public class GameState implements Serializable  {
 	private boolean isNewPlayer; // if newPlayer, then players include only one player which is the new player.
 	private boolean startGame;
 	
-	public GameState(boolean isNewPlayer, boolean quit)  {
+	public GameState(boolean isNewPlayer, boolean startGame, boolean quit)  {
 		
 		this.quit = quit;
 		this.isNewPlayer = isNewPlayer;

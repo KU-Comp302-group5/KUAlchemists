@@ -28,7 +28,7 @@ public class LoginPage extends JFrame implements ActionListener{
 	
 
 	public  LoginPage() {
-		super("Log-in Page");		
+		super("Login Page");		
 		panelLogin = new JPanel();
 		panelLogin.setLayout(null);
 		
@@ -50,7 +50,6 @@ public class LoginPage extends JFrame implements ActionListener{
 			@Override
 				public void actionPerformed(ActionEvent arg0) {
 				
-					
 					panelLogin.remove(addPlayerBtn2);
 					panelLogin.revalidate();
 					panelLogin.repaint();
@@ -100,7 +99,6 @@ public class LoginPage extends JFrame implements ActionListener{
 					usernamesChosen.add(textfields.get(i).getText());
 				}
 				HandlerFactory.getInstance().getLoginHandler().login(usernamesChosen, avatarsChosen, playerNum);
-				
 				
 				BoardPage boardPage = new BoardPage();
 				KUAlchemistsGame.getInstance().addEndListener(boardPage);

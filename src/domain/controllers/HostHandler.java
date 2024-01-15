@@ -1,8 +1,11 @@
 package domain.controllers;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import domain.KUAlchemistsGame;
 import domain.Server;
 
 public class HostHandler {
@@ -14,18 +17,26 @@ public class HostHandler {
 	
 	public void startServer() {
 		server = new Server();
-		IPAddress = server.getIPAdress();
-		port = server.getPortNumber();
+		port = 9999;
 		
 		pool = Executors.newCachedThreadPool();
 		pool.execute(server);
 	}
 
-	public Server getServer() {
-		return server;
+	public String getIPAddress() {
+		try {
+			return InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public int getPort() {
 		return port;
+	}
+
+	public void login(String username, int avatar) {
+		KUAlchemistsGame.getInstance().createPlayer(username, avatar);
 	}
 }

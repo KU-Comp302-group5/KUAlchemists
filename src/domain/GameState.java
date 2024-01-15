@@ -28,6 +28,7 @@ public class GameState implements Serializable  {
     // Other
 	private boolean quit;
 	private boolean isNewPlayer; // if newPlayer, then players include only one player which is the new player.
+	private boolean startGame;
 	
 	public GameState(boolean isNewPlayer, boolean quit)  {
 		

@@ -51,20 +51,6 @@ public class Server implements Runnable {
 		}
 	}
 	
-	public String getIPAdress() {
-		try {
-			return InetAddress.getLocalHost().getHostName();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public int getPortNumber() {
-		return server.getLocalPort();
-	}
-	
 	public void shutdown() {
 		accepting = false;
 		if (! server.isClosed()) {

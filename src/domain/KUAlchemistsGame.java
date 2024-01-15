@@ -26,6 +26,7 @@ public class KUAlchemistsGame {
 
 	private static int numPlayers;
 	private static int currentPlayerNo;
+	private static int thisPlayerNo;
 	private static int turnCounter;
 	
 	private static List<TurnListener> turnListeners;

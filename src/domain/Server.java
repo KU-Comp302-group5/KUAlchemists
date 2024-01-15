@@ -81,7 +81,7 @@ public class Server implements Runnable {
 				
 				GameState gameState;
 				try {
-					while (( gameState = (GameState)in.readObject() ) != null) {
+					while ((gameState = (GameState)in.readObject()) != null) {
 						broadcastGameState(gameState);
 					}
 				} catch (ClassNotFoundException e) {

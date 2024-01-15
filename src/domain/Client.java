@@ -14,8 +14,12 @@ public class Client implements Runnable {
 	private Socket client;
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
+	private String address;
+	private int port;
 
-	public Client() {
+	public Client(String address, int port) {
+		this.address = address;
+		this.port = port;
 	}
 	
 	public void broadcastChange(GameState state) {
@@ -30,14 +34,14 @@ public class Client implements Runnable {
 	@Override
 	public void run() {
 		try {
-			client = new Socket("127.0.0.1", 9999);
+			client = new Socket(this.address, this.port);
 			out = new ObjectOutputStream(client.getOutputStream());
 			in = new ObjectInputStream(client.getInputStream());
 			
 			GameState gameState;
 			try {
-				while(( gameState = (GameState)in.readObject() ) != null  ) {
-					//get incoming game state and handle here.
+				while((gameState = (GameState)in.readObject()) != null) {
+					gameState.updateGameState();
 				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();

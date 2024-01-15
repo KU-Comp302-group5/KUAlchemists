@@ -33,7 +33,7 @@ public class LoginPage extends JFrame implements ActionListener{
 
 	public  LoginPage() {
 		super("Log-in Page");		
-		panelLogin = new JPanel();
+		panelLogin = new BackgroundPanel("pixil-frame-0.png");
 		panelLogin.setLayout(null);
 		
 		// initialize

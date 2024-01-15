@@ -138,7 +138,7 @@ public class BoardPage extends JFrame implements ActionListener, EndListener {
         //KUAlchemistsGame.getInstance().getPlayer(1).addIngListener((SellPotionPanel) sellPotionPanel);
         //KUAlchemistsGame.getInstance().getPlayer(2).addIngListener((SellPotionPanel) sellPotionPanel);
 
-        publicationArea.setBounds(700, 400, 550, 300);
+        publicationArea.setBounds(700, 300, 550, 600);
         publicationArea.setLayout(null);
         publicationArea.setBackground(Color.RED);
         publicationArea.updatePublicationArea();
@@ -1026,9 +1026,11 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             List<AlchemyMarker> markers = HandlerFactory.getInstance().getPublicationHandler().getAvailableAlchemies();
             
             for (int i=0; i<markers.size(); i++) {
-            	
-            	JRadioButton markerBtn= new JRadioButton(Integer.toString(markers.get(i).getID()));
-            	markerBtn.setBounds(160, 30 + 30*i, 100, 20);
+            	//Integer.toString(markers.get(i).getID())
+            	JRadioButton markerBtn= new JRadioButton();
+            	markerBtn.setIcon(new ImageIcon(markers.get(i).getImage()));
+            	markerBtn.setBounds(160, 30 + 60*i, markerBtn.getIcon().getIconWidth(), markerBtn.getIcon().getIconHeight());
+            	markerBtn.setMargin(new Insets(0,0,0,0));
             	markerBtn.addItemListener(this);
             	markerGroup.add(markerBtn);
             	this.add(markerBtn);

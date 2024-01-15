@@ -18,7 +18,5 @@ public class OnlineAdapter implements IGameAdapter{
 		onlineLoginPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		onlineLoginPage.setVisible(true);
 		onlineLoginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 	}
-
 }

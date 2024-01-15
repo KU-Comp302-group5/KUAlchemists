@@ -13,7 +13,6 @@ public class OnlineLoginPage extends JFrame{
 	
 	private JPanel panel;
 	
-	
 	public OnlineLoginPage() {
 		super("Login Page");
 		panel = new JPanel();
@@ -57,7 +56,6 @@ public class OnlineLoginPage extends JFrame{
 		panel.add(av3);
 		panel.add(hostBtn);
 		panel.add(joinBtn);
-		
 	}
 
 
@@ -69,7 +67,4 @@ public class OnlineLoginPage extends JFrame{
 	public void setPanel(JPanel panel) {
 		this.panel = panel;
 	}
-	
-	
-
 }

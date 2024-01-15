@@ -26,7 +26,7 @@ public class KUAlchemistsGame {
 
 	private static int numPlayers;
 	private static int currentPlayerNo;
-	private static int thisPlayerNo;
+	private static int thisPlayerNo; // for online only
 	private static int turnCounter;
 	
 	private static List<TurnListener> turnListeners;
@@ -82,7 +82,6 @@ public class KUAlchemistsGame {
      * This method now uses adapters to start the appropriate page. 
      */
     public void startLoginView() {
-    	
     	gameMode.startLoginView();
     }
     
@@ -172,7 +171,6 @@ public class KUAlchemistsGame {
 		if (gamemode.equals("offline")) {
 			gameMode = new OfflineAdapter();
 		}
-		
 	}
 
 	public static int getTurnCounter() {
@@ -181,5 +179,13 @@ public class KUAlchemistsGame {
 
 	public static void setTurnCounter(int turnCounter) {
 		KUAlchemistsGame.turnCounter = turnCounter;
+	}
+
+	public static int getThisPlayerNo() {
+		return thisPlayerNo;
+	}
+
+	public static void setThisPlayerNo(int thisPlayerNo) {
+		KUAlchemistsGame.thisPlayerNo = thisPlayerNo;
 	}
 }

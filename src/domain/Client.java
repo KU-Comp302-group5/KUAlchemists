@@ -29,7 +29,6 @@ public class Client implements Runnable {
 
 	@Override
 	public void run() {
-		
 		try {
 			client = new Socket("127.0.0.1", 9999);
 			out = new ObjectOutputStream(client.getOutputStream());

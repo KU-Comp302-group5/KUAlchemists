@@ -109,6 +109,10 @@ public class KUAlchemistsGame {
     	numPlayers++;
     }
     
+    public void addPlayer(Player player) {
+    	players.add(player);
+    	numPlayers++;
+    }
     
     public Player getPlayer(int playerNo) {
     	return players.get(playerNo-1);
@@ -146,6 +150,10 @@ public class KUAlchemistsGame {
 	public static List<Player> getPlayers() {
 		return players;
 	}
+	
+	public static void setPlayers(List<Player> players) {
+		KUAlchemistsGame.players = players;
+	}
 
 	public static int getNumPlayers() {
 		return numPlayers;
@@ -164,5 +172,13 @@ public class KUAlchemistsGame {
 			gameMode = new OfflineAdapter();
 		}
 		
+	}
+
+	public static int getTurnCounter() {
+		return turnCounter;
+	}
+
+	public static void setTurnCounter(int turnCounter) {
+		KUAlchemistsGame.turnCounter = turnCounter;
 	}
 }

@@ -6,6 +6,7 @@ public class Ingredient {
     private Aspect redAspect;
     private Aspect greenAspect;
     private Aspect blueAspect;
+    private String image; 
     
 	public Ingredient(String name, int id, Aspect redAspect, Aspect greenAspect, Aspect blueAspect) {
 		this.name = name;
@@ -13,6 +14,40 @@ public class Ingredient {
 		this.redAspect = redAspect;
 		this.greenAspect = greenAspect;
 		this.blueAspect = blueAspect;
+		switch(id) {
+		case 1:
+			this.image="rat.png";
+			break;
+		case 2:
+			this.image="birdi.png";
+			break;
+		case 3:
+			this.image="garlic.png";
+			break;
+		case 4:
+			this.image="clover.png";
+			break;
+		case 5:
+			this.image="aloevera.png";
+			break;
+		case 6:
+			this.image="mushroomi.png";
+			break;
+		case 7:
+			this.image="floweri.png";
+			break;
+		case 8:
+			this.image="bluelotus.png";
+			break;
+		}
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	@Override

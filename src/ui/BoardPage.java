@@ -584,7 +584,9 @@ public class BoardPage extends JFrame implements ActionListener, EndListener {
             this.add(pi_text);
             
             for (int i = 0; i < KUAlchemistsGame.getInstance().getPlayer(playerNum).getIngredients().size(); i++) {
-                JButton player_ing = new JButton(KUAlchemistsGame.getInstance().getPlayer(playerNum).getIngredients().get(i).toString());
+            	//KUAlchemistsGame.getInstance().getPlayer(playerNum).getIngredients().get(i).toString()
+                JButton player_ing = new JButton();
+                player_ing.setIcon(new ImageIcon(KUAlchemistsGame.getInstance().getPlayer(playerNum).getIngredients().get(i).getImage()));
                 player_ing.setBounds(10, 20+9*i, 80, 30);
                 this.add(player_ing);
                 player_ing.addActionListener(e -> {
@@ -743,9 +745,11 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             ingrindex = new ArrayList<Integer>();
             
             for (int i=0; i<KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().size(); i++) {
-    			
-    			JCheckBox player_ing = new JCheckBox(KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).toString());
-    			player_ing.setBounds(20, 30 + 30 * i, 200, 20); // should change
+            	//KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).toString()
+    			JCheckBox player_ing = new JCheckBox();
+    			player_ing.setIcon(new ImageIcon(KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).getImage()));
+    			player_ing.setBounds(20, 30 + 30 * i, 40, 30); // should change
+    			player_ing.setOpaque(false);
     			checkboxes.add(player_ing);
     			this.add(player_ing);
                 player_ing.addItemListener(this);
@@ -775,11 +779,12 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
 						clickedcheckboxes.remove(0);
 						ingrindex.remove(0);
 						temp.setSelected(false);
-						
+						temp.setBorderPainted(false);						
 					}
 					
 					ingrindex.add(checkboxes.indexOf(e.getSource()));
 					clickedcheckboxes.add((JCheckBox) e.getSource());
+					((JCheckBox) e.getSource()).setBorderPainted(true);
 					
 					if(ingrindex.size()==2) {
 						testBtn1.setVisible(true);
@@ -902,9 +907,11 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             ingrindex = new ArrayList<Integer>(); //keeps the indices of the chosen ingredients in the player's ingredient list
             
             for (int i=0; i<KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().size(); i++) {
-    			
-    			JCheckBox player_ing = new JCheckBox(KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).toString());
-    			player_ing.setBounds(20, 30 + 30 * i, 200, 20); // should change
+    			//KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).toString()
+    			JCheckBox player_ing = new JCheckBox();
+    			player_ing.setIcon(new ImageIcon(KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).getImage()));
+    			player_ing.setBounds(20, 30 + 30 * i, 40, 30); // should change
+    			player_ing.setOpaque(false);
     			checkboxes.add(player_ing);
     			this.add(player_ing);
                 player_ing.addItemListener(this);
@@ -932,11 +939,13 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
 						clickedcheckboxes.remove(0); //discard the first chosen ingredient
 						ingrindex.remove(0); //discard the index of the first chosen ingredient
 						temp.setSelected(false); //discard the first chosen ingredient
+						temp.setBorderPainted(false);
 						
 					}
 					
 					ingrindex.add(checkboxes.indexOf(e.getSource())); //add the index of the new chosen ingredient
 					clickedcheckboxes.add((JCheckBox) e.getSource()); //add the new chosen ingredient
+					((JCheckBox) e.getSource()).setBorderPainted(true);
 					
 					if(ingrindex.size()==2) { //two ingredients are chosen --> show the prediction buttons
 						predBtn1.setVisible(true);
@@ -988,6 +997,8 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
     	List<JRadioButton> theoryButtons;
     	JButton debunkBtn;
     	List<JRadioButton> aspectButtons;
+    	List<JRadioButton> ingrButtons;
+    	List<JRadioButton> markerButtons;
     	
     	public void updatePublicationArea() {
     		
@@ -1011,25 +1022,31 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
             ButtonGroup theoryGroup = new ButtonGroup();
             ButtonGroup aspectGroup = new ButtonGroup();
             
+            ingrButtons = new ArrayList<JRadioButton>();
             List<Ingredient> ingrs = HandlerFactory.getInstance().getPublicationHandler().getAvailableIngredients();
             
             for (int i=0; i<ingrs.size(); i++) {
-            	
-            	JRadioButton ingrBtn= new JRadioButton(ingrs.get(i).getName());
-            	ingrBtn.setBounds(10, 30 + 30*i, 100, 20);
+            	//ingrs.get(i).getName()
+            	JRadioButton ingrBtn= new JRadioButton();
+            	ingrButtons.add(ingrBtn);
+            	ingrBtn.setIcon(new ImageIcon(ingrs.get(i).getImage()));
+            	ingrBtn.setBounds(10, 30 + 60*i, 65, 59);
+            	ingrBtn.setOpaque(false);
             	ingrBtn.addItemListener(this);
             	ingrGroup.add(ingrBtn);
             	this.add(ingrBtn);
             	ingrBtn.setVisible(true);
             }
-            
+            markerButtons = new ArrayList<JRadioButton>();
             List<AlchemyMarker> markers = HandlerFactory.getInstance().getPublicationHandler().getAvailableAlchemies();
             
             for (int i=0; i<markers.size(); i++) {
             	//Integer.toString(markers.get(i).getID())
             	JRadioButton markerBtn= new JRadioButton();
+            	markerButtons.add(markerBtn);
             	markerBtn.setIcon(new ImageIcon(markers.get(i).getImage()));
-            	markerBtn.setBounds(160, 30 + 60*i, markerBtn.getIcon().getIconWidth(), markerBtn.getIcon().getIconHeight());
+            	markerBtn.setBounds(160, 30 + 60*i, 65, 59);
+            	markerBtn.setOpaque(false);
             	markerBtn.setMargin(new Insets(0,0,0,0));
             	markerBtn.addItemListener(this);
             	markerGroup.add(markerBtn);
@@ -1194,6 +1211,23 @@ private class PotionBrew extends JPanel implements TurnListener, ItemListener {
 			if(aspectButtons.contains(e.getSource())) {
 				debunkBtn.setVisible(true);
 			}
+			if (ingrButtons.contains(e.getSource())) {
+				if (e.getStateChange()==1) {
+					((JRadioButton) e.getSource()).setBorderPainted(true);
+				}
+				else {
+					((JRadioButton) e.getSource()).setBorderPainted(false);
+				}
+			}
+			if (markerButtons.contains(e.getSource())) {
+				if (e.getStateChange()==1) {
+					((JRadioButton) e.getSource()).setBorderPainted(true);
+				}
+				else {
+					((JRadioButton) e.getSource()).setBorderPainted(false);
+				}
+			}
+			
 		}
 
 		@Override

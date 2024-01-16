@@ -15,6 +15,8 @@ public class JoinWaitPage extends JFrame {
 		
 		JLabel label = new JLabel("Waiting for host to start game.");
 		label.setBounds(200, 200, 200, 30);
+		
+		panel.add(label);
 	}
 	
 	public JPanel getPanel() {
@@ -24,5 +26,8 @@ public class JoinWaitPage extends JFrame {
 	public void setPanel(JPanel panel) {
 		this.panel = panel;
 	}
-
+	
+	public void disposePage() {
+		dispose();
+	}
 }

@@ -74,7 +74,8 @@ public class OnlineLoginPage extends JFrame{
 						hostPage.add(hostPage.getPanel());
 						hostPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
 						hostPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				
+						KUAlchemistsGame.getInstance().addPlayerNumListener(hostPage);	
+						
 						dispose();
 					}
 				}

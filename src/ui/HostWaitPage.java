@@ -1,5 +1,8 @@
 package ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -9,13 +12,16 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import domain.KUAlchemistsGame;
+import domain.playerNumListener;
 import domain.controllers.HandlerFactory;
 
-public class HostWaitPage extends JFrame {
+public class HostWaitPage extends JFrame implements playerNumListener  {
 	
 	private JPanel panel;
+	private JLabel label3;
 
-	public HostWaitPage() {
+	public HostWaitPage(){
 		super("Hosting Page");
 		panel = new JPanel();
 		panel.setLayout(null);
@@ -26,11 +32,21 @@ public class HostWaitPage extends JFrame {
 		JLabel label2 = new JLabel("Port: " +  Integer.toString(HandlerFactory.getInstance().getHostHandler().getPort()));
 		label2.setBounds(200, 300, 200, 30);
 		
-		JLabel label3 = new JLabel("Current Number of Players: "); // to do observer pattern for current number of players.
+		int numPlayers = KUAlchemistsGame.getNumPlayers();
+		label3 = new JLabel("Current Number of Players: " + Integer.toString(numPlayers)); // to do observer pattern for current number of players.
 		label3.setBounds(200, 400, 200, 30);
 		
 		JButton goBtn = new JButton("Go");
 		goBtn.setBounds(282, 500, 80, 30);
+		goBtn.addActionListener( 
+				new ActionListener() { 
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						HandlerFactory.getInstance().getJoinHandler().startGame();
+						dispose();
+					}
+				}
+				);
 		
 		panel.add(label1);
 		panel.add(label2);
@@ -44,5 +60,12 @@ public class HostWaitPage extends JFrame {
 
 	public void setPanel(JPanel panel) {
 		this.panel = panel;
+	}
+
+	@Override
+	public void onPlayerNumChange() {
+		int numPlayers = KUAlchemistsGame.getNumPlayers();
+		label3.setText("Current Number of Players: " + Integer.toString(numPlayers));
+		panel.add(label3);
 	}
 }

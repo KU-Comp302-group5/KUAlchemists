@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import domain.controllers.HandlerFactory;
 import ui.GameModePage;
 import ui.LoginPage;
 
@@ -24,6 +25,7 @@ public class KUAlchemistsGame {
 	private static int numPlayers;
 	private static int currentPlayerNo;
 	private static int thisPlayerNo; //for online only
+	private static String devicePlayer; //for online only
 	private static int turnCounter;
 	private static List<TurnListener> turnListeners;
 	private static List<EndListener> endListeners;
@@ -140,6 +142,7 @@ public class KUAlchemistsGame {
 	    if (currentPlayerNo == 1) { // if all players took turns, game finishes when everyone has taken 9 turns
 	    	turnCounter++;
 	    	System.out.println("TURN COUNTER IS: " + turnCounter);
+	    	HandlerFactory.getInstance().getJoinHandler().broadcastGameState(false, false, false);
 	    }
 	    
 	    if (turnCounter == 10) {
@@ -198,5 +201,13 @@ public class KUAlchemistsGame {
 
 	public static void setThisPlayerNo(int thisPlayerNo) {
 		KUAlchemistsGame.thisPlayerNo = thisPlayerNo;
+	}
+
+	public static String getDevicePlayer() {
+		return devicePlayer;
+	}
+
+	public static void setDevicePlayer(String devicePlayer) {
+		KUAlchemistsGame.devicePlayer = devicePlayer;
 	}
 }

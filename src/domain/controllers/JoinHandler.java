@@ -31,6 +31,7 @@ public class JoinHandler {
 	
 	public void login(String username, int avatar) {
 		KUAlchemistsGame.getInstance().createPlayer(username, avatar);
+		KUAlchemistsGame.getInstance().setDevicePlayer(username);
 		broadcastGameState(true, false, false);
 	}
 	

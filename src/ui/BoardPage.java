@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-public class BoardPage extends JFrame implements ActionListener, EndListener {
+public class BoardPage extends JFrame implements ActionListener, EndListener, TurnListener {
 	
 	private static JPanel panelBoard, player1_ingr, player2_ingr, player3_ingr, player4_ingr,
 				   player1_arts, player2_arts, player3_arts, player4_arts,
@@ -41,7 +41,7 @@ public class BoardPage extends JFrame implements ActionListener, EndListener {
 				   name, avatar, name2, avatar2, name3, avatar3, name4, avatar4;
 				   //p1a_text, p2a_text, p3a_text, p4a_text,
 				   //p1i_text, p2i_text, p3i_text, p4i_text
-	//private int currentPlayer;
+	private JDialog waitTurn;
 	
 	public BoardPage() {
 		super("KUAlchemists");
@@ -1133,6 +1133,22 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 	    pause.setLocationRelativeTo(pauseText);
 	    pause.setVisible(true);
 	}
+	
+	private void showWaitTurnDialog() {
+	    waitTurn = new JDialog(
+	    		this, 
+	    		"Wait for yout turn", 
+	    		true);
+	    waitTurn.setSize(300, 100);
+	    JLabel waitText = new JLabel("Game is paused. Press OK to continue.");
+	    waitTurn.add(waitText, BorderLayout.CENTER);
+	    waitTurn.setLocationRelativeTo(waitText);
+	    waitTurn.setVisible(true);
+	}
+	
+	private void disposeWaitTurn() {
+		waitTurn.dispose();
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -1145,5 +1161,18 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 
 	public static void setPanelBoard(JPanel panelBoard) {
 		BoardPage.panelBoard = panelBoard;
+	}
+
+
+	@Override
+	public void onTurnChange() {
+		String currentName = KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername();
+		String playerName = KUAlchemistsGame.getInstance().getDevicePlayer();
+		if (! playerName.equals(currentName)) {
+			showWaitTurnDialog();
+		}
+		else {
+			disposeWaitTurn();
+		}
 	}
 }

@@ -34,6 +34,7 @@ import domain.controllers.HandlerFactory;
 
 public class DeductionBoardDialog extends JDialog implements DBListener{
 	JPanel resultsTriangleJPanel, deductionGridJPanel, ingredientsJPanel;
+	String[] ingredients; // = {"toad", "claw", "scorpion", "fern", "feather", "mushroom", "flower", "root"}; 
 	
 
 
@@ -46,6 +47,7 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 		
 		this.dBoard = KUAlchemistsGame.getInstance().getCurrentPlayer().getdBoard();
 		this.selectedQuality = 2;
+		this.ingredients = new String[]{"toad", "claw", "scorpion", "fern", "feather", "mushroom", "flower", "root"}; 
 		
 		setResultsTriangle(new JPanel());
 		getResultsTriangle().setLayout(null);
@@ -72,13 +74,13 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 	
 
     public void IngredientPanel() {
-    	String[] ingredients = {"toad", "claw", "scorpion", "fern", "feather", "mushroom", "flower", "root"};  // Your ingredients array
+    	 
         int imageWidth = 25;  // Adjust based on your image dimensions
         
                 
         
         for (int i = 0; i < 8; i++) {
-            ImageIcon image = createImageIcon("ingredient-" + ingredients[i] + ".png");
+            ImageIcon image = createImageIcon("ingredient-" + this.ingredients[i] + ".png", 25, 50);
             JLabel label = new JLabel(image);
             //label.setPreferredSize(new Dimension(imageWidth, image.getIconHeight()));  // Maintain aspect ratio
             label.setBounds(15 + 50*i, 0, 25, 50);
@@ -87,18 +89,18 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
         
     }
 	
-	private ImageIcon createImageIcon(String path){
-		ImageIcon ingIcon = null;
+	private ImageIcon createImageIcon(String path, int width, int height){
+		ImageIcon icon = null;
 		try {
 			System.out.println(path);
             BufferedImage image = ImageIO.read(new File(path));
-            Image resizedImage = image.getScaledInstance(25, 50, Image.SCALE_SMOOTH);
-            ingIcon = new ImageIcon(resizedImage);
+            Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            icon = new ImageIcon(resizedImage);
             
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-		return ingIcon;
+		return icon;
 	}
 	
 	// GETTERS AND SETTERS
@@ -133,7 +135,8 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 			int tempi = i;
 			for (int j = 0; j < 8; j++) {	//iterate over ingredients
 				int tempj = j;
-				JButton button = new JButton();
+				ImageIcon marker = createImageIcon(this.ingredients[i] + ".png", 50, 50);
+				JButton button = new JButton(marker);
 				button.setOpaque(true); // Set opaque to true to see the background color
                 if (dGrid[j][i]) {
                 	button.setBackground(Color.RED); // set red if marked by user 

@@ -304,32 +304,6 @@ public class BoardPage extends JFrame implements ActionListener, EndListener {
 	
 	@Override
 	public void onEndChange() {
-//		// Create the dialog
-//	    JDialog endGameDialog = new JDialog();
-//	    endGameDialog.setTitle("Results");
-//	    endGameDialog.setSize(300, 150);
-//	    endGameDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-//	    endGameDialog.setLayout(new BorderLayout());
-//	    endGameDialog.setLocationRelativeTo(null);
-//	    endGameDialog.setModal(true);
-//
-//	    // Create a label for the message
-//	    JLabel messageLabel = new JLabel("End of the game.");
-//	    endGameDialog.add(messageLabel, BorderLayout.CENTER);
-//
-//	    // Create a button to exit the program
-//	    JButton exitButton = new JButton("Exit");
-//	    exitButton.addActionListener(e -> {
-//	        System.exit(0); // Terminate program execution
-//	    });
-//
-//	    // Add the exit button to the dialog
-//	    JPanel buttonPanel = new JPanel();
-//	    buttonPanel.add(exitButton);
-//	    endGameDialog.add(buttonPanel, BorderLayout.SOUTH);
-//
-//	    // Make the dialog visible
-//	    endGameDialog.setVisible(true);
 //		
 		String[] playerNames = KUAlchemistsGame.getInstance().getPlayerNames();
 		List<Integer> playerScores = KUAlchemistsGame.getInstance().getScores();

@@ -19,16 +19,12 @@ public class KUAlchemistsGame {
 	private static KUAlchemistsGame game;
 	private static GameModePage gameModePage; //the initial window of the game 
 	private static LoginPage loginPage;
-	
 	private static IGameAdapter gameMode; //adapter pattern here
-	
 	private static List<Player> players = new ArrayList<Player>();
-
 	private static int numPlayers;
 	private static int currentPlayerNo;
 	private static int thisPlayerNo; // for online only
 	private static int turnCounter;
-	
 	private static List<TurnListener> turnListeners;
 	private static List<EndListener> endListeners;
 

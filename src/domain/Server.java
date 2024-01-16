@@ -25,14 +25,18 @@ public class Server implements Runnable {
 	public Server() {
 		connections = new ArrayList<ConnectionHandler>();
 		accepting = true;
+		try {
+			server = new ServerSocket(9999);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		pool = Executors.newCachedThreadPool();
 	}
 
 	@Override
 	public void run() {
 		try {
 			while(accepting) {
-				server = new ServerSocket(9999);
-				pool = Executors.newCachedThreadPool();
 				Socket client = server.accept();
 				ConnectionHandler connectionHandler = new ConnectionHandler(client);
 				connections.add(connectionHandler);

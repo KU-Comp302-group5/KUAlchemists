@@ -20,6 +20,17 @@ public class Client implements Runnable {
 	public Client(String address, int port) {
 		this.address = address;
 		this.port = port;
+		try {
+			client = new Socket(this.address, this.port);
+			out = new ObjectOutputStream(client.getOutputStream());
+			in = new ObjectInputStream(client.getInputStream());
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 	
 	public void broadcastChange(GameState state) {
@@ -34,10 +45,6 @@ public class Client implements Runnable {
 	@Override
 	public void run() {
 		try {
-			client = new Socket(this.address, this.port);
-			out = new ObjectOutputStream(client.getOutputStream());
-			in = new ObjectInputStream(client.getInputStream());
-			
 			GameState gameState;
 			try {
 				while((gameState = (GameState)in.readObject()) != null) {

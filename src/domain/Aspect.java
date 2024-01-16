@@ -1,6 +1,8 @@
 package domain;
 
-public class Aspect {
+import java.io.Serializable;
+
+public class Aspect implements Serializable {
 	private boolean sign;
 	private boolean circleSize;
 

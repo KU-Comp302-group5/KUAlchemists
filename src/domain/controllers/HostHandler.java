@@ -37,5 +37,6 @@ public class HostHandler {
 
 	public void login(String username, int avatar) {
 		KUAlchemistsGame.getInstance().createPlayer(username, avatar);
+		HandlerFactory.getInstance().getJoinHandler().connectToServer(getIPAddress(), Integer.toString(port));
 	}
 }

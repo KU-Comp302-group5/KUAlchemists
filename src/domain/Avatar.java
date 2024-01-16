@@ -1,8 +1,10 @@
 package domain;
 
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
-public class Avatar {
+public class Avatar implements Serializable {
     private int avatarType;
     public static ImageIcon avatar1 = new ImageIcon("avatar1.png");
     public static ImageIcon avatar2 = new ImageIcon("avatar2.png");

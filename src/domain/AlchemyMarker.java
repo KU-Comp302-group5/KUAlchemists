@@ -26,7 +26,7 @@ public class AlchemyMarker {
 			this.image="fern.png";
 			break;
 		case 5:
-			this.image="feather.png";
+			this.image="fether.png";
 			break;
 		case 6:
 			this.image="mushroom.png";

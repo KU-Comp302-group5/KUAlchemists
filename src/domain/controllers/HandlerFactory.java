@@ -18,9 +18,6 @@ public class HandlerFactory {
 	private MakeExperimentHandler makeExperimentHandler;
 	private PublicationHandler publicationHandler;
 	private SellPotionHandler sellPotionHandler;
-	private GameModeHandler gameModeHandler;
-	private HostHandler hostHandler;
-	private JoinHandler joinHandler;
 	
 	public static HandlerFactory getInstance() {
 		if (instance == null) {
@@ -40,9 +37,6 @@ public class HandlerFactory {
 		this.makeExperimentHandler = new MakeExperimentHandler();
 		this.publicationHandler = new PublicationHandler();
 		this.sellPotionHandler = new SellPotionHandler();
-		this.hostHandler = new HostHandler();
-		this.joinHandler = new JoinHandler();
-		this.gameModeHandler = new GameModeHandler();
 	}
 	
 	public PublicationHandler getPublicationHandler() {
@@ -113,31 +107,6 @@ public class HandlerFactory {
 	public void setSellPotionHandler(SellPotionHandler sellPotionHandler) {
 		this.sellPotionHandler = sellPotionHandler;
 	}
-
-	public GameModeHandler getGameModeHandler() {
-		return gameModeHandler;
-	}
-
-	public void setGameModeHandler(GameModeHandler gameModeHandler) {
-		this.gameModeHandler = gameModeHandler;
-	}
-
-	public HostHandler getHostHandler() {
-		return hostHandler;
-	}
-
-	public void setHostHandler(HostHandler hostHandler) {
-		this.hostHandler = hostHandler;
-	}
-
-	public JoinHandler getJoinHandler() {
-		return joinHandler;
-	}
-
-	public void setJoinHandler(JoinHandler joinHandler) {
-		this.joinHandler = joinHandler;
-	}
-	
 	
 	
 	

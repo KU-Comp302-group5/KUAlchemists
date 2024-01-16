@@ -89,12 +89,7 @@ public class OnlineLoginPage extends JFrame{
 					public void actionPerformed(ActionEvent arg0) {
 						HandlerFactory.getInstance().getJoinHandler().connectToServer(IPaddress.getText(), portNo.getText());
 						HandlerFactory.getInstance().getJoinHandler().login(username.getText(), 1);
-						
-						JoinWaitPage joinPage = new JoinWaitPage();
-						joinPage.setVisible(true);
-						joinPage.add(joinPage.getPanel());
-						joinPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
-						joinPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						HandlerFactory.getInstance().getJoinHandler().openJoinWaitPage();
 				
 						dispose();
 					}

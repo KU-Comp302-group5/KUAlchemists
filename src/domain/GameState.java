@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
+
+import domain.controllers.HandlerFactory;
+import ui.BoardPage;
+
 public class GameState implements Serializable  {
 	
 	// From KUAlchemistsGame
@@ -34,6 +39,7 @@ public class GameState implements Serializable  {
 		
 		this.quit = quit;
 		this.isNewPlayer = isNewPlayer;
+		this.startGame = startGame;
 		
 		// From KUAlchemistsGame
 		this.players =  KUAlchemistsGame.getPlayers();
@@ -66,11 +72,6 @@ public class GameState implements Serializable  {
 		}
 		
 		else {
-			
-			if (startGame) {
-				//handle here
-			}
-			
 			// KUAlchemistsGame related
 			KUAlchemistsGame.setPlayers(players);
 			KUAlchemistsGame.setNumPlayers(numPlayers);
@@ -89,6 +90,17 @@ public class GameState implements Serializable  {
 			PublicationTrack.getInstance().setAvailableAlchemies(availableAlchemies);
 			PublicationTrack.getInstance().setAvailableIngredients(availableIngredients);
 			PublicationTrack.getInstance().setPublishedTheories(publishedTheories);
+			
+			if (startGame) {
+				HandlerFactory.getInstance().getJoinHandler().disposeJoinPage();
+				
+				BoardPage boardPage = new BoardPage();
+				KUAlchemistsGame.getInstance().addEndListener(boardPage);
+				boardPage.setVisible(true);
+				boardPage.add(BoardPage.getPanelBoard());
+				boardPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				boardPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			}
 		}
 	}
 }

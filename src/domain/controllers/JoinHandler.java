@@ -3,14 +3,19 @@ package domain.controllers;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.swing.JFrame;
+
 import domain.Client;
 import domain.GameState;
 import domain.KUAlchemistsGame;
+import ui.JoinWaitPage;
 
 public class JoinHandler {
 	
 	private Client client;
 	private ExecutorService pool;
+	private JoinWaitPage joinPage;
+	private boolean joinPageOpen;
 	
 	public void connectToServer(String address, String port) {
 		int portNo = Integer.valueOf(port);
@@ -31,5 +36,22 @@ public class JoinHandler {
 	
 	public void startGame() {
 		broadcastGameState(false, true, false);
+	}
+
+	public void openJoinWaitPage() {
+		joinPage = new JoinWaitPage();
+		joinPage.setVisible(true);
+		joinPage.add(joinPage.getPanel());
+		joinPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		joinPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		joinPageOpen = true;
+	}
+	
+	public void disposeJoinPage() {
+		if (joinPageOpen) {
+			joinPage.disposePage();
+		}
+		
 	}
 }

@@ -1,6 +1,8 @@
 package domain;
 
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
     private String name;
     private int id;
     private Aspect redAspect;

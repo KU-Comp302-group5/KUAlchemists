@@ -23,6 +23,11 @@ public class KUAlchemistsGame {
 	private static IGameAdapter gameMode; //adapter pattern here
 	
 	private static List<Player> players = new ArrayList<Player>();
+	private static List<Integer> scores = new ArrayList<Integer>();
+
+	public static List<Integer> getScores() {
+		return scores;
+	}
 
 	private static int numPlayers;
 	private static int currentPlayerNo;
@@ -128,11 +133,20 @@ public class KUAlchemistsGame {
 	    }
 	    
 	    if (turnCounter == 10) {
-	    	// TO DO: calculate results
+	    	//calculate results
+	    	for (Player p : players) {
+	    		calculateResults(p);
+	    	}
 	    	publishEndEvent();
 	    }
 	    
 	    publishTurnEvent();
+	}
+	
+	public static void calculateResults(Player p) {
+		int score = 0;
+		score += (p.getReputation() + p.getArtifacts().size() * 2 + (p.getGold() / 3));
+		scores.add(score);
 	}
 
 	public static int getCurrentPlayerNo() {
@@ -163,6 +177,13 @@ public class KUAlchemistsGame {
 		if (gamemode.equals("offline")) {
 			gameMode = new OfflineAdapter();
 		}
-		
+	}
+	
+	public String[] getPlayerNames() {
+		String[] names = new String[numPlayers];
+		for (int i = 0; i <numPlayers; i++) {
+			names[i] = players.get(i).getUsername();
+		}
+		return names;
 	}
 }

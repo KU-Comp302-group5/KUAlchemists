@@ -2,15 +2,22 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -26,7 +33,10 @@ import domain.Potion;
 import domain.controllers.HandlerFactory;
 
 public class DeductionBoardDialog extends JDialog implements DBListener{
-	JPanel resultsTriangleJPanel, deductionGridJPanel;
+	JPanel resultsTriangleJPanel, deductionGridJPanel, ingredientsJPanel;
+	
+
+
 	int selectedQuality;
 	DeductionBoard dBoard;
 	
@@ -44,6 +54,11 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 		
 		this.add(getResultsTriangle());
 		
+		setIngredientsJPanel(new JPanel());
+		getIngredientsJPanel().setBounds(0, 300, 400, 50);
+		getIngredientsJPanel().setLayout(null);
+		IngredientPanel();
+		this.add(getIngredientsJPanel());
 		
 		setDeductionGridJPanel(new JPanel());
 		getDeductionGridJPanel().setLayout(null);
@@ -54,7 +69,47 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 	}
 	
 	
+	
+
+    public void IngredientPanel() {
+    	String[] ingredients = {"toad", "claw", "scorpion", "fern", "feather", "mushroom", "flower", "root"};  // Your ingredients array
+        int imageWidth = 25;  // Adjust based on your image dimensions
+        
+                
+        
+        for (int i = 0; i < 8; i++) {
+            ImageIcon image = createImageIcon("ingredient-" + ingredients[i] + ".png");
+            JLabel label = new JLabel(image);
+            //label.setPreferredSize(new Dimension(imageWidth, image.getIconHeight()));  // Maintain aspect ratio
+            label.setBounds(15 + 50*i, 0, 25, 50);
+            getIngredientsJPanel().add(label);
+        }
+        
+    }
+	
+	private ImageIcon createImageIcon(String path){
+		ImageIcon ingIcon = null;
+		try {
+			System.out.println(path);
+            BufferedImage image = ImageIO.read(new File(path));
+            Image resizedImage = image.getScaledInstance(25, 50, Image.SCALE_SMOOTH);
+            ingIcon = new ImageIcon(resizedImage);
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+		return ingIcon;
+	}
+	
 	// GETTERS AND SETTERS
+	public JPanel getIngredientsJPanel() {
+		return ingredientsJPanel;
+	}
+
+	public void setIngredientsJPanel(JPanel ingredientsJPanel) {
+		this.ingredientsJPanel = ingredientsJPanel;
+	}
+	
 	public JPanel getResultsTriangle() {
 		return resultsTriangleJPanel;
 	}
@@ -72,6 +127,7 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 	}
 
 	public void configureDeductionGrid() {
+		
 		Boolean[][] dGrid = dBoard.getDeductionGrid();
 		for (int i = 0; i < 8; i++) {	// iterate over alchemy markers
 			int tempi = i;
@@ -92,7 +148,7 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
         			HandlerFactory.getInstance().getDeductionBoardHandler().markDeductionGrid(tempj, tempi);
                 });
                 
-                button.setText("Alchemy marker #" + i);
+                button.setText("#" + (i+1));
                 getDeductionGridJPanel().add(button); // Add label to the frame
                 
 			}
@@ -207,12 +263,15 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 		SwingUtilities.invokeLater(() -> {
 			getDeductionGridJPanel().removeAll();
 			getResultsTriangle().removeAll();
+			getIngredientsJPanel().removeAll();
 	        configureDeductionGrid();
 	        configureResultsTriangle();
+	        IngredientPanel();
 	        // Remove and re-add components to the dialog's content pane
 	        this.getContentPane().removeAll();
 	        this.getContentPane().add(getResultsTriangle());
 	        this.getContentPane().add(getDeductionGridJPanel());
+	        this.getContentPane().add(getIngredientsJPanel());
 	        revalidate(); // Revalidate the container to update the layout
 	        repaint(); // Repaint to reflect the changes
 	    });

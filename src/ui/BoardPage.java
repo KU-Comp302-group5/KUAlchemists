@@ -270,16 +270,14 @@ public class BoardPage extends JFrame implements ActionListener, EndListener {
         	KUAlchemistsGame.getInstance().getPlayer(4).addIngListener((SellPotionPanel) sellPotionPanel);
         }
         
-
-
-        
-  
         //added for turn change. 
         turnButton.setMargin(new Insets(0, 0, 0, 0));
         turnButton.setFocusPainted(false);
 		turnButton.setBounds(400, 0, 50, 20);
 		turnButton.addActionListener(e -> {
+			nextTurnMessage();
 			KUAlchemistsGame.getInstance().switchTurns();
+			
 		});
 		getPanelBoard().add(turnButton);
 		
@@ -300,33 +298,39 @@ public class BoardPage extends JFrame implements ActionListener, EndListener {
 	
 	@Override
 	public void onEndChange() {
-		// Create the dialog
-	    JDialog endGameDialog = new JDialog();
-	    endGameDialog.setTitle("End Game");
-	    endGameDialog.setSize(300, 150);
-	    endGameDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-	    endGameDialog.setLayout(new BorderLayout());
-	    endGameDialog.setLocationRelativeTo(null);
-	    endGameDialog.setModal(true);
+//		// Create the dialog
+//	    JDialog endGameDialog = new JDialog();
+//	    endGameDialog.setTitle("Results");
+//	    endGameDialog.setSize(300, 150);
+//	    endGameDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+//	    endGameDialog.setLayout(new BorderLayout());
+//	    endGameDialog.setLocationRelativeTo(null);
+//	    endGameDialog.setModal(true);
+//
+//	    // Create a label for the message
+//	    JLabel messageLabel = new JLabel("End of the game.");
+//	    endGameDialog.add(messageLabel, BorderLayout.CENTER);
+//
+//	    // Create a button to exit the program
+//	    JButton exitButton = new JButton("Exit");
+//	    exitButton.addActionListener(e -> {
+//	        System.exit(0); // Terminate program execution
+//	    });
+//
+//	    // Add the exit button to the dialog
+//	    JPanel buttonPanel = new JPanel();
+//	    buttonPanel.add(exitButton);
+//	    endGameDialog.add(buttonPanel, BorderLayout.SOUTH);
+//
+//	    // Make the dialog visible
+//	    endGameDialog.setVisible(true);
+//		
+		String[] playerNames = KUAlchemistsGame.getInstance().getPlayerNames();
+		List<Integer> playerScores = KUAlchemistsGame.getInstance().getScores();
 
-	    // Create a label for the message
-	    JLabel messageLabel = new JLabel("End of the game.");
-	    endGameDialog.add(messageLabel, BorderLayout.CENTER);
-
-	    // Create a button to exit the program
-	    JButton exitButton = new JButton("Exit");
-	    exitButton.addActionListener(e -> {
-	        System.exit(0); // Terminate program execution
-	    });
-
-	    // Add the exit button to the dialog
-	    JPanel buttonPanel = new JPanel();
-	    buttonPanel.add(exitButton);
-	    endGameDialog.add(buttonPanel, BorderLayout.SOUTH);
-
-	    // Make the dialog visible
-	    endGameDialog.setVisible(true);
-		
+		EndgameDialog dialog = new EndgameDialog(null, "Game Over!", playerNames, playerScores);
+		dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		dialog.setLocationRelativeTo(null);
 	}
 	
 	
@@ -483,6 +487,74 @@ public class BoardPage extends JFrame implements ActionListener, EndListener {
 		KUAlchemistsGame.getInstance().getPlayer(4).addPotListener((PlayerPot) player4_pot);
 	}
 	
+	
+	public class EndgameDialog extends JDialog {
+
+	    private final String[] playerNames;
+	    private final List<Integer> playerScores;
+
+	    public EndgameDialog(JFrame parent, String title, String[] playerNames, List<Integer> playerScores) {
+	        super(parent, title, ModalityType.APPLICATION_MODAL);
+
+	        this.playerNames = playerNames;
+	        this.playerScores = playerScores;
+
+	        initializeDialog();
+	    }
+
+	    private void initializeDialog() {
+	        setLayout(new GridBagLayout());
+	        setSize(400, 200);
+
+	        JPanel contentPanel = new JPanel(new GridBagLayout());
+	        contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+	        // Label and list for each player
+	        for (int i = 0; i < playerNames.length; i++) {
+	            JLabel playerLabel = new JLabel(playerNames[i] + ": ");
+	            GridBagConstraints playerLabelConstraints = new GridBagConstraints();
+	            playerLabelConstraints.gridx = 0;
+	            playerLabelConstraints.gridy = i;
+	            contentPanel.add(playerLabel, playerLabelConstraints);
+
+	            JLabel scoreLabel = new JLabel(Integer.toString(playerScores.get(i)));
+	            GridBagConstraints scoreLabelConstraints = new GridBagConstraints();
+	            scoreLabelConstraints.gridx = 1;
+	            scoreLabelConstraints.gridy = i;
+	            contentPanel.add(scoreLabel, scoreLabelConstraints);
+	        }
+
+	        // Play again button
+//	        JButton playAgainButton = new JButton("Play Again");
+//	        playAgainButton.addActionListener(e -> {
+//	            // Implement action for playing again
+//	            this.dispose();
+//	        });
+//
+//	        GridBagConstraints playAgainButtonConstraints = new GridBagConstraints();
+//	        playAgainButtonConstraints.gridx = 0;
+//	        playAgainButtonConstraints.gridy = playerNames.length;
+//	        playAgainButtonConstraints.gridwidth = 2;
+//	        contentPanel.add(playAgainButton, playAgainButtonConstraints);
+
+	        // Exit button
+	        JButton exitButton = new JButton("Exit");
+	        exitButton.addActionListener(e -> {
+	            System.exit(0);
+	        });
+
+	        GridBagConstraints exitButtonConstraints = new GridBagConstraints();
+	        exitButtonConstraints.gridx = 0;
+	        exitButtonConstraints.gridy = playerNames.length + 1;
+	        exitButtonConstraints.gridwidth = 2;
+	        contentPanel.add(exitButton, exitButtonConstraints);
+
+	        add(contentPanel);
+
+	        setLocationRelativeTo(null);
+	        setVisible(true);
+	    }
+	}
 	
 	/**
      * Observer pattern.
@@ -1096,6 +1168,23 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 	    turn.setVisible(true);
 	}
 	
+    private void nextTurnMessage() {
+    	JDialog turn = new JDialog(
+	    		this,
+	    		"Turn",
+	    		true);
+	    turn.setSize(350, 200);
+	    String msgString = KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + "'s turn ended!"; 
+	    turn.setModal(false);
+	    JLabel turnText = new JLabel(msgString);
+	    turn.add(turnText, BorderLayout.CENTER);
+	    JButton ok = new JButton("OK");
+	    ok.addActionListener(e -> turn.dispose());
+	    turn.add(ok, BorderLayout.SOUTH);
+	    
+	    turn.setLocationRelativeTo(turnText);
+	    turn.setVisible(true);
+    }
 	
 	
 	private void showHelpDialog() {

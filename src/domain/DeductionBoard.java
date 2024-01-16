@@ -35,7 +35,6 @@ public class DeductionBoard {
     	//      [2] [3]
     	//    [4] [5] [6] ...
     	this.resultsTriangle = new Potion[28];
-    	this.resultsTriangle[2] = new Potion(1);
     	
     	// all elements initialized to false, no red mark
     	this.deductionGrid = new Boolean[8][];

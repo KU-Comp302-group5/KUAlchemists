@@ -50,23 +50,28 @@ public class IngredientDeck {
 		Aspect as4 = new Aspect(false, true);
 		
 		//Ingredient(name, ID, red, green, blue)
-		Ingredient toad = new Ingredient("toad", 1, as3, as1, as4);
-		Ingredient claw = new Ingredient("claw", 2, as1, as1, as1);
-		Ingredient scorpion = new Ingredient("scorpion", 3, as3, as1, as4);
-		Ingredient fern = new Ingredient("fern", 4, as2, as2, as2);
-		Ingredient feather = new Ingredient("feather", 5, as1, as4, as3);
-		Ingredient mushroom = new Ingredient("mushroom", 6, as4, as2, as3);
-		Ingredient flower = new Ingredient("flower", 7, as4, as3, as1);
-		Ingredient root = new Ingredient("root", 8, as2, as3, as4);
+		// add 5 of each card into the ingredient deck
+		for (int i = 0; i < 5; i++) {
+			Ingredient toad = new Ingredient("toad", 1, as3, as1, as4);
+			Ingredient claw = new Ingredient("claw", 2, as1, as1, as1);
+			Ingredient scorpion = new Ingredient("scorpion", 3, as3, as1, as4);
+			Ingredient fern = new Ingredient("fern", 4, as2, as2, as2);
+			Ingredient feather = new Ingredient("feather", 5, as1, as4, as3);
+			Ingredient mushroom = new Ingredient("mushroom", 6, as4, as2, as3);
+			Ingredient flower = new Ingredient("flower", 7, as4, as3, as1);
+			Ingredient root = new Ingredient("root", 8, as2, as3, as4);
+			
+			putCard(toad);
+			putCard(claw);
+			putCard(scorpion);
+			putCard(fern);
+			putCard(feather);
+			putCard(mushroom);
+			putCard(flower);
+			putCard(root);
+			
+		}
 		
-		putCard(toad);
-		putCard(claw);
-		putCard(scorpion);
-		putCard(fern);
-		putCard(feather);
-		putCard(mushroom);
-		putCard(flower);
-		putCard(root);
 		
 		Collections.shuffle(this.ingredients);
     }

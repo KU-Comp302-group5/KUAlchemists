@@ -141,11 +141,10 @@ public class KUAlchemistsGame {
     		l.onStateChange();
     	}
     	
-    	for (Player p: players) {
-    		publishArtEvent();
-    		publishIngEvent();
-    		publishPotEvent();
-    	}
+		publishArtEvent();
+		publishIngEvent();
+		publishPotEvent();
+		PublicationTrack.getInstance().publishPublicationEvent();
     }
     
     public void addEndListener(EndListener lis) {

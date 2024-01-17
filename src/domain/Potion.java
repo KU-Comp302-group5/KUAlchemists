@@ -1,6 +1,8 @@
 package domain;
 
-public class Potion {
+import java.io.Serializable;
+
+public class Potion implements Serializable {
     //private Ingredient ingr1;
     //private Ingredient ingr2;
     private int quality;

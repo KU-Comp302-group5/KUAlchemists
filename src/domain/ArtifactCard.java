@@ -1,6 +1,8 @@
 package domain;
 
-public class ArtifactCard {
+import java.io.Serializable;
+
+public class ArtifactCard implements Serializable {
     private String name;
     private Integer ID;
     private Boolean hasPanel;

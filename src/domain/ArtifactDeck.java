@@ -8,7 +8,7 @@ public class ArtifactDeck {
 	
 	private static ArtifactDeck instance;
 	
-    private Integer cardNum;
+    private int cardNum;
     private List<ArtifactCard> artifacts;
     
     public static ArtifactDeck getInstance() {

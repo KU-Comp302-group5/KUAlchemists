@@ -1,6 +1,8 @@
 package domain;
 
-public class Theory {
+import java.io.Serializable;
+
+public class Theory implements Serializable {
 	
 	private Ingredient ingredient;
 	private AlchemyMarker marker;

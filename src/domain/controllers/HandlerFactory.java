@@ -137,8 +137,4 @@ public class HandlerFactory {
 	public void setJoinHandler(JoinHandler joinHandler) {
 		this.joinHandler = joinHandler;
 	}
-	
-	
-	
-	
 }

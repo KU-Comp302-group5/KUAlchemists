@@ -14,8 +14,6 @@ public class OfflineAdapter implements IGameAdapter {
 		loginPage.add(loginPage.getPanelLogin());
 		loginPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		loginPage.setVisible(true);
-		loginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		loginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 	}
-
 }

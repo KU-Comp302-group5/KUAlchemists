@@ -1,11 +1,12 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
 
-public class DeductionBoard {
+public class DeductionBoard implements Serializable {
     private Potion[] resultsTriangle;
     private Boolean[][] deductionGrid;
     private List<DBListener> DBListeners;

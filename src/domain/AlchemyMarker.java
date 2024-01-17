@@ -1,6 +1,8 @@
 package domain;
 
-public class AlchemyMarker {
+import java.io.Serializable;
+
+public class AlchemyMarker implements Serializable {
     private Aspect redAspect;
     private Aspect greenAspect;
     private Aspect blueAspect;

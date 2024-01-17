@@ -1,9 +1,10 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
+public class Player implements Serializable {
 	private String username;
 	private int avatar;
 	private List<Ingredient> ingredients ;
@@ -15,9 +16,6 @@ public class Player {
 	private int gold;
 	private int reputation;
 	private int sickness;
-	private List<IngListener> ingListeners;
-	private List<ArtListener> artListeners;
-	private List<PotListener> potListeners;
 	
 	public Player(String username, Integer avatar) {
 		
@@ -26,42 +24,11 @@ public class Player {
 		this.ingredients = new ArrayList<Ingredient>();
 		this.artifacts = new ArrayList<ArtifactCard>();
 		this.potions = new ArrayList<Potion>();
-		this.ingListeners = new ArrayList<>();
-		this.artListeners = new ArrayList<>();
-		this.potListeners = new ArrayList<>();
 		this.gold = 10;
 		this.reputation = 0;
 		this.sickness = 0;
 		this.dBoard = new DeductionBoard();
 		
-	}
-	
-	public void addIngListener(IngListener lis) {
-		ingListeners.add(lis);
-	}
-	
-	public void addArtListener(ArtListener lis) {
-		artListeners.add(lis);
-	}
-	
-	public void addPotListener(PotListener lis) {
-		potListeners.add(lis);
-	}
-	
-	public void publishPotEvent() {
-		for(PotListener l: potListeners)
-			l.onPotChange();
-	}
-	
-	
-	public void publishIngEvent() {
-		for(IngListener l: ingListeners)
-			l.onIngChange();
-	}
-	
-	public void publishArtEvent() {
-		for(ArtListener l: artListeners)
-			l.onArtChange();
 	}
 	
 	public void forageIngredient() {
@@ -70,12 +37,12 @@ public class Player {
 			addIngredient(ingr);
 			System.out.println("\n"+ this.getUsername()+" got ingredient card: "+ ingr.getName());
 		}
-		publishIngEvent();
+		KUAlchemistsGame.getInstance().publishIngEvent();
 	}
 	
 	public void addIngredient(Ingredient ingr) {
 		this.ingredients.add(ingr);
-		publishIngEvent();
+		KUAlchemistsGame.getInstance().publishIngEvent();
 	}
 		
 	public List<Ingredient> getIngredients() {
@@ -102,7 +69,7 @@ public class Player {
 			this.ingredients.remove(ingr);
 			increaseGold(gold_num);
 			System.out.println("\n"+ this.getUsername()+" transmuted ingredient card: "+ ingr.getName());
-			publishIngEvent();
+			KUAlchemistsGame.getInstance().publishIngEvent();
 		}
 	}
 
@@ -113,13 +80,13 @@ public class Player {
 			System.out.println("\n"+ this.getUsername()+" bought artifact card: "+ boughtCard.getName());
 			this.decreaseGold(3);
 		}
-		publishArtEvent();
+		KUAlchemistsGame.getInstance().publishArtEvent();
 	}
 	
 	public void removeArtifactCard(ArtifactCard artifactCard) {
 		if (this.artifacts.contains(artifactCard)) {
 			this.artifacts.remove(artifactCard);
-			publishArtEvent();
+			KUAlchemistsGame.getInstance().publishArtEvent();
 		}
 	}
 	
@@ -127,13 +94,13 @@ public class Player {
 		if (this.ingredients.contains(ingr1) && (this.ingredients.contains(ingr2))) {
 			this.ingredients.remove(ingr1);
 			this.ingredients.remove(ingr2);
-			publishIngEvent();
+			KUAlchemistsGame.getInstance().publishIngEvent();
 		}
 	}
 	
 	public void addPotion(Potion p) {
 		this.potions.add(p);
-		publishPotEvent();
+		KUAlchemistsGame.getInstance().publishPotEvent();
 	}
 	
 	public void makePublication(Ingredient ingr, AlchemyMarker marker) {
@@ -226,7 +193,4 @@ public class Player {
 	public void increaseReputation(int i) {
 		reputation += i;
 	}
-
-	
-
 }

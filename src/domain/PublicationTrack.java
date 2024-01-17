@@ -46,7 +46,7 @@ public class PublicationTrack {
 		publishPublicationEvent();
 	}
 
-	private void publishPublicationEvent() {
+	public void publishPublicationEvent() {
 		for (PubListener l: pubListeners) {
 			l.onPubChange();
 		}

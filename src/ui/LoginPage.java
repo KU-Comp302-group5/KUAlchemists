@@ -31,12 +31,18 @@ public class LoginPage extends JFrame implements ActionListener{
 	private static JButton[][] avatarButtons = new JButton[4][6]; // stores 3 avatar buttons for n (numPlayers) players
 	private static List<JTextField> textfields = new ArrayList<JTextField>(); // stores n (numPlayers) JTextField instances
 	
+<<<<<<< HEAD
 	private static Boolean[] isAvatarChosen;
 	
 
 	public  LoginPage() {
-		super("Log-in Page");		
+		super("Login Page");		
 		panelLogin = new BackgroundPanel("images/pixil-frame-0.png");
+=======
+	public  LoginPage() {
+		super("Login Page");		
+		panelLogin = new JPanel();
+>>>>>>> online
 		panelLogin.setLayout(null);
 //		
 //		this.isAvatarChosen = new Boolean[6];
@@ -52,20 +58,24 @@ public class LoginPage extends JFrame implements ActionListener{
 		avatarsChosen.add(1);
 		avatarsChosen.add(2);
 
+<<<<<<< HEAD
 		
 		addPlayerBtn2 = new JButton();
 		addPlayerBtn2.setIcon(new ImageIcon("images/addplayer3.png"));
 		addPlayerBtn2.setOpaque(false);
 		addPlayerBtn2.setBounds(1045, 350, addPlayerBtn2.getIcon().getIconWidth(), addPlayerBtn2.getIcon().getIconHeight());
+=======
+		addPlayerBtn2 = new JButton("Add player.");
+		addPlayerBtn2.setBounds(1045, 350, 120, 40);
+>>>>>>> online
 		addPlayerBtn2.setForeground(Color.BLACK);
 		addPlayerBtn2.setBackground(Color.WHITE);
 		addPlayerBtn2.addActionListener(
 				new ActionListener() 
-				{ 
+				{
 			@Override
 				public void actionPerformed(ActionEvent arg0) {
 				
-					
 					panelLogin.remove(addPlayerBtn2);
 					panelLogin.revalidate();
 					panelLogin.repaint();
@@ -101,6 +111,7 @@ public class LoginPage extends JFrame implements ActionListener{
 		});
 		panelLogin.add(addPlayerBtn);
 		
+<<<<<<< HEAD
 		displayButtons();
 		
 		
@@ -109,6 +120,8 @@ public class LoginPage extends JFrame implements ActionListener{
 		openBoard.setIcon(new ImageIcon("images/startgame1.png"));
 		openBoard.setBounds(572, 470, openBoard.getIcon().getIconWidth(), openBoard.getIcon().getIconHeight());
 /*=======
+=======
+>>>>>>> online
 		openBoard = new JButton("Open Game!");
 		
 		openBoard.setBounds(572, 550, 120, 60);
@@ -128,7 +141,10 @@ public class LoginPage extends JFrame implements ActionListener{
 				}
 				HandlerFactory.getInstance().getLoginHandler().login(usernamesChosen, avatarsChosen, playerNum);
 				
+<<<<<<< HEAD
 
+=======
+>>>>>>> online
 				BoardPage boardPage = new BoardPage();
 				KUAlchemistsGame.getInstance().addEndListener(boardPage);
 				boardPage.setVisible(true);
@@ -159,6 +175,7 @@ public class LoginPage extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {		
 	}
 
+<<<<<<< HEAD
 	public void displayButtons() {
 		//this.avatarButtons = new ArrayList<List<JButton>>(); //empty the avatarbuttons list
 		for (int i =1; i < playerNum+1; i++) {
@@ -211,6 +228,8 @@ public class LoginPage extends JFrame implements ActionListener{
 	
 	
 	
+=======
+>>>>>>> online
 	public void displayPlayer(Integer playerNo) {
 		
 		int i;

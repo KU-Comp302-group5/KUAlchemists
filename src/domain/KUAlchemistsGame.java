@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import domain.controllers.HandlerFactory;
 import ui.GameModePage;
 import ui.LoginPage;
 
@@ -17,38 +18,58 @@ import ui.LoginPage;
  */
 public class KUAlchemistsGame {
 	private static KUAlchemistsGame game;
-	private static GameModePage gameModePage; //the initial window of the game 
+	private static GameModePage gameModePage; //the initial window of the game
 	private static LoginPage loginPage;
-	
 	private static IGameAdapter gameMode; //adapter pattern here
-	
 	private static List<Player> players = new ArrayList<Player>();
-	private static List<Integer> scores = new ArrayList<Integer>();
-
-	public static List<Integer> getScores() {
-		return scores;
-	}
-
 	private static int numPlayers;
 	private static int currentPlayerNo;
+	private static int thisPlayerNo; //for online only
+	private static String devicePlayer; //for online only
 	private static int turnCounter;
-	
 	private static List<TurnListener> turnListeners;
 	private static List<EndListener> endListeners;
+<<<<<<< HEAD
 	
 	private static List<Ingredient> ingredients; //to deliver 2 ingrs at the beginning 
+	private static List<playerNumListener> playerNumListeners;
+	private static List<GameStateListener> stateListeners;
+	
+	// moved here from Player class
+	private List<IngListener> ingListeners;
+	private List<ArtListener> artListeners;
+	private List<PotListener> potListeners;
 
+
+=======
+	private static List<playerNumListener> playerNumListeners;
+	private static List<GameStateListener> stateListeners;
+	
+	// moved here from Player class
+	private List<IngListener> ingListeners;
+	private List<ArtListener> artListeners;
+	private List<PotListener> potListeners;
+>>>>>>> online
 
 	/**
 	 * Private constructor for the game.
 	 */
 	private KUAlchemistsGame() {
+		this.numPlayers = 0;
 		this.currentPlayerNo = 1;
 		this.turnCounter = 1;
 		this.turnListeners = new ArrayList<TurnListener>(); 
 		this.endListeners = new ArrayList<EndListener>();
+<<<<<<< HEAD
 		IngredientDeck.getInstance().initializeIngredientDeck();
 		this.ingredients = IngredientDeck.getInstance().getIngredients();
+=======
+		this.playerNumListeners = new ArrayList<playerNumListener>();
+		this.stateListeners = new ArrayList<GameStateListener>();
+		this.ingListeners = new ArrayList<IngListener>();
+		this.artListeners = new ArrayList<ArtListener>();
+		this.potListeners = new ArrayList<PotListener>();
+>>>>>>> online
 	}
 	
 	public static void main(String[] args) {
@@ -90,8 +111,59 @@ public class KUAlchemistsGame {
      * This method now uses adapters to start the appropriate page. 
      */
     public void startLoginView() {
-    	
     	gameMode.startLoginView();
+    }
+    
+    public void addIngListener(IngListener lis) {
+		ingListeners.add(lis);
+	}
+	
+	public void addArtListener(ArtListener lis) {
+		artListeners.add(lis);
+	}
+	
+	public void addPotListener(PotListener lis) {
+		potListeners.add(lis);
+	}
+	
+	public void publishPotEvent() {
+		for(PotListener l: potListeners)
+			l.onPotChange();
+	}
+	
+	public void publishIngEvent() {
+		for(IngListener l: ingListeners)
+			l.onIngChange();
+	}
+	
+	public void publishArtEvent() {
+		for(ArtListener l: artListeners)
+			l.onArtChange();
+	}
+    
+    public void addPlayerNumListener(playerNumListener lis) {
+    	playerNumListeners.add(lis);
+    }
+    
+    public void publishPlayerNumEvent() {
+    	for (playerNumListener l: playerNumListeners) {
+    		l.onPlayerNumChange();
+    	}
+    }
+    
+    public void addStateListener(GameStateListener lis) {
+    	stateListeners.add(lis);
+    }
+    
+    public void publishStateEvent() {
+    	for (GameStateListener l: stateListeners) {
+    		l.onStateChange();
+    	}
+    	
+		publishArtEvent();
+		publishIngEvent();
+		publishPotEvent();
+		PublicationTrack.getInstance().publishPublicationEvent();
     }
     
     public void addEndListener(EndListener lis) {
@@ -118,8 +190,15 @@ public class KUAlchemistsGame {
     	players.get(numPlayers).addIngredient(this.ingredients.get(numPlayers*2));
     	players.get(numPlayers).addIngredient(this.ingredients.get(numPlayers*2 + 1));
     	numPlayers++;
+    	publishPlayerNumEvent();
     }
     
+    public void addPlayer(Player player) {
+    	System.out.println("Player added.");
+    	players.add(player);
+    	numPlayers++;
+    	publishPlayerNumEvent();
+    }
     
     public Player getPlayer(int playerNo) {
     	return players.get(playerNo-1);
@@ -133,6 +212,7 @@ public class KUAlchemistsGame {
 
 	public static void switchTurns() {
 	    currentPlayerNo = (currentPlayerNo % numPlayers) + 1;
+	    
 	    if (currentPlayerNo == 1) { // if all players took turns, game finishes when everyone has taken 9 turns
 	    	turnCounter++;
 	    	System.out.println("TURN COUNTER IS: " + turnCounter);
@@ -145,8 +225,8 @@ public class KUAlchemistsGame {
 	    	}
 	    	publishEndEvent();
 	    }
-	    
 	    publishTurnEvent();
+	    HandlerFactory.getInstance().getJoinHandler().broadcastGameState(false, false, false);
 	}
 	
 	public static void calculateResults(Player p) {
@@ -166,6 +246,10 @@ public class KUAlchemistsGame {
 	public static List<Player> getPlayers() {
 		return players;
 	}
+	
+	public static void setPlayers(List<Player> players) {
+		KUAlchemistsGame.players = players;
+	}
 
 	public static int getNumPlayers() {
 		return numPlayers;
@@ -184,6 +268,7 @@ public class KUAlchemistsGame {
 			gameMode = new OfflineAdapter();
 		}
 	}
+<<<<<<< HEAD
 	
 	public String[] getPlayerNames() {
 		String[] names = new String[numPlayers];
@@ -191,5 +276,30 @@ public class KUAlchemistsGame {
 			names[i] = players.get(i).getUsername();
 		}
 		return names;
+=======
+
+	public static int getTurnCounter() {
+		return turnCounter;
+	}
+
+	public static void setTurnCounter(int turnCounter) {
+		KUAlchemistsGame.turnCounter = turnCounter;
+	}
+
+	public static int getThisPlayerNo() {
+		return thisPlayerNo;
+	}
+
+	public static void setThisPlayerNo(int thisPlayerNo) {
+		KUAlchemistsGame.thisPlayerNo = thisPlayerNo;
+	}
+
+	public static String getDevicePlayer() {
+		return devicePlayer;
+	}
+
+	public static void setDevicePlayer(String devicePlayer) {
+		KUAlchemistsGame.devicePlayer = devicePlayer;
+>>>>>>> online
 	}
 }

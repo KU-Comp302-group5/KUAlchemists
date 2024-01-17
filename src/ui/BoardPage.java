@@ -1148,7 +1148,9 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 	}
 	
 	private void disposeWaitTurn() {
-		waitTurn.dispose();
+		if (waitTurn.isShowing()) {
+			waitTurn.dispose();
+		}
 	}
 
 	@Override

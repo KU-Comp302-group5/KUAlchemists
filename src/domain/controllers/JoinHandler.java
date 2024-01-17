@@ -53,6 +53,5 @@ public class JoinHandler {
 		if (joinPageOpen) {
 			joinPage.disposePage();
 		}
-		
 	}
 }

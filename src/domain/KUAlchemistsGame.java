@@ -30,6 +30,7 @@ public class KUAlchemistsGame {
 	private static List<TurnListener> turnListeners;
 	private static List<EndListener> endListeners;
 	private static List<playerNumListener> playerNumListeners;
+	private static List<GameStateListener> stateListeners;
 
 	/**
 	 * Private constructor for the game.
@@ -95,6 +96,16 @@ public class KUAlchemistsGame {
     	}
     }
     
+    public void addStateListener(GameStateListener lis) {
+    	stateListeners.add(lis);
+    }
+    
+    public void publishStateEvent() {
+    	for (GameStateListener l: stateListeners) {
+    		l.onStateChange();
+    	}
+    }
+    
     public void addEndListener(EndListener lis) {
 		endListeners.add(lis);
 	}
@@ -139,18 +150,19 @@ public class KUAlchemistsGame {
 
 	public static void switchTurns() {
 	    currentPlayerNo = (currentPlayerNo % numPlayers) + 1;
+	    
 	    if (currentPlayerNo == 1) { // if all players took turns, game finishes when everyone has taken 9 turns
 	    	turnCounter++;
 	    	System.out.println("TURN COUNTER IS: " + turnCounter);
-	    	HandlerFactory.getInstance().getJoinHandler().broadcastGameState(false, false, false);
 	    }
 	    
 	    if (turnCounter == 10) {
 	    	// TO DO: calculate results
 	    	publishEndEvent();
 	    }
-	    
 	    publishTurnEvent();
+	    
+	    HandlerFactory.getInstance().getJoinHandler().broadcastGameState(false, false, false);
 	}
 
 	public static int getCurrentPlayerNo() {

@@ -95,14 +95,16 @@ public class GameState implements Serializable  {
 				HandlerFactory.getInstance().getJoinHandler().disposeJoinPage();
 				
 				BoardPage boardPage = new BoardPage();
-				KUAlchemistsGame.getInstance().addEndListener(boardPage);
 				boardPage.setVisible(true);
 				boardPage.add(BoardPage.getPanelBoard());
 				boardPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				boardPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
-				KUAlchemistsGame.getInstance().addTurnListener(boardPage);
+				KUAlchemistsGame.getInstance().addEndListener(boardPage);
+				KUAlchemistsGame.getInstance().addStateListener(boardPage);
 			}
+			
+			KUAlchemistsGame.getInstance().publishStateEvent();
 		}
 	}
 }

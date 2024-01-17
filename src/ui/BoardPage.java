@@ -7,6 +7,7 @@ import domain.ArtListener;
 import domain.ArtifactCard;
 import domain.Avatar;
 import domain.EndListener;
+import domain.GameStateListener;
 import domain.IngListener;
 import domain.Ingredient;
 import domain.KUAlchemistsGame;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-public class BoardPage extends JFrame implements ActionListener, EndListener, TurnListener {
+public class BoardPage extends JFrame implements ActionListener, EndListener, GameStateListener {
 	
 	private static JPanel panelBoard, player1_ingr, player2_ingr, player3_ingr, player4_ingr,
 				   player1_arts, player2_arts, player3_arts, player4_arts,
@@ -1137,10 +1138,10 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 	private void showWaitTurnDialog() {
 	    waitTurn = new JDialog(
 	    		this, 
-	    		"Wait for yout turn", 
+	    		"Wait for your turn", 
 	    		true);
 	    waitTurn.setSize(300, 100);
-	    JLabel waitText = new JLabel("Game is paused. Press OK to continue.");
+	    JLabel waitText = new JLabel("It is other player's turn.");
 	    waitTurn.add(waitText, BorderLayout.CENTER);
 	    waitTurn.setLocationRelativeTo(waitText);
 	    waitTurn.setVisible(true);
@@ -1163,9 +1164,8 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 		BoardPage.panelBoard = panelBoard;
 	}
 
-
 	@Override
-	public void onTurnChange() {
+	public void onStateChange() {
 		String currentName = KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername();
 		String playerName = KUAlchemistsGame.getInstance().getDevicePlayer();
 		if (! playerName.equals(currentName)) {

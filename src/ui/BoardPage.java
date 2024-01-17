@@ -335,27 +335,25 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 	
 	private void updateGoldUI() {
 
-			gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(1).getGold());
+		gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(1).getGold());
 
-			gold2.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(2).getGold());
+		gold2.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(2).getGold());
 
-			if (KUAlchemistsGame.getNumPlayers() > 2) {
+		if (KUAlchemistsGame.getNumPlayers() > 2) {
 			gold3.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(3).getGold());
-			}
-			if (KUAlchemistsGame.getNumPlayers() > 3) {
+		}
+		if (KUAlchemistsGame.getNumPlayers() > 3) {
 			gold4.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(4).getGold());
-			}
+		}
 		
 	}
 	
 	private void updateReputationUI() {
-		//int currentPlayer = KUAlchemistsGame.getInstance().getCurrentPlayerNo();
-		//if (currentPlayer==1) {
-			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(1).getReputation());
-		//}
-		//if (currentPlayer==2) {
-			reputation2.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(2).getReputation());
-		//}
+
+		reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(1).getReputation());
+
+		reputation2.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(2).getReputation());
+		
 		if (KUAlchemistsGame.getNumPlayers() > 2) {
 			reputation3.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(3).getReputation());
 		}
@@ -365,17 +363,15 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 	}
 	
 	private void updateSicknessUI() {
-		//int currentPlayer = KUAlchemistsGame.getInstance().getCurrentPlayerNo();
-		//if (currentPlayer==1) {
-			sickness.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(1).getSickness());
-		//}
-		//if (currentPlayer==2) {
-			sickness2.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(2).getSickness());
-		//}
-			if (KUAlchemistsGame.getNumPlayers() > 2) {
+
+		sickness.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(1).getSickness());
+
+		sickness2.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(2).getSickness());
+
+		if (KUAlchemistsGame.getNumPlayers() > 2) {
 			sickness3.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(3).getSickness());
 		}
-			if (KUAlchemistsGame.getNumPlayers() > 3) {
+		if (KUAlchemistsGame.getNumPlayers() > 3) {
 			sickness4.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(4).getSickness());
 		}
 	}
@@ -1135,20 +1131,6 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 	    pause.setLocationRelativeTo(pauseText);
 	    pause.setVisible(true);
 	}
-	
-	private void showWaitTurnDialog() {
-	    waitTurn.setSize(300, 100);
-	    JLabel waitText = new JLabel("It is other player's turn.");
-	    waitTurn.add(waitText, BorderLayout.CENTER);
-	    waitTurn.setLocationRelativeTo(waitText);
-	    waitTurn.setVisible(true);
-	}
-	
-	private void disposeWaitTurn() {
-		if (waitTurn.isShowing()) {
-			waitTurn.dispose();
-		}
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -1168,11 +1150,9 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 		String currentName = KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername();
 		String playerName = KUAlchemistsGame.getInstance().getDevicePlayer();
 		if (! playerName.equals(currentName)) {
-			//showWaitTurnDialog();
 			getPanelBoard().setVisible(false);
 		} else {
-			//disposeWaitTurn();
-			getPanelBoard().setVisible(true);
+			getPanelBoard().setVisible(true); // should be changed to show a wait yout turn message
 		}
 		updateGoldUI();
     	updateSicknessUI();

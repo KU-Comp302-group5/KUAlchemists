@@ -62,14 +62,10 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 		ingrDeckButton = new JButton();
 		artifactDeckButton = new JButton();
 		
-<<<<<<< HEAD
+
 		ingrDeckButton.setIcon(new ImageIcon("images/ingrdeck.png"));
 		ingrDeckButton.setBounds(330 - ingrDeckButton.getIcon().getIconWidth(), 340, ingrDeckButton.getIcon().getIconWidth(), ingrDeckButton.getIcon().getIconHeight());
 		ingrDeckButton.setMargin(new Insets(0,0,0,0));
-=======
-		
-		ingrDeckButton.setBounds(140, 320, 150, 50);
->>>>>>> online
 		ingrDeckButton.setForeground(Color.BLUE);
 		ingrDeckButton.addActionListener(e -> {
         	System.out.println("ingrDeckButton clicked");
@@ -341,26 +337,19 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 	
 	
 	private void updateGoldUI() {
-
 		gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(1).getGold());
-
 		gold2.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(2).getGold());
-
 		if (KUAlchemistsGame.getNumPlayers() > 2) {
 			gold3.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(3).getGold());
 		}
 		if (KUAlchemistsGame.getNumPlayers() > 3) {
 			gold4.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(4).getGold());
 		}
-		
 	}
 	
 	private void updateReputationUI() {
-
 		reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(1).getReputation());
-
 		reputation2.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(2).getReputation());
-		
 		if (KUAlchemistsGame.getNumPlayers() > 2) {
 			reputation3.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(3).getReputation());
 		}
@@ -370,11 +359,8 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 	}
 	
 	private void updateSicknessUI() {
-
 		sickness.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(1).getSickness());
-
 		sickness2.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(2).getSickness());
-
 		if (KUAlchemistsGame.getNumPlayers() > 2) {
 			sickness3.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(3).getSickness());
 		}

@@ -22,6 +22,10 @@ public class KUAlchemistsGame {
 	private static LoginPage loginPage;
 	private static IGameAdapter gameMode; //adapter pattern here
 	private static List<Player> players = new ArrayList<Player>();
+	private static List<Integer> scores = new ArrayList<Integer>();
+	public static List<Integer> getScores() {
+		return scores;
+	}
 	private static int numPlayers;
 	private static int currentPlayerNo;
 	private static int thisPlayerNo; //for online only
@@ -29,8 +33,6 @@ public class KUAlchemistsGame {
 	private static int turnCounter;
 	private static List<TurnListener> turnListeners;
 	private static List<EndListener> endListeners;
-<<<<<<< HEAD
-	
 	private static List<Ingredient> ingredients; //to deliver 2 ingrs at the beginning 
 	private static List<playerNumListener> playerNumListeners;
 	private static List<GameStateListener> stateListeners;
@@ -39,17 +41,6 @@ public class KUAlchemistsGame {
 	private List<IngListener> ingListeners;
 	private List<ArtListener> artListeners;
 	private List<PotListener> potListeners;
-
-
-=======
-	private static List<playerNumListener> playerNumListeners;
-	private static List<GameStateListener> stateListeners;
-	
-	// moved here from Player class
-	private List<IngListener> ingListeners;
-	private List<ArtListener> artListeners;
-	private List<PotListener> potListeners;
->>>>>>> online
 
 	/**
 	 * Private constructor for the game.
@@ -60,16 +51,14 @@ public class KUAlchemistsGame {
 		this.turnCounter = 1;
 		this.turnListeners = new ArrayList<TurnListener>(); 
 		this.endListeners = new ArrayList<EndListener>();
-<<<<<<< HEAD
 		IngredientDeck.getInstance().initializeIngredientDeck();
 		this.ingredients = IngredientDeck.getInstance().getIngredients();
-=======
+
 		this.playerNumListeners = new ArrayList<playerNumListener>();
 		this.stateListeners = new ArrayList<GameStateListener>();
 		this.ingListeners = new ArrayList<IngListener>();
 		this.artListeners = new ArrayList<ArtListener>();
 		this.potListeners = new ArrayList<PotListener>();
->>>>>>> online
 	}
 	
 	public static void main(String[] args) {
@@ -268,7 +257,6 @@ public class KUAlchemistsGame {
 			gameMode = new OfflineAdapter();
 		}
 	}
-<<<<<<< HEAD
 	
 	public String[] getPlayerNames() {
 		String[] names = new String[numPlayers];
@@ -276,7 +264,8 @@ public class KUAlchemistsGame {
 			names[i] = players.get(i).getUsername();
 		}
 		return names;
-=======
+	}
+
 
 	public static int getTurnCounter() {
 		return turnCounter;
@@ -300,6 +289,5 @@ public class KUAlchemistsGame {
 
 	public static void setDevicePlayer(String devicePlayer) {
 		KUAlchemistsGame.devicePlayer = devicePlayer;
->>>>>>> online
 	}
 }

@@ -40,6 +40,7 @@ public class Server implements Runnable {
 				Socket client = server.accept();
 				ConnectionHandler connectionHandler = new ConnectionHandler(client);
 				connections.add(connectionHandler);
+				System.out.println("New connection accepted");
 				pool.execute(connectionHandler);
 			}
 		} catch (IOException e) {

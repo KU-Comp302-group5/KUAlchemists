@@ -49,6 +49,7 @@ public class Client implements Runnable {
 			try {
 				while((gameState = (GameState)in.readObject()) != null) {
 					gameState.updateGameState();
+					System.out.println("Game State received");
 				}
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();

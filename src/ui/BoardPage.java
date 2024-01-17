@@ -56,6 +56,8 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 		ingrDeckButton = new JButton("Ingredient Deck");
 		artifactDeckButton = new JButton("Artifacts Deck");
 		
+		waitTurn = new JDialog(this, "Wait for your turn", true);
+		
 		ingrDeckButton.setBounds(140, 320, 150, 50);
 		ingrDeckButton.setForeground(Color.BLUE);
 		ingrDeckButton.addActionListener(e -> {
@@ -1136,10 +1138,6 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 	}
 	
 	private void showWaitTurnDialog() {
-	    waitTurn = new JDialog(
-	    		this, 
-	    		"Wait for your turn", 
-	    		true);
 	    waitTurn.setSize(300, 100);
 	    JLabel waitText = new JLabel("It is other player's turn.");
 	    waitTurn.add(waitText, BorderLayout.CENTER);
@@ -1171,9 +1169,11 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 		String currentName = KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername();
 		String playerName = KUAlchemistsGame.getInstance().getDevicePlayer();
 		if (! playerName.equals(currentName)) {
-			showWaitTurnDialog();
+			//showWaitTurnDialog();
+			getPanelBoard().setVisible(false);
 		} else {
-			disposeWaitTurn();
+			//disposeWaitTurn();
+			getPanelBoard().setVisible(true);
 		}
 		updateGoldUI();
     	updateSicknessUI();

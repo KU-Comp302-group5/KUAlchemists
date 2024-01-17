@@ -334,49 +334,48 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 	
 	
 	private void updateGoldUI() {
-		int currentPlayer = KUAlchemistsGame.getInstance().getCurrentPlayerNo();
-		if (currentPlayer==1) {
+
 			gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(1).getGold());
-		}
-		if (currentPlayer==2) {
+
 			gold2.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(2).getGold());
-		}
-		if (currentPlayer==3) {
+
+			if (KUAlchemistsGame.getNumPlayers() > 2) {
 			gold3.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(3).getGold());
-		}
-		if (currentPlayer==4) {
+			}
+			if (KUAlchemistsGame.getNumPlayers() > 3) {
 			gold4.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(4).getGold());
-		}
+			}
+		
 	}
 	
 	private void updateReputationUI() {
-		int currentPlayer = KUAlchemistsGame.getInstance().getCurrentPlayerNo();
-		if (currentPlayer==1) {
+		//int currentPlayer = KUAlchemistsGame.getInstance().getCurrentPlayerNo();
+		//if (currentPlayer==1) {
 			reputation.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(1).getReputation());
-		}
-		if (currentPlayer==2) {
+		//}
+		//if (currentPlayer==2) {
 			reputation2.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(2).getReputation());
-		}
-		if (currentPlayer==3) {
+		//}
+		if (KUAlchemistsGame.getNumPlayers() > 2) {
 			reputation3.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(3).getReputation());
 		}
-		if (currentPlayer==4) {
+		if (KUAlchemistsGame.getNumPlayers() > 3) {
 			reputation4.setText("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(4).getReputation());
 		}
 	}
 	
 	private void updateSicknessUI() {
-		int currentPlayer = KUAlchemistsGame.getInstance().getCurrentPlayerNo();
-		if (currentPlayer==1) {
+		//int currentPlayer = KUAlchemistsGame.getInstance().getCurrentPlayerNo();
+		//if (currentPlayer==1) {
 			sickness.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(1).getSickness());
-		}
-		if (currentPlayer==2) {
+		//}
+		//if (currentPlayer==2) {
 			sickness2.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(2).getSickness());
-		}
-		if (currentPlayer==3) {
+		//}
+			if (KUAlchemistsGame.getNumPlayers() > 2) {
 			sickness3.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(3).getSickness());
 		}
-		if (currentPlayer==4) {
+			if (KUAlchemistsGame.getNumPlayers() > 3) {
 			sickness4.setText("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(4).getSickness());
 		}
 	}

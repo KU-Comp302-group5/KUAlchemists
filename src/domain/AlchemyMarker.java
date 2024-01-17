@@ -14,28 +14,28 @@ public class AlchemyMarker {
 		this.ID = ID;
 		switch(ID) {
 		case 1:
-			this.image="toad.png";
+			this.image="images/toad.png";
 			break;
 		case 2:
-			this.image="claw.png";
+			this.image="images/claw.png";
 			break;
 		case 3:
-			this.image="scorpion.png";
+			this.image="images/scorpion.png";
 			break;
 		case 4:
-			this.image="fern.png";
+			this.image="images/fern.png";
 			break;
 		case 5:
-			this.image="fether.png";
+			this.image="images/fether.png";
 			break;
 		case 6:
-			this.image="mushroom.png";
+			this.image="images/mushroom.png";
 			break;
 		case 7:
-			this.image="flower.png";
+			this.image="images/flower.png";
 			break;
 		case 8:
-			this.image="root.png";
+			this.image="images/root.png";
 			break;
 		}
 		

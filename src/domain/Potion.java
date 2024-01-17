@@ -4,6 +4,7 @@ public class Potion {
     //private Ingredient ingr1;
     //private Ingredient ingr2;
     private int quality;
+    String image;
     
 	public Potion(int quality) {
 		super();
@@ -11,6 +12,18 @@ public class Potion {
 		//this.ingr2 = ingr2;
 		//int quality = this.findQuality();
 		this.quality = quality;
+		
+    	switch (quality) {
+    	case 1: 
+    		this.image="images/positivepotion.png";
+    		break;
+    	case -1:
+    		this.image="images/negativepotion.png";
+    		break;
+    	case 0:
+    		this.image="images/neutralpotion.png";
+    		break;
+    	}
 	}
 
 	/*public Ingredient getIngr1() {
@@ -28,6 +41,14 @@ public class Potion {
 	public void setIngr2(Ingredient ingr2) {
 		this.ingr2 = ingr2;
 	}*/
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	public int getQuality() {
 		return quality;

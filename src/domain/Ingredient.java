@@ -16,28 +16,28 @@ public class Ingredient {
 		this.blueAspect = blueAspect;
 		switch(id) {
 		case 1:
-			this.image="rat.png";
+			this.image="images/rat.png";
 			break;
 		case 2:
-			this.image="birdi.png";
+			this.image="images/birdi.png";
 			break;
 		case 3:
-			this.image="garlic.png";
+			this.image="images/garlic.png";
 			break;
 		case 4:
-			this.image="clover.png";
+			this.image="images/clover.png";
 			break;
 		case 5:
-			this.image="aloevera.png";
+			this.image="images/aloevera.png";
 			break;
 		case 6:
-			this.image="mushroomi.png";
+			this.image="images/mushroomi.png";
 			break;
 		case 7:
-			this.image="floweri.png";
+			this.image="images/floweri.png";
 			break;
 		case 8:
-			this.image="bluelotus.png";
+			this.image="images/bluelotus.png";
 			break;
 		}
 	}

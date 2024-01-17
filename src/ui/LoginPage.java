@@ -33,7 +33,7 @@ public class LoginPage extends JFrame implements ActionListener{
 
 	public  LoginPage() {
 		super("Log-in Page");		
-		panelLogin = new BackgroundPanel("pixil-frame-0.png");
+		panelLogin = new BackgroundPanel("images/pixil-frame-0.png");
 		panelLogin.setLayout(null);
 		
 		// initialize
@@ -44,8 +44,10 @@ public class LoginPage extends JFrame implements ActionListener{
 		avatarsChosen.add(1);
 
 		
-		addPlayerBtn2 = new JButton("Add player.");
-		addPlayerBtn2.setBounds(1045, 350, 120, 40);
+		addPlayerBtn2 = new JButton();
+		addPlayerBtn2.setIcon(new ImageIcon("images/addplayer3.png"));
+		addPlayerBtn2.setOpaque(false);
+		addPlayerBtn2.setBounds(1045, 350, addPlayerBtn2.getIcon().getIconWidth(), addPlayerBtn2.getIcon().getIconHeight());
 		addPlayerBtn2.setForeground(Color.BLACK);
 		addPlayerBtn2.setBackground(Color.WHITE);
 		addPlayerBtn2.addActionListener(
@@ -65,8 +67,10 @@ public class LoginPage extends JFrame implements ActionListener{
 			}
 		});
 		
-		addPlayerBtn = new JButton("Add player.");
-		addPlayerBtn.setBounds(770, 350, 120, 40);
+		addPlayerBtn = new JButton();
+		addPlayerBtn.setIcon(new ImageIcon("images/addplayer3.png"));
+		addPlayerBtn.setOpaque(false);
+		addPlayerBtn.setBounds(770, 350, addPlayerBtn.getIcon().getIconWidth(), addPlayerBtn.getIcon().getIconHeight());
 		addPlayerBtn.setForeground(Color.BLACK);
 		addPlayerBtn.setBackground(Color.WHITE);
 		addPlayerBtn.addActionListener(
@@ -87,9 +91,9 @@ public class LoginPage extends JFrame implements ActionListener{
 		panelLogin.add(addPlayerBtn);
 		
 		
-		openBoard = new JButton("Open Game!");
-		
-		openBoard.setBounds(572, 470, 120, 60);
+		openBoard = new JButton();
+		openBoard.setIcon(new ImageIcon("images/startgame1.png"));
+		openBoard.setBounds(572, 470, openBoard.getIcon().getIconWidth(), openBoard.getIcon().getIconHeight());
 		openBoard.setForeground(Color.BLACK);
 		openBoard.setBackground(Color.WHITE);
 		openBoard.addActionListener(
@@ -132,7 +136,8 @@ public class LoginPage extends JFrame implements ActionListener{
 		//Information of first user
 		
 		//label11 = new JLabel("Player 1 Username");
-		JLabel usernameLabel = new JLabel("Player Username");
+		JLabel usernameLabel = new JLabel();
+		usernameLabel.setIcon(new ImageIcon("images/usernamelabel1.png"));
 		
 				
 		// a list & more avatars are needed
@@ -144,18 +149,22 @@ public class LoginPage extends JFrame implements ActionListener{
 		avatarButtons.add(innerlistAvatarButtons);
 		
 				
-		usernameLabel.setBounds(160 + 275*(playerNo -1), 300, 150, 20);
+		usernameLabel.setBounds(145 + 275*(playerNo -1), 300, 250, 20);
 		panelLogin.add(usernameLabel);
 		
 		
 		JTextField username = new JTextField();
-		username.setBounds(160 + 275*(playerNo -1), 325, 150, 20);
+		username.setBackground(new Color(255,225,168));
+		username.setSelectedTextColor(new Color(71, 45, 48));
+		//username.setFont(new Font("SERIF"));
+		username.setBounds(160 + 275*(playerNo -1), 325, 150, 25);
 		textfields.add(username);
 		panelLogin.add(username);
 		
 		
-		JLabel avatarLabel = new JLabel("Choose your avatar");
-		avatarLabel.setBounds( 160 + 275*(playerNo -1), 360, 150, 20);
+		JLabel avatarLabel = new JLabel();
+		avatarLabel.setIcon(new ImageIcon("images/choose avatar1.png"));
+		avatarLabel.setBounds(160 + 265*(playerNo -1), 360, avatarLabel.getIcon().getIconWidth(), avatarLabel.getIcon().getIconHeight());
 		panelLogin.add(avatarLabel);
 		
 		
@@ -171,7 +180,7 @@ public class LoginPage extends JFrame implements ActionListener{
 		        }
 		        // Set border for the selected button
 		        JButton selectedButton = (JButton) e.getSource();
-		        selectedButton.setBorder(BorderFactory.createLineBorder(Color.GREEN, 6)); // Highlight the selected button
+		        selectedButton.setBorder(BorderFactory.createLineBorder(new Color(255,225,168), 6)); // Highlight the selected button
 				
 				setAvatarChosen(playerNo, temp);
 			});	

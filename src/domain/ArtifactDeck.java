@@ -22,11 +22,14 @@ public class ArtifactDeck {
     
     public ArtifactDeck() {
 		super();
-		this.cardNum = 3;
+		this.cardNum = 4;
 		List<ArtifactCard> artifacts = new ArrayList<ArtifactCard>();
 		artifacts.add(new ArtifactCard("Elixir of Insight", 0, true));
-		artifacts.add(new ArtifactCard("Philosopher's Compass", 1, false));
+		artifacts.add(new ArtifactCard("Printing Press", 1, false));
+		//wisdom idol -> id = 3
+		//printing press -> id = 1
 		artifacts.add(new ArtifactCard("Magic Mortar", 2, false));
+		artifacts.add(new ArtifactCard("Wisdom Idol", 3, false));
 		Collections.shuffle(artifacts);
 		this.artifacts = artifacts ;
 	}

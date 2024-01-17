@@ -26,6 +26,8 @@ public class KUAlchemistsGame {
 	
 	private static List<TurnListener> turnListeners;
 	private static List<EndListener> endListeners;
+	
+	private static List<Ingredient> ingredients; //to deliver 2 ingrs at the beginning 
 
 
 	/**
@@ -36,6 +38,8 @@ public class KUAlchemistsGame {
 		this.turnCounter = 1;
 		this.turnListeners = new ArrayList<TurnListener>(); 
 		this.endListeners = new ArrayList<EndListener>();
+		IngredientDeck.getInstance().initializeIngredientDeck();
+		this.ingredients = IngredientDeck.getInstance().getIngredients();
 	}
 	
 	public static void main(String[] args) {
@@ -93,6 +97,8 @@ public class KUAlchemistsGame {
     
     public void createPlayer(String username, int avatar) {
     	players.add(new Player(username, avatar));
+    	players.get(numPlayers).addIngredient(this.ingredients.get(numPlayers*2));
+    	players.get(numPlayers).addIngredient(this.ingredients.get(numPlayers*2 + 1));
     	numPlayers++;
     }
     

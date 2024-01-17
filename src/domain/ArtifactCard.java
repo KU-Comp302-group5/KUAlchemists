@@ -4,13 +4,36 @@ public class ArtifactCard {
     private String name;
     private Integer ID;
     private Boolean hasPanel;
+    private String image;
     
     public ArtifactCard(String name, Integer ID, Boolean hasPanel) {
     	this.name = name;
     	this.ID = ID;
     	this.hasPanel = hasPanel;
+    	switch(ID) {
+		case 0:
+			this.image="images/elixirartf.png";
+			break;
+		case 1:
+			this.image="images/printingpressartf.png";
+			break;
+		case 2:
+			this.image="images/magicmortarartf.png";
+			break;
+		case 3:
+			this.image="images/wisdomidolartf.png";
+			break;
+		}
     	
     }
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	public String getName() {
 		return name;

@@ -31,6 +31,11 @@ public class KUAlchemistsGame {
 	private static List<EndListener> endListeners;
 	private static List<playerNumListener> playerNumListeners;
 	private static List<GameStateListener> stateListeners;
+	
+	// moved here from Player class
+	private List<IngListener> ingListeners;
+	private List<ArtListener> artListeners;
+	private List<PotListener> potListeners;
 
 	/**
 	 * Private constructor for the game.
@@ -42,6 +47,10 @@ public class KUAlchemistsGame {
 		this.turnListeners = new ArrayList<TurnListener>(); 
 		this.endListeners = new ArrayList<EndListener>();
 		this.playerNumListeners = new ArrayList<playerNumListener>();
+		this.stateListeners = new ArrayList<GameStateListener>();
+		this.ingListeners = new ArrayList<IngListener>();
+		this.artListeners = new ArrayList<ArtListener>();
+		this.potListeners = new ArrayList<PotListener>();
 	}
 	
 	public static void main(String[] args) {
@@ -86,6 +95,33 @@ public class KUAlchemistsGame {
     	gameMode.startLoginView();
     }
     
+    public void addIngListener(IngListener lis) {
+		ingListeners.add(lis);
+	}
+	
+	public void addArtListener(ArtListener lis) {
+		artListeners.add(lis);
+	}
+	
+	public void addPotListener(PotListener lis) {
+		potListeners.add(lis);
+	}
+	
+	public void publishPotEvent() {
+		for(PotListener l: potListeners)
+			l.onPotChange();
+	}
+	
+	public void publishIngEvent() {
+		for(IngListener l: ingListeners)
+			l.onIngChange();
+	}
+	
+	public void publishArtEvent() {
+		for(ArtListener l: artListeners)
+			l.onArtChange();
+	}
+    
     public void addPlayerNumListener(playerNumListener lis) {
     	playerNumListeners.add(lis);
     }
@@ -103,6 +139,12 @@ public class KUAlchemistsGame {
     public void publishStateEvent() {
     	for (GameStateListener l: stateListeners) {
     		l.onStateChange();
+    	}
+    	
+    	for (Player p: players) {
+    		publishArtEvent();
+    		publishIngEvent();
+    		publishPotEvent();
     	}
     }
     
@@ -161,7 +203,6 @@ public class KUAlchemistsGame {
 	    	publishEndEvent();
 	    }
 	    publishTurnEvent();
-	    
 	    HandlerFactory.getInstance().getJoinHandler().broadcastGameState(false, false, false);
 	}
 

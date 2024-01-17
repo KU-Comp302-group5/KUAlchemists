@@ -105,6 +105,7 @@ public class GameState implements Serializable  {
 			}
 			
 			KUAlchemistsGame.getInstance().publishStateEvent();
+			System.out.println("Game state updated successfully");
 		}
 	}
 }

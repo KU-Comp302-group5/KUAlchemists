@@ -65,11 +65,7 @@ public class GameState implements Serializable  {
 	
 	public void updateGameState() {
 		
-		if (end) {
-			KUAlchemistsGame.endGame();
-		}
-		
-		else if (isNewPlayer) {
+		if (isNewPlayer) {
 			KUAlchemistsGame.getInstance().addPlayer(players.get(0));
 		}
 		
@@ -107,8 +103,14 @@ public class GameState implements Serializable  {
 				KUAlchemistsGame.getInstance().addStateListener(boardPage);
 			}
 			
-			KUAlchemistsGame.getInstance().publishStateEvent();
-			System.out.println("Game state updated successfully");
+			if (end) {
+				KUAlchemistsGame.endGame();
+			}
+			
+			else {
+				KUAlchemistsGame.getInstance().publishStateEvent();
+				System.out.println("Game state updated successfully");
+			}
 		}
 	}
 }

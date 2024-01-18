@@ -40,6 +40,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 	private static PotionBrew potionBrewing;
 	private static PublicationArea publicationArea;
 	private static SellPotionPanel sellPotionPanel;
+	private static RoundPanel roundpnl;
 	private static JButton help, pause, deductionBoard, turnButton, ingrDeckButton, player_ing,
 	artifactDeckButton, player_art;
 	private JLabel gold, gold2, gold3, gold4,
@@ -62,7 +63,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		ingrDeckButton = new JButton();
 		artifactDeckButton = new JButton();
 		
-		RoundPanel roundpnl = new RoundPanel();
+		roundpnl = new RoundPanel();
 		roundpnl.setOpaque(false);
 		roundpnl.setBounds(1285, 29, 99, 90);
 		KUAlchemistsGame.getInstance().addTurnListener(roundpnl);
@@ -1778,6 +1779,8 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 			getPanelBoard().setVisible(false);
 		} else {
 			getPanelBoard().setVisible(true); // should be changed to show a wait yout turn message
+			onTurnChange();
+			roundpnl.onTurnChange();
 		}
 		updateGoldUI();
     	updateSicknessUI();

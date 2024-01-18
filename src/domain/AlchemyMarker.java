@@ -16,28 +16,28 @@ public class AlchemyMarker implements Serializable {
 		this.ID = ID;
 		switch(ID) {
 		case 1:
-			this.image="images/toad.png";
+			this.image="images/alchemy-rat.png";
 			break;
 		case 2:
-			this.image="images/claw.png";
+			this.image="images/alchemy-bird.png";
 			break;
 		case 3:
-			this.image="images/scorpion.png";
+			this.image="images/alchemy-garlic.png";
 			break;
 		case 4:
-			this.image="images/fern.png";
+			this.image="images/alchemy-clover.png";
 			break;
 		case 5:
-			this.image="images/fether.png";
+			this.image="images/alchemy-aloevera.png";
 			break;
 		case 6:
-			this.image="images/mushroom.png";
+			this.image="images/alchemy-mushroom.png";
 			break;
 		case 7:
-			this.image="images/flower.png";
+			this.image="images/alchemy-flower.png";
 			break;
 		case 8:
-			this.image="images/root.png";
+			this.image="images/alchemy-bluelotus.png";
 			break;
 		}
 		

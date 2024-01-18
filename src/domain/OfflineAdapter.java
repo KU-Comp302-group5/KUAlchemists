@@ -16,4 +16,10 @@ public class OfflineAdapter implements IGameAdapter {
 		loginPage.setVisible(true);
 		loginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 	}
+
+	@Override
+	public void switchTurn() {
+		// TODO Auto-generated method stub
+		
+	}
 }

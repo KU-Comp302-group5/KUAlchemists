@@ -18,28 +18,28 @@ public class Ingredient implements Serializable {
 		this.blueAspect = blueAspect;
 		switch(id) {
 		case 1:
-			this.image="images/rat.png";
+			this.image="images/ingredient-rat.png";
 			break;
 		case 2:
-			this.image="images/birdi.png";
+			this.image="images/ingredient-bird.png";
 			break;
 		case 3:
-			this.image="images/garlic.png";
+			this.image="images/ingredient-garlic.png";
 			break;
 		case 4:
-			this.image="images/clover.png";
+			this.image="images/ingredient-clover.png";
 			break;
 		case 5:
-			this.image="images/aloevera.png";
+			this.image="images/ingredient-aloevera.png";
 			break;
 		case 6:
-			this.image="images/mushroomi.png";
+			this.image="images/ingredient-mushroom.png";
 			break;
 		case 7:
-			this.image="images/floweri.png";
+			this.image="images/ingredient-flower.png";
 			break;
 		case 8:
-			this.image="images/bluelotus.png";
+			this.image="images/ingredient-bluelotus.png";
 			break;
 		}
 	}

@@ -3,10 +3,12 @@ package ui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -47,24 +49,27 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 		
 		this.dBoard = KUAlchemistsGame.getInstance().getCurrentPlayer().getdBoard();
 		this.selectedQuality = 2;
-		this.ingredients = new String[]{"toad", "claw", "scorpion", "fern", "feather", "mushroom", "flower", "root"}; 
+		this.ingredients = new String[]{"rat", "bird", "garlic", "clover", "aloevera", "mushroom", "flower", "bluelotus"}; 
 		
 		setResultsTriangle(new JPanel());
 		getResultsTriangle().setLayout(null);
-		getResultsTriangle().setBounds(0,0,400,300);
+		getResultsTriangle().setBackground(new Color(71,45,48));
+		getResultsTriangle().setBounds(0,0,600,320);
 		configureResultsTriangle();
 		
 		this.add(getResultsTriangle());
 		
 		setIngredientsJPanel(new JPanel());
-		getIngredientsJPanel().setBounds(0, 300, 400, 50);
+		getIngredientsJPanel().setBounds(0, 320, 600, 50);
+		getIngredientsJPanel().setBackground(new Color(255,225,168));
 		getIngredientsJPanel().setLayout(null);
 		IngredientPanel();
 		this.add(getIngredientsJPanel());
 		
 		setDeductionGridJPanel(new JPanel());
 		getDeductionGridJPanel().setLayout(null);
-		getDeductionGridJPanel().setBounds(0,350,400,400);
+		getDeductionGridJPanel().setBounds(0,370,600,600);
+		getDeductionGridJPanel().setBackground(new Color(71,45,48));
 		configureDeductionGrid();
 		
 		this.add(getDeductionGridJPanel());
@@ -80,10 +85,10 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
                 
         
         for (int i = 0; i < 8; i++) {
-            ImageIcon image = createImageIcon("ingredient-" + this.ingredients[i] + ".png", 25, 50);
-            JLabel label = new JLabel(image);
+            //ImageIcon image = createImageIcon("images/ingredient-" + this.ingredients[i] + ".png", 25, 50);
+            JLabel label = new JLabel(new ImageIcon("images/ingredient-" + this.ingredients[i] + ".png"));
             //label.setPreferredSize(new Dimension(imageWidth, image.getIconHeight()));  // Maintain aspect ratio
-            label.setBounds(15 + 50*i, 0, 25, 50);
+            label.setBounds(76 + 65*i, 0, 25, 50);
             getIngredientsJPanel().add(label);
         }
         
@@ -92,7 +97,7 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 	private ImageIcon createImageIcon(String path, int width, int height){
 		ImageIcon icon = null;
 		try {
-			System.out.println(path);
+			//System.out.println(path);
             BufferedImage image = ImageIO.read(new File(path));
             Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
             icon = new ImageIcon(resizedImage);
@@ -130,28 +135,39 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
 
 	public void configureDeductionGrid() {
 		
+		for (int i = 0; i < 8; i++) {	// iterate over alchemy markers
+			int tempi = i;
+			
+			ImageIcon marker = createImageIcon("images/alchemy-" + this.ingredients[i] + ".png", 48, 50);
+			JLabel label = new JLabel(marker);
+			//label.setIcon(new ImageIcon("images/alchemy-" + this.ingredients[i] + ".png"));
+			label.setOpaque(false); // Set opaque to true to see the background color
+            //label.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for clarity
+            label.setBounds(6, 7 + i * 58, 50, 52);
+            getDeductionGridJPanel().add(label); // Add label to the frame		
+		}
+		
 		Boolean[][] dGrid = dBoard.getDeductionGrid();
 		for (int i = 0; i < 8; i++) {	// iterate over alchemy markers
 			int tempi = i;
 			for (int j = 0; j < 8; j++) {	//iterate over ingredients
 				int tempj = j;
-				ImageIcon marker = createImageIcon(this.ingredients[i] + ".png", 50, 50);
-				JButton button = new JButton(marker);
+				JButton button = new JButton();
 				button.setOpaque(true); // Set opaque to true to see the background color
                 if (dGrid[j][i]) {
-                	button.setBackground(Color.RED); // set red if marked by user 
+                	button.setBackground(new Color(189, 12, 9)); // set red if marked by user 
                 }
                 else{
-                	button.setBackground(Color.WHITE); // Set initial background color
+                	button.setBackground(new Color(222,220,222)); // Set initial background color
                 }
                 button.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border for clarity
-                button.setBounds(j * 50, i * 50, 50, 50);
+                button.setBounds(64 + 64*j, 5 + i * 58, 57, 54);
                 
                 button.addActionListener(e -> {
         			HandlerFactory.getInstance().getDeductionBoardHandler().markDeductionGrid(tempj, tempi);
                 });
                 
-                button.setText("#" + (i+1));
+                //button.setText("#" + (i+1));
                 getDeductionGridJPanel().add(button); // Add label to the frame
                 
 			}
@@ -166,10 +182,20 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
         JButton negativeButton = new JButton("-");
         JButton neutralButton = new JButton("N");
         
-        positiveButton.setFont(positiveButton.getFont().deriveFont(7f));
-        negativeButton.setFont(negativeButton.getFont().deriveFont(7f));
-        neutralButton.setFont(neutralButton.getFont().deriveFont(7f));
-
+        //positiveButton.setFont(positiveButton.getFont().deriveFont(7f));
+        //negativeButton.setFont(negativeButton.getFont().deriveFont(7f));
+        //neutralButton.setFont(neutralButton.getFont().deriveFont(7f));
+        
+        positiveButton.setBackground(new Color(201, 203, 163));
+        positiveButton.setFont(new Font("Bahnschrift", Font.BOLD, 20));
+        positiveButton.setMargin(new Insets(0,0,0,0));
+        negativeButton.setBackground(new Color(201, 203, 163));
+        negativeButton.setFont(new Font("Bahnschrift", Font.BOLD, 20));
+        negativeButton.setMargin(new Insets(0,0,0,0));
+        neutralButton.setBackground(new Color(201, 203, 163));
+        neutralButton.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+        neutralButton.setMargin(new Insets(0,0,0,0));
+        
         // Add action listeners to the buttons
         positiveButton.addActionListener(new ActionListener() {
             @Override
@@ -195,9 +221,9 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
             }
         });
         
-        positiveButton.setBounds(0, 0, 40, 40);
-        negativeButton.setBounds(40, 0, 40, 40);
-        neutralButton.setBounds(80, 0, 40, 40);
+        positiveButton.setBounds(15, 15, 40, 40);
+        negativeButton.setBounds(65, 15, 40, 40);
+        neutralButton.setBounds(115, 15, 40, 40);
         
         // Add buttons to the results triangle panel
         getResultsTriangle().add(positiveButton);
@@ -205,40 +231,41 @@ public class DeductionBoardDialog extends JDialog implements DBListener{
         getResultsTriangle().add(neutralButton);
 		
 		int index = 0;
-		int gap = 10;
-		int halfButton = 20;
+		int gap = 65;
 		
 		for (int i = 1; i < 8; i++) {
-			int startX = (200 - (i*20 + (i / 2)*10));
-			int startY = (i - 1)*40;
+			int startX = (325 - (i*32));
+			int startY = (i - 1) * 43;
 			
 			for (int j = 0; j < i; j++) {
 				int tempindex = index;
 				JLabel label = new JLabel();
 				label.setOpaque(true); // Set opaque to true to see the background color
-				label.setBackground(Color.YELLOW);
+				label.setBackground(new Color(255,225,168));
 	            label.setBorder(BorderFactory.createLineBorder(Color.GRAY)); // Add border for clarity
-	            label.setBounds(startX + (j * 2 * halfButton + j * gap), startY, 40, 40);
+	            label.setBounds(startX + (j * gap), 6 + startY, 40, 40);
 	            
 	            if (rTriangle[index] != null) {
-	            	String str = null;
 	            	switch (rTriangle[index].getQuality()) {
 	            	case 1: 
-	            		str="positive";
+	            		label.setText("+");
+	            		label.setFont(new Font("Bahnschrift", Font.BOLD, 20));
 	            		break;
 	            	case -1:
-	            		str="negative";
+	            		label.setText("-");
+	            		label.setFont(new Font("Bahnschrift", Font.BOLD, 20));
 	            		break;
 	            	case 0:
-	            		str="neutral";
+	            		label.setText("N");
+	            		label.setFont(new Font("Bahnschrift", Font.BOLD, 15));
 	            		break;
 	            	}
-	            	label.setText(str);
 	            }
 	            else {
 	            	label.setText("-------");
+	            	label.setFont(new Font("Bahnschrift", Font.BOLD, 9));
 	            }
-	            label.setFont(label.getFont().deriveFont(8f)); // Set the font size
+	            
 	            label.setHorizontalAlignment(SwingConstants.CENTER); // Center text horizontally
 	            label.setFocusable(true);
 	            label.addMouseListener(new MouseAdapter() {

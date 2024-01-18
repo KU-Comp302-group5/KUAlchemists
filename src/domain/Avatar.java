@@ -24,69 +24,70 @@ public class Avatar implements Serializable {
         ImageIcon selectedAvatar = null;
         switch (avatarType) {
             case 1:
-            	try {
+            	/*try {
                     BufferedImage image = ImageIO.read(new File("avatar1.png"));
                     Image resizedImage = image.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                     selectedAvatar = new ImageIcon(resizedImage);
                     
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                }
+                }*/
+            	selectedAvatar = new ImageIcon("images/avatar1.png");
                 break;
             case 2:
-            	try {
+            	/*try {
                     BufferedImage image = ImageIO.read(new File("avatar2.png"));
                     Image resizedImage = image.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                     selectedAvatar = new ImageIcon(resizedImage);
                     
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                }
-
+                }*/
+            	selectedAvatar = new ImageIcon("images/avatar2.png");
                 break;
             case 3:
-            	try {
+            	/*try {
                     BufferedImage image = ImageIO.read(new File("avatar3.png"));
                     Image resizedImage = image.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                     selectedAvatar = new ImageIcon(resizedImage);
                     
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                }
-
+                }*/
+            	selectedAvatar = new ImageIcon("images/avatar3.png");
                 break;
             case 4:
-            	try {
+            	/*try {
                     BufferedImage image = ImageIO.read(new File("avatar4.png"));
                     Image resizedImage = image.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                     selectedAvatar = new ImageIcon(resizedImage);
                     
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                }
-
+                }*/
+            	selectedAvatar = new ImageIcon("images/avatar4.png");
                 break;
             case 5:
-            	try {
+            	/*try {
                     BufferedImage image = ImageIO.read(new File("avatar5.png"));
                     Image resizedImage = image.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                     selectedAvatar = new ImageIcon(resizedImage);
                     
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                }
-
+                }*/
+            	selectedAvatar = new ImageIcon("images/avatar5.png");
                 break;
             case 6:
-            	try {
+            	/*try {
                     BufferedImage image = ImageIO.read(new File("avatar6.png"));
                     Image resizedImage = image.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                     selectedAvatar = new ImageIcon(resizedImage);
                     
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                }
-
+                }*/
+            	selectedAvatar = new ImageIcon("images/avatar6.png");
                 break;
             default:
                 break;

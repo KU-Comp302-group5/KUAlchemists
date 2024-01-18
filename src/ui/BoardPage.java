@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-public class BoardPage extends JFrame implements ActionListener, EndListener, GameStateListener {
+public class BoardPage extends JFrame implements TurnListener, ActionListener, EndListener, GameStateListener {
 	
 	private static JPanel panelBoard, player1_ingr, player2_ingr, player3_ingr, player4_ingr,
 				   player1_arts, player2_arts, player3_arts, player4_arts,
@@ -56,11 +56,17 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 		getPanelBoard().setLayout(null);
 		
 		
-		help = new JButton("Help");
-		pause = new JButton("Pause");
-		turnButton = new JButton("Turn");
+		help = new JButton();
+		pause = new JButton();
+		turnButton = new JButton();
 		ingrDeckButton = new JButton();
 		artifactDeckButton = new JButton();
+		
+		RoundPanel roundpnl = new RoundPanel();
+		roundpnl.setOpaque(false);
+		roundpnl.setBounds(1285, 29, 99, 30);
+		KUAlchemistsGame.getInstance().addTurnListener(roundpnl);
+		getPanelBoard().add(roundpnl);
 		
 
 		ingrDeckButton.setIcon(new ImageIcon("images/ingrdeck.png"));
@@ -98,8 +104,9 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 		
         //help.setFont(new Font("Arial", Font.PLAIN, 9));
         help.setMargin(new Insets(0, 0, 0, 0));
+        help.setIcon(new ImageIcon("images/helpbtn.png"));
         help.setFocusPainted(false);
-		help.setBounds(1300, 0, 60, 23);
+		help.setBounds(1310, 67, help.getIcon().getIconWidth()-14, help.getIcon().getIconHeight()-8);
 		help.setForeground(Color.BLACK);
 		help.setBackground(Color.WHITE);
 		help.addActionListener(e -> showHelpDialog());
@@ -108,7 +115,8 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 		
 		pause.setMargin(new Insets(0, 0, 0, 0));
         pause.setFocusPainted(false);
-		pause.setBounds(1370, 0, 60, 23);
+        pause.setIcon(new ImageIcon("images/pause btn.png"));
+		pause.setBounds(1310, 98, pause.getIcon().getIconWidth()-14, pause.getIcon().getIconHeight()-8);
 		pause.setForeground(Color.BLACK);
 		pause.setBackground(Color.WHITE);
 		pause.addActionListener(e -> showPauseDialog());
@@ -117,6 +125,7 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 		
         potionBrewing = new PotionBrew(new ImageIcon("images/panelbg.png").getImage());
         sellPotionPanel = new SellPotionPanel(new ImageIcon("images/panelbg.png").getImage());
+        sellPotionPanel.setVisible(false);
         KUAlchemistsGame.getInstance().addTurnListener(potionBrewing);
         KUAlchemistsGame.getInstance().addTurnListener(sellPotionPanel);
         publicationArea = new PublicationArea(new ImageIcon("images/panelbg.png").getImage());
@@ -146,6 +155,7 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 
         publicationArea.setBounds(750, 300, 550, 550);
         publicationArea.setLayout(null);
+        publicationArea.setVisible(false);
         publicationArea.setBackground(Color.RED);
         publicationArea.updatePublicationArea();
         getPanelBoard().add(publicationArea);
@@ -299,9 +309,10 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
         }
         
         //added for turn change. 
+        turnButton.setIcon(new ImageIcon("images/endturn.png"));
         turnButton.setMargin(new Insets(0, 0, 0, 0));
         turnButton.setFocusPainted(false);
-		turnButton.setBounds(400, 0, 50, 20);
+		turnButton.setBounds(560, 800, turnButton.getIcon().getIconWidth()-5, turnButton.getIcon().getIconHeight()-10);
 		turnButton.addActionListener(e -> {
 			nextTurnMessage();
 			KUAlchemistsGame.getInstance().switchTurns();
@@ -309,17 +320,46 @@ public class BoardPage extends JFrame implements ActionListener, EndListener, Ga
 		});
 		getPanelBoard().add(turnButton);
 		
-		JButton dBoardButton = new JButton("Deduction Board");
-		dBoardButton.setBounds(500, 750, 150, 50);
+		JButton dBoardButton = new JButton();
+		dBoardButton.setIcon(new ImageIcon("images/deductionboard.png"));
+		dBoardButton.setBackground(new Color(226, 109, 92));
+		dBoardButton.setBounds(240, 750, dBoardButton.getIcon().getIconWidth()+10, dBoardButton.getIcon().getIconHeight());
 		dBoardButton.addActionListener(e -> {
 			DeductionBoardDialog dialog = new DeductionBoardDialog(this);
 			dialog.setLayout(null);
 			HandlerFactory.getInstance().getDeductionBoardHandler().addListener(dialog);
-			dialog.setSize(500,800);
+			dialog.setSize(620,900);
 			dialog.setVisible(true);
         });
         getPanelBoard().add(dBoardButton);
 		
+		
+	}
+	
+	public class RoundPanel extends JPanel implements TurnListener{
+
+		JLabel round;
+		String[] rounds = new String[]{"images/round1.png","images/round2 .png", "images/round3.png"};
+		
+		
+		public RoundPanel() {
+			super();			
+			this.round = new JLabel();
+			round.setIcon(new ImageIcon("images/round1.png"));
+			round.setBounds(0, 0, WIDTH, HEIGHT);
+			//round.setFont(new Font("Bahnschrift", Font.BOLD, 20));
+			//round.setForeground(new Color(201, 203,163));
+			//round.setText("Round 1");
+			this.add(round);
+		}
+
+
+		@Override
+		public void onTurnChange() {
+			// TODO Auto-generated method stub
+			//round.setText("Round " + Integer.toString(KUAlchemistsGame.getInstance().getRound()));
+			round.setIcon(new ImageIcon(rounds[KUAlchemistsGame.getInstance().getRound()-1]));
+		}
 		
 	}
 	
@@ -1206,7 +1246,15 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
     	    setLayout(null);*/
     	}
     	
-    	@Override
+    	public List<JRadioButton> getTheoryButtons() {
+			return theoryButtons;
+		}
+
+		public void setTheoryButtons(List<JRadioButton> theoryButtons) {
+			this.theoryButtons = theoryButtons;
+		}
+
+		@Override
     	protected void paintComponent(Graphics g) {
     		// TODO Auto-generated method stub
     		super.paintComponent(g);
@@ -1296,6 +1344,11 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
             	JRadioButton theoryBtn = new JRadioButton();
             	theoryBtn.setIcon(new ImageIcon("images/publish.png"));
             	theoryButtons.add(theoryBtn);
+            	
+            	if(KUAlchemistsGame.getInstance().getRound()!=3) {
+            		theoryBtn.setEnabled(false);
+            	}
+            	
             	theoryBtn.setBounds(356, 42 + 60*i, theoryBtn.getIcon().getIconWidth()+10, theoryBtn.getIcon().getIconHeight());
             	theoryBtn.setMargin(new Insets(0,0,0,0));
             	theoryBtn.setOpaque(false);
@@ -1553,14 +1606,18 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 	    		"Help",
 	    		true);
 	    
-	    help.setSize(300, 100);
+	    help.setSize(400, 400);
 	    help.setModal(false);
+	    help.setLayout(null);
 	    
-	    JLabel helpText = new JLabel("This is help center.");
-	    help.add(helpText, BorderLayout.CENTER);
-	    JButton ok = new JButton("OK");
+	    JLabel helpText = new JLabel();
+	    helpText.setIcon(new ImageIcon("images/help.png"));
+	    helpText.setBounds(0, 0, 400, 400);
+	    help.add(helpText);
+	    //help.add(helpText, BorderLayout.CENTER);
+	    /*JButton ok = new JButton("OK");
 	    ok.addActionListener(e -> help.dispose());
-	    help.add(ok, BorderLayout.SOUTH);
+	    help.add(ok, BorderLayout.SOUTH);*/
 	    
 	    help.setLocationRelativeTo(helpText);
 	    help.setVisible(true);
@@ -1571,13 +1628,19 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 	    		this, 
 	    		"Pause", 
 	    		true);
-	    pause.setSize(300, 100);
+	    pause.setSize(400, 400);
+	    pause.setLayout(null);
 	    
-	    JLabel pauseText = new JLabel("Game is paused. Press OK to continue.");
-	    pause.add(pauseText, BorderLayout.CENTER);
-	    JButton ok = new JButton("OK");
+	    JLabel pauseText = new JLabel();
+	    pauseText.setIcon(new ImageIcon("images/pause.png"));
+	    pauseText.setBounds(0, 0, 400, 400);
+	    pause.add(pauseText);
+	    
+	    JButton ok = new JButton();
+	    ok.setIcon(new ImageIcon("images/ok.png"));
+	    ok.setBounds(155, 300, ok.getIcon().getIconWidth(), ok.getIcon().getIconHeight());
 	    ok.addActionListener(e -> pause.dispose());
-	    pause.add(ok, BorderLayout.SOUTH);
+	    pause.add(ok);
 	    
 	    pause.setLocationRelativeTo(pauseText);
 	    pause.setVisible(true);
@@ -1608,5 +1671,25 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 		updateGoldUI();
     	updateSicknessUI();
     	updateReputationUI();
+	}
+
+
+	@Override
+	public void onTurnChange() {
+		// TODO Auto-generated method stub
+		
+		if(KUAlchemistsGame.getInstance().getRound()==2) {
+			sellPotionPanel.setVisible(true);
+	        publicationArea.setVisible(true);
+		}
+		
+		if(KUAlchemistsGame.getInstance().getRound()==3) {
+			for (JRadioButton btn: publicationArea.getTheoryButtons()){
+				btn.setEnabled(true);
+			}
+		}
+		
+		
+		
 	}
 }

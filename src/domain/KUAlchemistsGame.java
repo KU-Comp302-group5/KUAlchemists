@@ -31,6 +31,7 @@ public class KUAlchemistsGame {
 	private static int thisPlayerNo; //for online only
 	private static String devicePlayer; //for online only
 	private static int turnCounter;
+	private static int round;
 	private static List<TurnListener> turnListeners;
 	private static List<EndListener> endListeners;
 	private static List<Ingredient> ingredients; //to deliver 2 ingrs at the beginning 
@@ -49,8 +50,10 @@ public class KUAlchemistsGame {
 		this.numPlayers = 0;
 		this.currentPlayerNo = 1;
 		this.turnCounter = 1;
+		this.round=1;
 		this.turnListeners = new ArrayList<TurnListener>(); 
 		this.endListeners = new ArrayList<EndListener>();
+		
 		IngredientDeck.getInstance().initializeIngredientDeck();
 		this.ingredients = IngredientDeck.getInstance().getIngredients();
 
@@ -204,6 +207,7 @@ public class KUAlchemistsGame {
 	    
 	    if (currentPlayerNo == 1) { // if all players took turns, game finishes when everyone has taken 9 turns
 	    	turnCounter++;
+	    	round = (turnCounter - 1) / 3 + 1;
 	    	System.out.println("TURN COUNTER IS: " + turnCounter);
 	    }
 	    
@@ -215,9 +219,18 @@ public class KUAlchemistsGame {
 	    	publishEndEvent();
 	    }
 	    publishTurnEvent();
-	    HandlerFactory.getInstance().getJoinHandler().broadcastGameState(false, false, false);
+	    
+	    gameMode.switchTurn();
 	}
 	
+	public static int getRound() {
+		return round;
+	}
+
+	public static void setRound(int round) {
+		KUAlchemistsGame.round = round;
+	}
+
 	public static void calculateResults(Player p) {
 		int score = 0;
 		score += (p.getReputation() + p.getArtifacts().size() * 2 + (p.getGold() / 3));

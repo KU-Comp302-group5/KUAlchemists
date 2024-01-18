@@ -2,6 +2,7 @@ package domain;
 
 import javax.swing.JFrame;
 
+import domain.controllers.HandlerFactory;
 import ui.LoginPage;
 import ui.OnlineLoginPage;
 
@@ -18,5 +19,11 @@ public class OnlineAdapter implements IGameAdapter{
 		onlineLoginPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		onlineLoginPage.setVisible(true);
 		onlineLoginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	@Override
+	public void switchTurn() {
+		// TODO Auto-generated method stub
+		HandlerFactory.getInstance().getJoinHandler().broadcastGameState(false, false, false);
 	}
 }

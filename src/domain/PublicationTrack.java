@@ -101,23 +101,23 @@ public class PublicationTrack {
 		Aspect as4 = new Aspect(false, true);
 		
 		//Ingredient(name, ID, red, green, blue)
-		Ingredient toad = new Ingredient("toad", 1, as3, as1, as4);
-		Ingredient claw = new Ingredient("claw", 2, as1, as1, as1);
-		Ingredient scorpion = new Ingredient("scorpion", 3, as3, as4, as2);
-		Ingredient fern = new Ingredient("fern", 4, as2, as2, as2);
-		Ingredient feather = new Ingredient("feather", 5, as1, as4, as3);
+		Ingredient rat = new Ingredient("rat", 1, as3, as1, as4);
+		Ingredient bird = new Ingredient("bird", 2, as1, as1, as1);
+		Ingredient garlic = new Ingredient("garlic", 3, as3, as4, as2);
+		Ingredient clover = new Ingredient("clover", 4, as2, as2, as2);
+		Ingredient aloevera = new Ingredient("aloevera", 5, as1, as4, as3);
 		Ingredient mushroom = new Ingredient("mushroom", 6, as4, as2, as3);
 		Ingredient flower = new Ingredient("flower", 7, as4, as3, as1);
-		Ingredient root = new Ingredient("root", 8, as2, as3, as4);
+		Ingredient bluelotus = new Ingredient("bluelotus", 8, as2, as3, as4);
 		
-		ingrs.add(toad);
-		ingrs.add(claw);
-		ingrs.add(scorpion);
-		ingrs.add(fern);
-		ingrs.add(feather);
+		ingrs.add(rat);
+		ingrs.add(bird);
+		ingrs.add(garlic);
+		ingrs.add(clover);
+		ingrs.add(aloevera);
 		ingrs.add(mushroom);
 		ingrs.add(flower);
-		ingrs.add(root);
+		ingrs.add(bluelotus);
 		
 		this.availableIngredients = ingrs;
 	}

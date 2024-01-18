@@ -300,13 +300,13 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		
 		KUAlchemistsGame.getInstance().addPotListener((PlayerPot) player2_pot);
         
-        if(LoginPage.playerNum==3) {
+        if(KUAlchemistsGame.getNumPlayers()==3) {
         	showPlayer3();
         	KUAlchemistsGame.getInstance().addIngListener((PotionBrew) potionBrewing);
         	KUAlchemistsGame.getInstance().addIngListener((SellPotionPanel) sellPotionPanel);
         }
         
-        if(LoginPage.playerNum==4) {
+        if(KUAlchemistsGame.getNumPlayers()==4) {
         	showPlayer3();
         	showPlayer4();
         	KUAlchemistsGame.getInstance().addIngListener((PotionBrew) potionBrewing);

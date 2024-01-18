@@ -1789,16 +1789,31 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 			getPanelBoard().setVisible(true); // should be changed to show a wait yout turn message
 			onTurnChange();
 			roundpnl.onTurnChange();
+			updateGoldUI();
+	    	updateSicknessUI();
+	    	updateReputationUI();
 		}
-		updateGoldUI();
-    	updateSicknessUI();
-    	updateReputationUI();
 	}
-
 
 	@Override
 	public void onTurnChange() {
 		// TODO Auto-generated method stub
+		
+		//Wisdom Idol Implementation
+		for (String p: KUAlchemistsGame.getRecentlyDebunkedPlayers()) {
+			if (p.equals(KUAlchemistsGame.getCurrentPlayer().getUsername())) {
+				
+				// if the player has Wisdom Idol card
+            	if (KUAlchemistsGame.getCurrentPlayer().getArtifacts().contains(new ArtifactCard("Wisdom Idol", 3, false))){
+            		WisdomIdolDialog dialog = new WisdomIdolDialog(this);
+					dialog.add(dialog.getPanelArtifact());
+					dialog.setSize(600,600);
+					dialog.setVisible(true);
+            	}
+			}
+		}
+		
+		KUAlchemistsGame.getInstance().emptyRecentlyDebunkedPlayers();
 		
 		if(KUAlchemistsGame.getInstance().getRound()==2) {
 			sellPotionPanel.setVisible(true);
@@ -1810,6 +1825,7 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 				btn.setEnabled(true);
 			}
 		}
+		
 		if (KUAlchemistsGame.getInstance().getCurrentPlayerNo()==1){
 			gold.setVisible(true);
 			sickness.setVisible(true);
@@ -1873,7 +1889,5 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 			player3_ingr.setVisible(false);
 		
 		}
-		
-		
 	}
 }

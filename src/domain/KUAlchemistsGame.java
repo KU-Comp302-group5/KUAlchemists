@@ -42,6 +42,9 @@ public class KUAlchemistsGame {
 	private List<IngListener> ingListeners;
 	private List<ArtListener> artListeners;
 	private List<PotListener> potListeners;
+	
+	//Players that was recently debunked
+	private static List<String> recentlyDebunkedPlayers = new ArrayList<String>();
 
 	/**
 	 * Private constructor for the game.
@@ -106,7 +109,25 @@ public class KUAlchemistsGame {
     	gameMode.startLoginView();
     }
     
-    public void addIngListener(IngListener lis) {
+    public void addRecentlyDebunkedPlayer(String p) {
+    	if (! recentlyDebunkedPlayers.contains(p)) {
+    		recentlyDebunkedPlayers.add(p);
+    	}
+    }
+    
+    public void emptyRecentlyDebunkedPlayers() {
+    	recentlyDebunkedPlayers = new ArrayList<String>();
+    }
+    
+    public static List<String> getRecentlyDebunkedPlayers() {
+		return recentlyDebunkedPlayers;
+	}
+
+	public static void setRecentlyDebunkedPlayers(List<String> recentlyDebunkedPlayers) {
+		KUAlchemistsGame.recentlyDebunkedPlayers = recentlyDebunkedPlayers;
+	}
+
+	public void addIngListener(IngListener lis) {
 		ingListeners.add(lis);
 	}
 	
@@ -198,7 +219,6 @@ public class KUAlchemistsGame {
     
 
 	public static Player getCurrentPlayer() {
-		System.out.println("current player no: " + currentPlayerNo);
 		return KUAlchemistsGame.getInstance().getPlayer(currentPlayerNo);
 	}
 
@@ -241,7 +261,14 @@ public class KUAlchemistsGame {
 
 	public static void calculateResults(Player p) {
 		int score = 0;
-		score += (p.getReputation() + p.getArtifacts().size() * 2 + (p.getGold() / 3));
+		score += (p.getReputation() 
+				//+ p.getArtifacts().size() * 2 
+				+ (p.getGold() / 3));
+		
+		if (p.getArtifacts().contains(new ArtifactCard("Wisdom Idol", 3, false))) {
+			score++;
+		}
+		
 		scores.add(score);
 	}
 

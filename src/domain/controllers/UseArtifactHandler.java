@@ -1,14 +1,12 @@
 package domain.controllers;
 
-import java.util.List;
-
 import domain.ArtifactBehavior;
 import domain.ArtifactCard;
 import domain.ElixirOfInsightArtifact;
 import domain.KUAlchemistsGame;
 import domain.MagicMortarArtifact;
 import domain.PrintingPressArtifact;
-import domain.Player;
+import domain.WisdomIdolArtifact;
 
 public class UseArtifactHandler {
 	ArtifactBehavior artifactBehavior;
@@ -28,7 +26,7 @@ public class UseArtifactHandler {
 			artifactBehavior = new MagicMortarArtifact();
 		}
 		if (artifactCard.getID() == 3) {
-			//artifactBehavior = new MagicMortarArtifact();
+			artifactBehavior = new WisdomIdolArtifact();
 		}
 		
 		KUAlchemistsGame.getInstance().getCurrentPlayer().removeArtifactCard(artifactCard);

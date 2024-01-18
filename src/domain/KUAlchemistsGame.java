@@ -115,8 +115,10 @@ public class KUAlchemistsGame {
     	}
     }
     
-    public void emptyRecentlyDebunkedPlayers() {
-    	recentlyDebunkedPlayers = new ArrayList<String>();
+    public void removeRecentlyDebunkedPlayer(String p) {
+    	if (recentlyDebunkedPlayers.contains(p)) {
+    		recentlyDebunkedPlayers.remove(p);
+    	}
     }
     
     public static List<String> getRecentlyDebunkedPlayers() {

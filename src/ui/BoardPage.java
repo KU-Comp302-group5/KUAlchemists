@@ -373,16 +373,16 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		public void onTurnChange() {
 			// TODO Auto-generated method stub
 			//round.setText("Round " + Integer.toString(KUAlchemistsGame.getInstance().getRound()));
-			round.setIcon(new ImageIcon(rounds[KUAlchemistsGame.getInstance().getRound()-1]));
-			turn.setIcon(new ImageIcon(turns[KUAlchemistsGame.getInstance().getTurnCounter()%3]));
+			
+			if (KUAlchemistsGame.getInstance().getRound() < 4) {
+				round.setIcon(new ImageIcon(rounds[KUAlchemistsGame.getInstance().getRound()-1]));
+				turn.setIcon(new ImageIcon(turns[KUAlchemistsGame.getInstance().getTurnCounter()%3]));
+			}
 		}
-		
 	}
-	
 	
 	@Override
 	public void onEndChange() {
-//		
 		String[] playerNames = KUAlchemistsGame.getInstance().getPlayerNames();
 		List<Integer> playerScores = KUAlchemistsGame.getInstance().getScores();
 
@@ -1450,11 +1450,15 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             	HandlerFactory.getInstance().getPublicationHandler().makePublication(ingrName, markerName, KUAlchemistsGame.getInstance().getCurrentPlayerNo());
             	
             	// if the player has Printing Press card
-            	if (KUAlchemistsGame.getInstance().getCurrentPlayer().getArtifacts().contains(new ArtifactCard("Printing Press", 1, false))){
+            	if (KUAlchemistsGame.getCurrentPlayer().getArtifacts().contains(new ArtifactCard("Printing Press", 1, false))){
+            		System.out.println("Player has printing press");
             		PrintingPressDialog dialog = new PrintingPressDialog((Frame) this.parentWindow);
 					dialog.add(dialog.getPanelArtifact());
 					dialog.setSize(600,600);
 					dialog.setVisible(true);
+            	} else {
+            		System.out.println("Player doesnt have printing press");
+            		System.out.println(KUAlchemistsGame.getCurrentPlayer().getArtifacts());
             	}
             	
             	updateGoldUI();
@@ -1797,23 +1801,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 
 	@Override
 	public void onTurnChange() {
-		// TODO Auto-generated method stub
-		
-		//Wisdom Idol Implementation
-		for (String p: KUAlchemistsGame.getRecentlyDebunkedPlayers()) {
-			if (p.equals(KUAlchemistsGame.getCurrentPlayer().getUsername())) {
-				
-				// if the player has Wisdom Idol card
-            	if (KUAlchemistsGame.getCurrentPlayer().getArtifacts().contains(new ArtifactCard("Wisdom Idol", 3, false))){
-            		WisdomIdolDialog dialog = new WisdomIdolDialog(this);
-					dialog.add(dialog.getPanelArtifact());
-					dialog.setSize(600,600);
-					dialog.setVisible(true);
-            	}
-			}
-		}
-		
-		KUAlchemistsGame.getInstance().emptyRecentlyDebunkedPlayers();
 		
 		if(KUAlchemistsGame.getInstance().getRound()==2) {
 			sellPotionPanel.setVisible(true);
@@ -1889,5 +1876,21 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 			player3_ingr.setVisible(false);
 		
 		}
+		
+		//Wisdom Idol Implementation
+		for (String p: KUAlchemistsGame.getRecentlyDebunkedPlayers()) {
+			if (p.equals(KUAlchemistsGame.getCurrentPlayer().getUsername())) {
+				
+				// if the player has Wisdom Idol card
+            	if (KUAlchemistsGame.getCurrentPlayer().getArtifacts().contains(new ArtifactCard("Wisdom Idol", 3, false))){
+            		WisdomIdolDialog dialog = new WisdomIdolDialog(this);
+					dialog.add(dialog.getPanelArtifact());
+					dialog.setSize(600,600);
+					dialog.setVisible(true);
+            	}
+			}
+		}
+		KUAlchemistsGame.getInstance().removeRecentlyDebunkedPlayer(KUAlchemistsGame.getCurrentPlayer().getUsername());
+		updateReputationUI();
 	}
 }

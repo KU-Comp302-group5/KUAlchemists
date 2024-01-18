@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,20 +34,27 @@ public class PrintingPressDialog extends JDialog {
 		setPanelArtifact(new JPanel());
 		getPanelArtifact().setLayout(null);
 		
+		getPanelArtifact().setBackground(new Color(255,225,168));
+		
 		JLabel labelDescription = new JLabel("Do you want to publish free of charge?");
-		labelDescription.setBounds(100, 100, 400, 20);
+		labelDescription.setBounds(120, 70, 400, 20);
 		getPanelArtifact().add(labelDescription);
 		
-		JButton Button1 = new JButton("use");
-		JButton Button2 = new JButton("don't use");
+		labelDescription.setFont(new Font("Bahnschrift", Font.BOLD, 19));
+		labelDescription.setForeground(new Color(71, 45, 48));
 		
-		Button1.setBounds(70, 170, 100, 60);
-		Button1.setForeground(Color.BLACK);
-		Button1.setBackground(Color.WHITE);
+		JButton Button1 = new JButton("Use Artifact");
+		JButton Button2 = new JButton("Don't use");
 		
-		Button2.setBounds(190, 170, 100, 60);
-		Button2.setForeground(Color.BLACK);
-		Button2.setBackground(Color.WHITE);
+		Button1.setBounds(160, 140, 120, 40);
+		Button1.setForeground(new Color(71, 45, 48));
+		Button1.setBackground(new Color(201,203,163));
+		Button1.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+		
+		Button2.setBounds(300, 140, 120, 40);
+		Button2.setForeground(new Color(71, 45, 48));
+		Button2.setBackground(new Color(201,203,163));
+		Button2.setFont(new Font("Bahnschrift", Font.BOLD, 15));
 		
 		Button1.addActionListener(new ActionListener() {
             @Override

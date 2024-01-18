@@ -13,6 +13,7 @@ public class GameState implements Serializable  {
 	
 	// From KUAlchemistsGame
 	private List<Player> players = new ArrayList<Player>();
+	private List<String> recentlyDebunkedPlayers = new ArrayList<String>();
 	private int numPlayers;
 	private int currentPlayerNo;
 	private int turnCounter;
@@ -44,6 +45,7 @@ public class GameState implements Serializable  {
 		
 		// From KUAlchemistsGame
 		this.players =  KUAlchemistsGame.getPlayers();
+		this.recentlyDebunkedPlayers = KUAlchemistsGame.getRecentlyDebunkedPlayers();
 		this.numPlayers = KUAlchemistsGame.getNumPlayers();
 		this.currentPlayerNo = KUAlchemistsGame.getCurrentPlayerNo();
 		this.turnCounter = KUAlchemistsGame.getTurnCounter();
@@ -72,6 +74,7 @@ public class GameState implements Serializable  {
 		else {
 			// KUAlchemistsGame related
 			KUAlchemistsGame.setPlayers(players);
+			KUAlchemistsGame.setRecentlyDebunkedPlayers(recentlyDebunkedPlayers);
 			KUAlchemistsGame.setNumPlayers(numPlayers);
 			KUAlchemistsGame.setCurrentPlayerNo(currentPlayerNo);
 			KUAlchemistsGame.setTurnCounter(turnCounter);

@@ -29,7 +29,7 @@ public class UseArtifactHandler {
 			artifactBehavior = new WisdomIdolArtifact();
 		}
 		
-		KUAlchemistsGame.getInstance().getCurrentPlayer().removeArtifactCard(artifactCard);
+		KUAlchemistsGame.getInstance().getCurrentPlayer().removeArtifactCard(artifactCard.getID());
 	}
 	
 	public <T> void performArtifact(T element) {

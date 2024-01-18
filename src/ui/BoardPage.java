@@ -35,7 +35,7 @@ import java.util.List;
 
 public class BoardPage extends JFrame implements TurnListener, ActionListener, EndListener, GameStateListener {
 	
-	private static JPanel panelBoard, player1_ingr, player2_ingr, player3_ingr, player4_ingr,
+	private static JPanel waitPanel, panelBoard, player1_ingr, player2_ingr, player3_ingr, player4_ingr,
 				   player1_arts, player2_arts, player3_arts, player4_arts,
 				   player1_pot, player2_pot, player3_pot, player4_pot;
 	private static PotionBrew potionBrewing;
@@ -57,6 +57,15 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		setPanelBoard(new BackgroundPanel("images/pixil-frame-0.png"));
 		getPanelBoard().setLayout(null);
 		
+		waitPanel = new BackgroundPanel("images/waitpnl.png");
+		waitPanel.setLayout(null);
+		waitPanel.setBounds(0, 0, 600, 600);
+		waitPanel.setVisible(false);
+		this.add(waitPanel);
+		
+		
+		
+		
 		
 		help = new JButton();
 		pause = new JButton();
@@ -77,12 +86,10 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		ingrDeckButton.setForeground(Color.BLUE);
 		ingrDeckButton.addActionListener(e -> {
         	System.out.println("ingrDeckButton clicked");
-        	//System.out.println("curr player before switch turn:" + KUAlchemistsGame.getInstance().getCurrentPlayerNo());
         	HandlerFactory.getInstance().getForageIngHandler().forageIngredient();
         	updateGoldUI();
         	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " foraged an ingredient.");
-        	//KUAlchemistsGame.getInstance().switchTurns();
-        	//System.out.println("curr player after switch turn:" + KUAlchemistsGame.getInstance().getCurrentPlayerNo());
+        	ingrDeckButton.setEnabled(false);
         	revalidate();
         	repaint();
         	
@@ -96,11 +103,16 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		artifactDeckButton.addActionListener(e -> {
         	System.out.println("artifactDeckButton clicked");
         	//again gold UI update without observer
-        	HandlerFactory.getInstance().getBuyArtifactHandler().buyArtifact();
-        	updateGoldUI();
-        	System.out.println(KUAlchemistsGame.getInstance().getCurrentPlayer().getArtifacts());
-        	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " bought an artifact.");
-        	//KUAlchemistsGame.getInstance().switchTurns();
+        	if (KUAlchemistsGame.getInstance().getCurrentPlayer().getGold()<3) {
+        		showMessage("NOT ENOUGH GOLD!");
+        	}
+        	else {
+	        	HandlerFactory.getInstance().getBuyArtifactHandler().buyArtifact();
+	        	updateGoldUI();
+	        	System.out.println(KUAlchemistsGame.getInstance().getCurrentPlayer().getArtifacts());
+	        	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " bought an artifact.");
+	        	artifactDeckButton.setEnabled(false);
+        	}
         });
         getPanelBoard().add(artifactDeckButton);
 		
@@ -207,7 +219,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         reputation = new JLabel("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(1).getReputation());
         reputation.setFont(new Font("Bahnschrift", Font.BOLD, 15));
         reputation.setForeground(new Color(255,225,168));
-        reputation.setBounds(213, 95, 100, 30);
+        reputation.setBounds(213, 95, 110, 30);
         getPanelBoard().add(reputation);
         
         player1_arts = new PlayerArts(1, new ImageIcon("images/panelbg.png").getImage());
@@ -267,7 +279,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         reputation2 = new JLabel("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(2).getReputation());
         reputation2.setFont(new Font("Bahnschrift", Font.BOLD, 15));
         reputation2.setForeground(new Color(255,225,168));
-        reputation2.setBounds(513, 95, 100, 30);
+        reputation2.setBounds(513, 95, 110, 30);
         getPanelBoard().add(reputation2);
         
 		player2_arts = new PlayerArts(2, new ImageIcon("images/panelbg.png").getImage());
@@ -455,7 +467,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         reputation3 = new JLabel("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(3).getReputation());
         reputation3.setFont(new Font("Bahnschrift", Font.BOLD, 15));
         reputation3.setForeground(new Color(255,225,168));
-        reputation3.setBounds(813, 95, 100, 30);
+        reputation3.setBounds(813, 95, 110, 30);
         getPanelBoard().add(reputation3);
         
 		player3_arts = new PlayerArts(3, new ImageIcon("images/panelbg.png").getImage());
@@ -521,7 +533,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         reputation4 = new JLabel("Reputation: " + KUAlchemistsGame.getInstance().getPlayer(4).getReputation());
         reputation4.setFont(new Font("Bahnschrift", Font.BOLD, 15));
         reputation4.setForeground(new Color(255,225,168));
-        reputation4.setBounds(1113, 95, 100, 30);
+        reputation4.setBounds(1113, 95, 110, 30);
         getPanelBoard().add(reputation4);
         
         player4_arts = new PlayerArts(4, new ImageIcon("images/panelbg.png").getImage());
@@ -738,7 +750,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
     			}
     			else {
     				player_art.addActionListener(e -> {
-                    	JOptionPane.showMessageDialog(this.parentWindow,"This artifact cannot be used now!");  
+                    	showMessage("This artifact cannot be used now!");
                     });
     			}    			
                 
@@ -752,6 +764,37 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
     		updateArts();
     	}
     }
+    
+    private void showMessage(String msg) {
+	    JDialog message = new JDialog(
+	    		this,
+	    		"Turn",
+	    		true);
+	    message.setSize(350, 150);
+	    message.setModal(true);
+	    
+	    message.getContentPane().setBackground(new Color(255,225,168));
+	    
+	    message.setLayout(null);
+	    
+	    JLabel text = new JLabel(msg);
+	    text.setFont(new Font("Bahnschrift", Font.BOLD, 19));
+	    text.setBounds(20, 30, 300, 30);
+	    text.setForeground(new Color(189, 12, 9));
+	    
+	    message.add(text);
+	    
+	    JButton ok = new JButton("OK");
+	    ok.setBounds(125, 73, 100, 30);
+	    ok.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+	    ok.setForeground(new Color(255,225,168));
+	    ok.setBackground(new Color(189, 12, 9));
+	    ok.addActionListener(e -> message.dispose());
+	    message.add(ok);
+	    
+	    message.setLocationRelativeTo(text);
+	    message.setVisible(true);
+	}
     
     
     /**
@@ -962,9 +1005,14 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             			KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(ingrindex.get(1)),
             			str, KUAlchemistsGame.getInstance().getCurrentPlayer());
             	
+            	int magicMortarFlag=0;
+            	
+            	for (ArtifactCard artf : KUAlchemistsGame.getInstance().getCurrentPlayer().getArtifacts()) {
+            		if (artf.getID()==2) magicMortarFlag=1;
+            	}
             	
             	// if the player has magic mortar card
-            	if (KUAlchemistsGame.getInstance().getCurrentPlayer().getArtifacts().contains(new ArtifactCard("Magic Mortar", 2, false))){
+            	if (magicMortarFlag==1){
             		// TO DO
             		// show MagicMortarDialog to take input from user
             		// MagicMortarDialog takes which ingredient the user wants to be not discarded
@@ -1180,15 +1228,28 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             	}
             	
             	//transmit the massage to the specific controller
-            	HandlerFactory.getInstance().getSellPotionHandler().sellPotion(
+            	int result = HandlerFactory.getInstance().getSellPotionHandler().sellPotion(
             			KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(ingrindex.get(0)),
             			KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(ingrindex.get(1)),
             			prediction, KUAlchemistsGame.getInstance().getCurrentPlayer());
+            	
             	updateGoldUI();
             	updateReputationUI();
             	
-            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made a potion sale.");
-                //KUAlchemistsGame.getInstance().switchTurns();
+            	String msg = null;
+            	
+            	if (result==1) { //positive prediction
+            		msg = "positive";
+            	}
+            	if(result==0) { //positive/neutral
+            		msg = "neutral";
+            	}
+            	if(result==-1) { //'may be negative' prediction
+            		msg="negative";
+            	}
+            	
+            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made a " + msg + " potion sale.");
+            	
             });
             
             checkboxes = new ArrayList<JCheckBox>(); //keeps all the ingredients
@@ -1301,12 +1362,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
     	public PublicationArea(Image image) {
     		super();
     		this.image = image;
-    		/*Dimension size = new Dimension(image.getWidth(this), image.getHeight(this));
-    	    //setPreferredSize(size);
-    	    //setMinimumSize(size);
-    	    this.setMaximumSize(size);
-    	    //setSize(size);
-    	    setLayout(null);*/
     	}
     	
     	public List<JRadioButton> getTheoryButtons() {
@@ -1409,7 +1464,8 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             	theoryBtn.setIcon(new ImageIcon("images/publish.png"));
             	theoryButtons.add(theoryBtn);
             	
-            	if(KUAlchemistsGame.getInstance().getRound()!=3) {
+            	if(KUAlchemistsGame.getInstance().getRound()!=3 || 
+            			theories.get(i).getPlayerNo()==KUAlchemistsGame.getCurrentPlayerNo()) {
             		theoryBtn.setEnabled(false);
             	}
             	
@@ -1476,43 +1532,57 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             publishBtn.setVisible(true);
             publishBtn.addActionListener(e -> {
             	System.out.println("Publish button in UI");
-            	String ingrName = null;
-            	String markerName = null;
             	
+            	int printingPressFlag = 0;
+            	for (ArtifactCard artf : KUAlchemistsGame.getCurrentPlayer().getArtifacts()) {
+            		if (artf.getID()==1) printingPressFlag=1;
+            	}
             	
-            	for (Enumeration<AbstractButton> buttons = ingrGroup.getElements(); buttons.hasMoreElements();) {
-                    AbstractButton button = buttons.nextElement();
-
-                    if (button.isSelected()) {
-                         ingrName = ingrs.get(ingrButtons.indexOf(button)).getName();
-                    }
-                }
-            	
-            	for (Enumeration<AbstractButton> buttons = markerGroup.getElements(); buttons.hasMoreElements();) {
-                    AbstractButton button = buttons.nextElement();
-
-                    if (button.isSelected()) {
-                         markerName = Integer.toString(markers.get(markerButtons.indexOf(button)).getID());
-                    }
-                }
-            	
-            	HandlerFactory.getInstance().getPublicationHandler().makePublication(ingrName, markerName, KUAlchemistsGame.getInstance().getCurrentPlayerNo());
-            	
-            	// if the player has Printing Press card
-            	if (KUAlchemistsGame.getCurrentPlayer().getArtifacts().contains(new ArtifactCard("Printing Press", 1, false))){
+            	if (printingPressFlag==1){
             		System.out.println("Player has printing press");
             		PrintingPressDialog dialog = new PrintingPressDialog((Frame) this.parentWindow);
 					dialog.add(dialog.getPanelArtifact());
-					dialog.setSize(600,600);
+					dialog.setSize(600,350);
 					dialog.setVisible(true);
-            	} else {
-            		System.out.println("Player doesnt have printing press");
-            		System.out.println(KUAlchemistsGame.getCurrentPlayer().getArtifacts());
+            	}
+            	// if the player has Printing Press card
+           	 	else {
+           	 		System.out.println("Player doesnt have printing press");
+           	 		System.out.println(KUAlchemistsGame.getCurrentPlayer().getArtifacts());
+           	 	}
+            	if (KUAlchemistsGame.getInstance().getCurrentPlayer().getGold()<1) {
+            		showMessage("NOT ENOUGH GOLD!");
             	}
             	
-            	updateGoldUI();
-            	updateReputationUI();
-            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made a publication.");
+            	else {
+	            	String ingrName = null;
+	            	String markerName = null;
+	            	
+	            	
+	            	for (Enumeration<AbstractButton> buttons = ingrGroup.getElements(); buttons.hasMoreElements();) {
+	                    AbstractButton button = buttons.nextElement();
+	
+	                    if (button.isSelected()) {
+	                         ingrName = ingrs.get(ingrButtons.indexOf(button)).getName();
+	                    }
+	                }
+	            	
+	            	for (Enumeration<AbstractButton> buttons = markerGroup.getElements(); buttons.hasMoreElements();) {
+	                    AbstractButton button = buttons.nextElement();
+	
+	                    if (button.isSelected()) {
+	                         markerName = Integer.toString(markers.get(markerButtons.indexOf(button)).getID());
+	                    }
+	                }
+	            	
+	            	HandlerFactory.getInstance().getPublicationHandler().makePublication(ingrName, markerName, KUAlchemistsGame.getInstance().getCurrentPlayerNo());
+	            	
+	            	
+	            	
+	            	updateGoldUI();
+	            	updateReputationUI();
+	            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made a publication.");
+            	}
             });
             
             debunkBtn = new JButton();
@@ -1574,13 +1644,17 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             			//aspectSign);
             	
             	String image = theories.get(theoryIndex).getIngredient().getImage();
+            	int debunkedPlayerNo = theories.get(theoryIndex).getPlayerNo();
             	
-            	HandlerFactory.getInstance().getPublicationHandler().debunkTheory(theories.get(theoryIndex), aspectIndex + 1,
+            	int result = HandlerFactory.getInstance().getPublicationHandler().debunkTheory(theories.get(theoryIndex),
+            			aspectIndex + 1,
             			KUAlchemistsGame.getInstance().getCurrentPlayerNo());
             	
             	updateReputationUI();
             	
-            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made a debunk.", 
+            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + (result==1 ? " debunked " +
+            			KUAlchemistsGame.getInstance().getPlayer(debunkedPlayerNo).getUsername()+ "'s theory." : 
+            				" made an unsuccessful debunk") , 
             			image, 
             			"'s" + " " + aspect + aspectSign);
                 //KUAlchemistsGame.getInstance().switchTurns();
@@ -1711,12 +1785,12 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 	    
 	    JLabel turnText1 = new JLabel(msgString);
 	    turnText1.setFont(new Font("Bahnschrift", Font.BOLD, 15));
-	    turnText1.setBounds(20, 70, 300, 30);
+	    turnText1.setBounds(20, 75, 300, 30);
 	    turnText1.setForeground(new Color(226, 109, 92));
 	    
 	    JLabel turnText2 = new JLabel(msgString2);
 	    turnText2.setFont(new Font("Bahnschrift", Font.BOLD, 15));
-	    turnText2.setBounds(20, 90, 300, 30);
+	    turnText2.setBounds(20, 95, 300, 30);
 	    turnText2.setForeground(new Color(226, 109, 92));
 	    
 	    turn.add(turnText);
@@ -1838,10 +1912,16 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 		String playerName = KUAlchemistsGame.getInstance().getDevicePlayer();
 		if (! playerName.equals(currentName)) {
 			getPanelBoard().setVisible(false);
+			//this.setLayout(new GridBagLayout());
+			waitPanel.setVisible(true);
+			
 		} else {
+			waitPanel.setVisible(false);
+			//this.setLayout(null);
 			getPanelBoard().setVisible(true); // should be changed to show a wait yout turn message
-			onTurnChange();
 			roundpnl.onTurnChange();
+			publicationArea.onPubChange();
+			onTurnChange();
 			updateGoldUI();
 	    	updateSicknessUI();
 	    	updateReputationUI();
@@ -1851,6 +1931,9 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 	@Override
 	public void onTurnChange() {
 		
+		ingrDeckButton.setEnabled(true);
+		artifactDeckButton.setEnabled(true);
+		
 		if(KUAlchemistsGame.getInstance().getRound()==2) {
 			sellPotionPanel.setVisible(true);
 	        publicationArea.setVisible(true);
@@ -1858,8 +1941,15 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 		
 		if(KUAlchemistsGame.getInstance().getRound()==3) {
 			for (JRadioButton btn: publicationArea.getTheoryButtons()){
-				btn.setEnabled(true);
+				if (HandlerFactory.getInstance().getPublicationHandler().getPublishedTheories().get
+						(publicationArea.getTheoryButtons().indexOf(btn)).getPlayerNo()== KUAlchemistsGame.getCurrentPlayerNo()) {
+				btn.setEnabled(false);
+				}
+				else {
+					btn.setEnabled(true);
+				}
 			}
+			
 		}
 		
 		if (KUAlchemistsGame.getInstance().getCurrentPlayerNo()==1){
@@ -1926,15 +2016,20 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 		
 		}
 		
+		int wisdomIdolFlag = 0;
+    	for (ArtifactCard artf : KUAlchemistsGame.getCurrentPlayer().getArtifacts()) {
+    		if (artf.getID()==3) wisdomIdolFlag=1;
+    	}
+		
 		//Wisdom Idol Implementation
 		for (String p: KUAlchemistsGame.getRecentlyDebunkedPlayers()) {
 			if (p.equals(KUAlchemistsGame.getCurrentPlayer().getUsername())) {
 				
 				// if the player has Wisdom Idol card
-            	if (KUAlchemistsGame.getCurrentPlayer().getArtifacts().contains(new ArtifactCard("Wisdom Idol", 3, false))){
+            	if (wisdomIdolFlag==1){
             		WisdomIdolDialog dialog = new WisdomIdolDialog(this);
 					dialog.add(dialog.getPanelArtifact());
-					dialog.setSize(600,600);
+					dialog.setSize(600,350);
 					dialog.setVisible(true);
             	}
 			}
@@ -1942,4 +2037,5 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 		KUAlchemistsGame.getInstance().removeRecentlyDebunkedPlayer(KUAlchemistsGame.getCurrentPlayer().getUsername());
 		updateReputationUI();
 	}
+
 }

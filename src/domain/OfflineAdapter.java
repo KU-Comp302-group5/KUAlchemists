@@ -20,6 +20,7 @@ public class OfflineAdapter implements IGameAdapter {
 	@Override
 	public void switchTurn() {
 		// TODO Auto-generated method stub
+		KUAlchemistsGame.publishTurnEvent();
 		
 	}
 

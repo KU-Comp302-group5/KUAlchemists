@@ -87,10 +87,13 @@ public class Player implements Serializable {
 	}
 	
 	
-	public void removeArtifactCard(ArtifactCard artifactCard) {
-		if (this.artifacts.contains(artifactCard)) {
-			this.artifacts.remove(artifactCard);
-			KUAlchemistsGame.getInstance().publishArtEvent();
+	public void removeArtifactCard(int artfID) {
+		for (ArtifactCard artf : this.artifacts) {
+			if (artf.getID()==artfID) {
+				this.artifacts.remove(artf);
+				KUAlchemistsGame.getInstance().publishArtEvent();
+				break;
+			}
 		}
 	}
 	

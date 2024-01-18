@@ -257,7 +257,7 @@ public class KUAlchemistsGame {
 	    	gameMode.sendEndGame();
 	    	publishEndEvent();
 	    }
-	    publishTurnEvent();
+	    
 	    
 	    gameMode.switchTurn();
 	}
@@ -279,13 +279,20 @@ public class KUAlchemistsGame {
 
 	public static void calculateResults(Player p) {
 		int score = 0;
-		score += (p.getReputation() 
-				//+ p.getArtifacts().size() * 2 
-				+ (p.getGold() / 3));
+		int gold = p.getGold();
 		
-		if (p.getArtifacts().contains(new ArtifactCard("Wisdom Idol", 3, false))) {
-			score++;
+		for (ArtifactCard artf : p.getArtifacts()) {
+			if(artf.getID()==3) {
+				score+=10;
+			}
+			else {
+				gold+=2;
+			}
 		}
+		
+		score += p.getReputation() * 10;
+		
+		score += gold/3;		
 		
 		scores.add(score);
 	}

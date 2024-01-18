@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,20 +32,35 @@ private static JPanel panelArtifact;
 		setPanelArtifact(new JPanel());
 		getPanelArtifact().setLayout(null);
 		
+		getPanelArtifact().setBackground(new Color(255,225,168));
+		
+		JLabel labelDescription1 = new JLabel("An Alchemist debunked your theory!!!");
+		labelDescription1.setBounds(120, 65, 400, 20);
+		getPanelArtifact().add(labelDescription1);
+
+		labelDescription1.setFont(new Font("Bahnschrift", Font.BOLD, 19));
+		labelDescription1.setForeground(new Color(71, 45, 48));
+		
 		JLabel labelDescription = new JLabel("Do you want to keep your reputation as a Wisdom Idol?");
-		labelDescription.setBounds(100, 100, 400, 20);
+		labelDescription.setBounds(75, 100, 600, 20);
 		getPanelArtifact().add(labelDescription);
+		
+		labelDescription.setFont(new Font("Bahnschrift", Font.BOLD, 19));
+		labelDescription.setForeground(new Color(71, 45, 48));
+		
 		
 		JButton Button1 = new JButton("Yes");
 		JButton Button2 = new JButton("No");
 		
-		Button1.setBounds(70, 170, 100, 60);
-		Button1.setForeground(Color.BLACK);
-		Button1.setBackground(Color.WHITE);
+		Button1.setBounds(170, 150, 60, 40);
+		Button1.setForeground(new Color(71, 45, 48));
+		Button1.setBackground(new Color(201,203,163));
+		Button1.setFont(new Font("Bahnschrift", Font.BOLD, 15));
 		
-		Button2.setBounds(190, 170, 100, 60);
-		Button2.setForeground(Color.BLACK);
-		Button2.setBackground(Color.WHITE);
+		Button2.setBounds(290, 150, 60, 40);
+		Button2.setForeground(new Color(71, 45, 48));
+		Button2.setBackground(new Color(201,203,163));
+		Button2.setFont(new Font("Bahnschrift", Font.BOLD, 15));
 		
 		Button1.addActionListener(new ActionListener() {
             @Override

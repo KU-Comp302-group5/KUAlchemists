@@ -37,7 +37,7 @@ public class PublicationHandler {
 	//theory: published theory chosen to debunk
 	//num: represents the aspect that is targeted to be proven wrong
 	//num=1 --> redAspect, num==2 -->greenAspect, num==3 --> blueAspect
-	public void debunkTheory(Theory theory, int num, int debunkingPlayerNo) {
+	public int debunkTheory(Theory theory, int num, int debunkingPlayerNo) {
 		int result = theory.tryDebunk(num); //the chosen aspect is checked here 
 		
 		int debunkedPlayerNo = theory.getPlayerNo();
@@ -57,5 +57,7 @@ public class PublicationHandler {
 		if (result==-1) {
 			KUAlchemistsGame.getInstance().getPlayer(debunkingPlayerNo).increaseReputation(-1);
 		}
+		
+		return result;
 	}
 }

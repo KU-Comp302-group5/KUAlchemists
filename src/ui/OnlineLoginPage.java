@@ -23,6 +23,8 @@ import domain.controllers.HandlerFactory;
 public class OnlineLoginPage extends JFrame implements ItemListener{
 	
 	private JPanel panel;
+	private JRadioButton av1, av2, av3, av4, av5, av6;
+	private int av = 1;
 	
 	public OnlineLoginPage() {
 		super("Login Page");
@@ -43,32 +45,32 @@ public class OnlineLoginPage extends JFrame implements ItemListener{
 		label2.setIcon(new ImageIcon("images/choose avatar1.png"));
 		label2.setBounds(300, 300, label2.getIcon().getIconWidth(), label2.getIcon().getIconHeight());
 		
-		JRadioButton av1 = new JRadioButton(new ImageIcon("images/avatar1.png"));
+		av1 = new JRadioButton(new ImageIcon("images/avatar1.png"));
 		av1.addItemListener(this);
 		av1.setContentAreaFilled(false);
 		av1.setBounds(297, 335, av1.getIcon().getIconWidth()+5, av1.getIcon().getIconHeight()+5);
 		
-		JRadioButton av2 = new JRadioButton(new ImageIcon("images/avatar2.png"));
+		av2 = new JRadioButton(new ImageIcon("images/avatar2.png"));
 		av2.addItemListener(this);
 		av2.setContentAreaFilled(false);
 		av2.setBounds(372, 335, av1.getIcon().getIconWidth()+5, av1.getIcon().getIconHeight()+5);
 		
-		JRadioButton av3 = new JRadioButton(new ImageIcon("images/avatar3.png"));
+		av3 = new JRadioButton(new ImageIcon("images/avatar3.png"));
 		av3.addItemListener(this);
 		av3.setContentAreaFilled(false);
 		av3.setBounds(447, 335, av1.getIcon().getIconWidth()+5, av1.getIcon().getIconHeight()+5);
 		
-		JRadioButton av4 = new JRadioButton(new ImageIcon("images/avatar4.png"));
+		av4 = new JRadioButton(new ImageIcon("images/avatar4.png"));
 		av4.addItemListener(this);
 		av4.setContentAreaFilled(false);
 		av4.setBounds(297, 400, av1.getIcon().getIconWidth()+5, av1.getIcon().getIconHeight()+5);
 		
-		JRadioButton av5 = new JRadioButton(new ImageIcon("images/avatar5.png"));
+		av5 = new JRadioButton(new ImageIcon("images/avatar5.png"));
 		av5.addItemListener(this);
 		av5.setContentAreaFilled(false);
 		av5.setBounds(372, 400, av1.getIcon().getIconWidth()+5, av1.getIcon().getIconHeight()+5);
 	
-		JRadioButton av6 = new JRadioButton(new ImageIcon("images/avatar6.png"));
+		av6 = new JRadioButton(new ImageIcon("images/avatar6.png"));
 		av6.addItemListener(this);
 		av6.setContentAreaFilled(false);
 		av6.setBounds(447, 400, av1.getIcon().getIconWidth()+5, av1.getIcon().getIconHeight()+5);
@@ -111,7 +113,7 @@ public class OnlineLoginPage extends JFrame implements ItemListener{
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						HandlerFactory.getInstance().getHostHandler().startServer();
-						HandlerFactory.getInstance().getHostHandler().login(username.getText(), 1);
+						HandlerFactory.getInstance().getHostHandler().login(username.getText(), av);
 						
 						HostWaitPage hostPage = new HostWaitPage();
 						hostPage.setVisible(true);
@@ -134,7 +136,7 @@ public class OnlineLoginPage extends JFrame implements ItemListener{
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						HandlerFactory.getInstance().getJoinHandler().connectToServer(IPaddress.getText(), portNo.getText());
-						HandlerFactory.getInstance().getJoinHandler().login(username.getText(), 1);
+						HandlerFactory.getInstance().getJoinHandler().login(username.getText(), av);
 						HandlerFactory.getInstance().getJoinHandler().openJoinWaitPage();
 				
 						dispose();
@@ -173,6 +175,25 @@ public class OnlineLoginPage extends JFrame implements ItemListener{
 		if (e.getStateChange()==1) {
 			((JRadioButton)e.getSource()).setBorderPainted(true);
 			((JRadioButton)e.getSource()).setBorder(BorderFactory.createLineBorder(new Color(255,225,168), 2));
+			if (e.getSource()==av1) {
+				av=1;
+			}
+			if (e.getSource()==av2) {
+				av=2;
+			}
+			if (e.getSource()==av3) {
+				av=3;
+			}
+			if (e.getSource()==av4) {
+				av=4;
+			}
+			if (e.getSource()==av5) {
+				av=5;
+			}
+			if (e.getSource()==av6) {
+				av=6;
+			}			
+				
 		}
 		else {
 			((JRadioButton)e.getSource()).setBorderPainted(false);

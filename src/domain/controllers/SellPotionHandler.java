@@ -6,10 +6,12 @@ import domain.PotionSale;
 
 public class SellPotionHandler {
 	
-	public void sellPotion(Ingredient ingr1, Ingredient ingr2, int prediction, Player p) {
+	public int sellPotion(Ingredient ingr1, Ingredient ingr2, int prediction, Player p) {
 		PotionSale ps = new PotionSale(ingr1, ingr2, prediction);
+		int quality = ps.getPotion().getQuality();
 		updatePlayerGoldReputation(ps, p);
 		p.discardIngredients(ingr1, ingr2);
+		return quality;
 	}
 	
 	public void updatePlayerGoldReputation(PotionSale ps, Player p) {

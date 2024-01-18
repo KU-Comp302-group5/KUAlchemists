@@ -216,11 +216,19 @@ public class KUAlchemistsGame {
 	    	for (Player p : players) {
 	    		calculateResults(p);
 	    	}
+	    	gameMode.sendEndGame();
 	    	publishEndEvent();
 	    }
 	    publishTurnEvent();
 	    
 	    gameMode.switchTurn();
+	}
+	
+	public static void endGame() {
+		for (Player p : players) {
+    		calculateResults(p);
+    	}
+    	publishEndEvent();
 	}
 	
 	public static int getRound() {

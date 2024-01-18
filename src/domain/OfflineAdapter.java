@@ -22,4 +22,9 @@ public class OfflineAdapter implements IGameAdapter {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void sendEndGame() {
+		// TODO Auto-generated method stub
+	}
 }

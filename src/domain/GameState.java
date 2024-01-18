@@ -32,13 +32,13 @@ public class GameState implements Serializable  {
     private List<Theory> publishedTheories;
     
     // Other
-	private boolean quit;
+	private boolean end;
 	private boolean isNewPlayer; // if newPlayer, then players include only one player which is the new player.
 	private boolean startGame;
 	
-	public GameState(boolean isNewPlayer, boolean startGame, boolean quit)  {
+	public GameState(boolean isNewPlayer, boolean startGame, boolean end)  {
 		
-		this.quit = quit;
+		this.end = end;
 		this.isNewPlayer = isNewPlayer;
 		this.startGame = startGame;
 		
@@ -65,8 +65,8 @@ public class GameState implements Serializable  {
 	
 	public void updateGameState() {
 		
-		if (quit) {
-			// handle here.
+		if (end) {
+			KUAlchemistsGame.endGame();
 		}
 		
 		else if (isNewPlayer) {

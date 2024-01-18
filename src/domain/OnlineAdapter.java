@@ -26,4 +26,8 @@ public class OnlineAdapter implements IGameAdapter{
 		// TODO Auto-generated method stub
 		HandlerFactory.getInstance().getJoinHandler().broadcastGameState(false, false, false);
 	}
+	
+	public void sendEndGame() {
+		HandlerFactory.getInstance().getJoinHandler().broadcastGameState(false, false, true);
+	}
 }

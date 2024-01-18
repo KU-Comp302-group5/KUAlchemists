@@ -6,5 +6,7 @@ public interface IGameAdapter {
 	public void startLoginView();
 
 	public void switchTurn(); 
+	
+	public void sendEndGame();
 
 }

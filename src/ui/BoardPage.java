@@ -250,12 +250,14 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         
         gold2 = new JLabel("Gold: " + KUAlchemistsGame.getInstance().getPlayer(2).getGold());
         gold2.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+        gold2.setVisible(false);
         gold2.setForeground(new Color(255,225,168));
         gold2.setBounds(358, 95, 60, 30);
         getPanelBoard().add(gold2);
         
         sickness2 = new JLabel("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(2).getSickness());
         sickness2.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+        sickness2.setVisible(false);
         sickness2.setForeground(new Color(255,225,168));
         sickness2.setBounds(421, 95, 90, 30);
         getPanelBoard().add(sickness2);
@@ -268,6 +270,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         
 		player2_arts = new PlayerArts(2, new ImageIcon("images/panelbg.png").getImage());
 		player2_arts.setLayout(null);
+		player2_arts.setVisible(false);
 		player2_arts.setBounds(355, 234, 275, 47);
 		player2_arts.setBackground(Color.ORANGE);
 		panelBoard.add(player2_arts);
@@ -278,6 +281,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		
 		player2_ingr = new PlayerIngs(2, new ImageIcon("images/panelbg.png").getImage());
 		player2_ingr.setLayout(null);
+		player2_ingr.setVisible(false);
 		player2_ingr.setBounds(355, 175, 275, 51);
 		player2_ingr.setBackground(Color.MAGENTA);
 		panelBoard.add(player2_ingr);
@@ -335,6 +339,10 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		
 		
 	}
+	
+	//public showCurrentPlayerArtifacts() {
+		
+	//}
 	
 	public class RoundPanel extends JPanel implements TurnListener{
 
@@ -423,6 +431,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         
         gold3 = new JLabel("Gold: " + KUAlchemistsGame.getInstance().getPlayer(3).getGold());
         gold3.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+        gold3.setVisible(false);
         gold3.setForeground(new Color(255,225,168));
         gold3.setBounds(658, 95, 60, 30);
         getPanelBoard().add(gold3);
@@ -430,6 +439,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         sickness3 = new JLabel("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(3).getSickness());
         sickness3.setFont(new Font("Bahnschrift", Font.BOLD, 15));
         sickness3.setForeground(new Color(255,225,168));
+        sickness3.setVisible(false);
         sickness3.setBounds(721, 95, 90, 30);
         getPanelBoard().add(sickness3);
         
@@ -441,6 +451,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         
 		player3_arts = new PlayerArts(3, new ImageIcon("images/panelbg.png").getImage());
 		player3_arts.setLayout(null);
+		player3_arts.setVisible(false);
 		player3_arts.setBounds(655, 234, 275, 47);
 		player3_arts.setBackground(Color.ORANGE);
 		panelBoard.add(player3_arts);
@@ -451,6 +462,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		
 		player3_ingr = new PlayerIngs(3, new ImageIcon("images/panelbg.png").getImage());
 		player3_ingr.setLayout(null);
+		player3_ingr.setVisible(false);
 		player3_ingr.setBounds(655, 175, 275, 51);
 		player3_ingr.setBackground(Color.MAGENTA);
 		panelBoard.add(player3_ingr);
@@ -485,12 +497,14 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         
         gold4 = new JLabel("Gold: " + KUAlchemistsGame.getInstance().getPlayer(4).getGold());
         gold4.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+        gold4.setVisible(false);
         gold4.setForeground(new Color(255,225,168));
         gold4.setBounds(958, 95, 60, 30);
         getPanelBoard().add(gold4);
         
         sickness4 = new JLabel("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(4).getSickness());
         sickness4.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+        sickness4.setVisible(false);
         sickness4.setForeground(new Color(255,225,168));
         sickness4.setBounds(1021, 95, 90, 30);
         getPanelBoard().add(sickness4);
@@ -503,6 +517,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         
         player4_arts = new PlayerArts(4, new ImageIcon("images/panelbg.png").getImage());
         player4_arts.setLayout(null);
+        player4_arts.setVisible(false);
 		player4_arts.setBounds(955, 234, 275, 47);
 		player4_arts.setBackground(Color.ORANGE);
 		panelBoard.add(player4_arts);
@@ -513,6 +528,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		
 		player4_ingr = new PlayerIngs(4, new ImageIcon("images/panelbg.png").getImage());
 		player4_ingr.setLayout(null);
+		player4_ingr.setVisible(false);
 		player4_ingr.setBounds(955, 175, 275, 51);
 		player4_ingr.setBackground(Color.MAGENTA);
 		panelBoard.add(player4_ingr);
@@ -1688,7 +1704,69 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 				btn.setEnabled(true);
 			}
 		}
+		if (KUAlchemistsGame.getInstance().getCurrentPlayerNo()==1){
+			gold.setVisible(true);
+			sickness.setVisible(true);
+			player1_arts.setVisible(true);
+			player1_ingr.setVisible(true);
+			if (LoginPage.playerNum==2) {
+				gold2.setVisible(false);
+				sickness2.setVisible(false);
+				player2_arts.setVisible(false);
+				player2_ingr.setVisible(false);
+			}
+			if (LoginPage.playerNum==3) {
+				gold3.setVisible(false);
+				sickness3.setVisible(false);
+				player3_arts.setVisible(false);
+				player3_ingr.setVisible(false);
+			}
+			if (LoginPage.playerNum==4) {
+				gold4.setVisible(false);
+				sickness4.setVisible(false);
+				player4_arts.setVisible(false);
+				player4_ingr.setVisible(false);
+			}
+		}
 		
+		if (KUAlchemistsGame.getInstance().getCurrentPlayerNo()==2){
+			gold2.setVisible(true);
+			sickness2.setVisible(true);
+			player2_arts.setVisible(true);
+			player2_ingr.setVisible(true);
+			
+			gold.setVisible(false);
+			sickness.setVisible(false);
+			player1_arts.setVisible(false);
+			player1_ingr.setVisible(false);
+		
+		}
+		
+		if (KUAlchemistsGame.getInstance().getCurrentPlayerNo()==3){
+			gold3.setVisible(true);
+			sickness3.setVisible(true);
+			player3_arts.setVisible(true);
+			player3_ingr.setVisible(true);
+			
+			gold2.setVisible(false);
+			sickness2.setVisible(false);
+			player2_arts.setVisible(false);
+			player2_ingr.setVisible(false);
+		
+		}
+		
+		if (KUAlchemistsGame.getInstance().getCurrentPlayerNo()==4){
+			gold4.setVisible(true);
+			sickness4.setVisible(true);
+			player4_arts.setVisible(true);
+			player4_ingr.setVisible(true);
+			
+			gold3.setVisible(false);
+			sickness3.setVisible(false);
+			player3_arts.setVisible(false);
+			player3_ingr.setVisible(false);
+		
+		}
 		
 		
 	}

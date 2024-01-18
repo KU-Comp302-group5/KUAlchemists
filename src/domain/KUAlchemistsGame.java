@@ -240,6 +240,10 @@ public class KUAlchemistsGame {
 	public static int getCurrentPlayerNo() {
 		return currentPlayerNo;
 	}
+	
+	public static int getNextPlayerNo() {
+		return currentPlayerNo % numPlayers + 1;
+	}
 
 	public static void setCurrentPlayerNo(int currentPlayerNo) {
 		KUAlchemistsGame.currentPlayerNo = currentPlayerNo;

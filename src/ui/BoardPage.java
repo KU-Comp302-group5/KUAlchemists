@@ -64,7 +64,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		
 		RoundPanel roundpnl = new RoundPanel();
 		roundpnl.setOpaque(false);
-		roundpnl.setBounds(1285, 29, 99, 30);
+		roundpnl.setBounds(1285, 29, 99, 90);
 		KUAlchemistsGame.getInstance().addTurnListener(roundpnl);
 		getPanelBoard().add(roundpnl);
 		
@@ -106,7 +106,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         help.setMargin(new Insets(0, 0, 0, 0));
         help.setIcon(new ImageIcon("images/helpbtn.png"));
         help.setFocusPainted(false);
-		help.setBounds(1310, 67, help.getIcon().getIconWidth()-14, help.getIcon().getIconHeight()-8);
+		help.setBounds(1310, 97, help.getIcon().getIconWidth()-14, help.getIcon().getIconHeight()-8);
 		help.setForeground(Color.BLACK);
 		help.setBackground(Color.WHITE);
 		help.addActionListener(e -> showHelpDialog());
@@ -116,7 +116,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		pause.setMargin(new Insets(0, 0, 0, 0));
         pause.setFocusPainted(false);
         pause.setIcon(new ImageIcon("images/pause btn.png"));
-		pause.setBounds(1310, 98, pause.getIcon().getIconWidth()-14, pause.getIcon().getIconHeight()-8);
+		pause.setBounds(1310, 128, pause.getIcon().getIconWidth()-14, pause.getIcon().getIconHeight()-8);
 		pause.setForeground(Color.BLACK);
 		pause.setBackground(Color.WHITE);
 		pause.addActionListener(e -> showPauseDialog());
@@ -347,18 +347,24 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 	public class RoundPanel extends JPanel implements TurnListener{
 
 		JLabel round;
+		JLabel turn;
 		String[] rounds = new String[]{"images/round1.png","images/round2 .png", "images/round3.png"};
+		String[] turns = new String[]{"images/turn3.png", "images/turn1.png","images/turn2.png"};
 		
 		
 		public RoundPanel() {
 			super();			
 			this.round = new JLabel();
+			this.turn = new JLabel();
 			round.setIcon(new ImageIcon("images/round1.png"));
 			round.setBounds(0, 0, WIDTH, HEIGHT);
 			//round.setFont(new Font("Bahnschrift", Font.BOLD, 20));
 			//round.setForeground(new Color(201, 203,163));
 			//round.setText("Round 1");
+			turn.setIcon(new ImageIcon("images/turn1.png"));
+			turn.setBounds(0, 30, WIDTH, HEIGHT);
 			this.add(round);
+			this.add(turn);
 		}
 
 
@@ -367,6 +373,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 			// TODO Auto-generated method stub
 			//round.setText("Round " + Integer.toString(KUAlchemistsGame.getInstance().getRound()));
 			round.setIcon(new ImageIcon(rounds[KUAlchemistsGame.getInstance().getRound()-1]));
+			turn.setIcon(new ImageIcon(turns[KUAlchemistsGame.getInstance().getTurnCounter()%3]));
 		}
 		
 	}
@@ -830,12 +837,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 	public PotionBrew(Image image) {
 		super();
 		this.image = image;
-		/*Dimension size = new Dimension(image.getWidth(this), image.getHeight(this));
-	    //setPreferredSize(size);
-	    //setMinimumSize(size);
-	    this.setMaximumSize(size);
-	    //setSize(size);
-	    setLayout(null);*/
 	}
 	
 	@Override
@@ -844,9 +845,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 		super.paintComponent(g);
 		g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
 	}
-/*=======
-private class PotionBrew extends JPanel implements IngListener, TurnListener, ItemListener {
->>>>>>> e494a56a3994ae9f2fad9b77c6ca038cc03fc60b*/
     	
     	ArrayList<JCheckBox> checkboxes;
     	ArrayList<JCheckBox> clickedcheckboxes;
@@ -1483,7 +1481,7 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
             	String aspectSign = null;
             	
             	if (aspectIndex==0) {
-            		aspect = "Red Aspect:";
+            		aspect = "Red Aspect:  ";
             		if (theories.get(theoryIndex).getIngredient().getRedAspect().isSign()) {
             			aspectSign = "+";
             		}
@@ -1492,7 +1490,7 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
             		}
             	}
             	if (aspectIndex==1) {
-            		aspect = "Green Aspect:";
+            		aspect = "Green Aspect:  ";
             		if (theories.get(theoryIndex).getIngredient().getGreenAspect().isSign()) {
             			aspectSign = "+";
             		}
@@ -1501,7 +1499,7 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
             		}
             	}
             	if (aspectIndex==2) {
-            		aspect = "Blue Aspect:";
+            		aspect = "Blue Aspect:  ";
             		if (theories.get(theoryIndex).getIngredient().getBlueAspect().isSign()) {
             			aspectSign = "+";
             		}
@@ -1513,16 +1511,17 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
             	//theoryButtons.get(theoryIndex).setText(theoryButtons.get(theoryIndex).getText() + " " + aspect +
             			//aspectSign);
             	
-            	String ingrName = theories.get(theoryIndex).getIngredient().getName();
+            	String image = theories.get(theoryIndex).getIngredient().getImage();
             	
             	HandlerFactory.getInstance().getPublicationHandler().debunkTheory(theories.get(theoryIndex), aspectIndex + 1,
             			KUAlchemistsGame.getInstance().getCurrentPlayerNo());
             	
             	updateReputationUI();
             	
-            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made a debunk." + " "
-            	+ ingrName + "'s" + " " + aspect + aspectSign);
-                KUAlchemistsGame.getInstance().switchTurns();
+            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made a debunk.", 
+            			image, 
+            			"'s" + " " + aspect + aspectSign);
+                //KUAlchemistsGame.getInstance().switchTurns();
             });
     		
     		revalidate();
@@ -1585,13 +1584,88 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 	    		"Turn",
 	    		true);
 	    turn.setSize(350, 200);
-	    String msgString = "<html>" + message + "<br>Click the turn button after you are done with other operations.</html>"; 
-	    turn.setModal(false);
-	    JLabel turnText = new JLabel(msgString);
-	    turn.add(turnText, BorderLayout.CENTER);
-	    JButton ok = new JButton("OK");
+	    String msgString = "Click the turn button after you are done";
+	    String msgString2 = "with other operations.";
+	    turn.setModal(true);
+	    turn.getContentPane().setBackground(new Color(255,225,168));
+	    turn.setLayout(null);
+	    
+	    JLabel turnText = new JLabel(message);
+	    turnText.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+	    turnText.setBounds(20, 30, 300, 30);
+	    turnText.setForeground(new Color(226, 109, 92));
+	    
+	    JLabel turnText1 = new JLabel(msgString);
+	    turnText1.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+	    turnText1.setBounds(20, 60, 300, 30);
+	    turnText1.setForeground(new Color(226, 109, 92));
+	    
+	    JLabel turnText2 = new JLabel(msgString2);
+	    turnText2.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+	    turnText2.setBounds(20, 80, 300, 30);
+	    turnText2.setForeground(new Color(226, 109, 92));
+	    
+	    turn.add(turnText);
+	    turn.add(turnText1);
+	    turn.add(turnText2);
+	    
+	    JButton ok = new JButton();
+	    ok.setIcon(new ImageIcon("images/ok.png"));
+	    ok.setBounds(205, 115, ok.getIcon().getIconWidth(), ok.getIcon().getIconHeight());
 	    ok.addActionListener(e -> turn.dispose());
-	    turn.add(ok, BorderLayout.SOUTH);
+	    turn.add(ok);
+	    
+	    turn.setLocationRelativeTo(turnText);
+	    turn.setVisible(true);
+	}
+    
+    private void showTurnMessage(String message, String image, String aspect) {
+	    JDialog turn = new JDialog(
+	    		this,
+	    		"Turn",
+	    		true);
+	    turn.setSize(350, 200);
+	    String msgString = "Click the turn button after you are done";
+	    String msgString2 = "with other operations.";
+	    turn.setModal(true);
+	    turn.getContentPane().setBackground(new Color(255,225,168));
+	    turn.setLayout(null);
+	    
+	    JLabel turnText = new JLabel(message);
+	    turnText.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+	    turnText.setBounds(20, 10, 300, 30);
+	    turnText.setForeground(new Color(226, 109, 92));
+	    
+	    JLabel ingr = new JLabel(new ImageIcon(image));
+	    ingr.setBounds(20, 42, ingr.getIcon().getIconWidth(), ingr.getIcon().getIconHeight());
+	    ingr.setOpaque(false);
+	    turn.add(ingr);
+	    
+	    JLabel ingrlbl = new JLabel(aspect);
+	    ingrlbl.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+	    ingrlbl.setForeground(new Color(71, 45, 48));
+	    ingrlbl.setBounds(55, 40, 200, 30);
+	    turn.add(ingrlbl);	    
+	    
+	    JLabel turnText1 = new JLabel(msgString);
+	    turnText1.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+	    turnText1.setBounds(20, 70, 300, 30);
+	    turnText1.setForeground(new Color(226, 109, 92));
+	    
+	    JLabel turnText2 = new JLabel(msgString2);
+	    turnText2.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+	    turnText2.setBounds(20, 90, 300, 30);
+	    turnText2.setForeground(new Color(226, 109, 92));
+	    
+	    turn.add(turnText);
+	    turn.add(turnText1);
+	    turn.add(turnText2);
+	    
+	    JButton ok = new JButton();
+	    ok.setIcon(new ImageIcon("images/ok.png"));
+	    ok.setBounds(205, 120, ok.getIcon().getIconWidth(), ok.getIcon().getIconHeight());
+	    ok.addActionListener(e -> turn.dispose());
+	    turn.add(ok);
 	    
 	    turn.setLocationRelativeTo(turnText);
 	    turn.setVisible(true);
@@ -1603,13 +1677,34 @@ private class PotionBrew extends JPanel implements IngListener, TurnListener, It
 	    		"Turn",
 	    		true);
 	    turn.setSize(350, 200);
+	    turn.setLayout(null);
 	    String msgString = KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + "'s turn ended!"; 
-	    turn.setModal(false);
+	    String msgString1 = "Now it is " +
+	    		KUAlchemistsGame.getInstance().getPlayer(KUAlchemistsGame.getInstance().getNextPlayerNo()).getUsername() 
+	    		+ "'s turn!"; 
+	    
+	    turn.setModal(true);
+	    
+	    turn.getContentPane().setBackground(new Color(226, 109, 92));
+	    
 	    JLabel turnText = new JLabel(msgString);
-	    turn.add(turnText, BorderLayout.CENTER);
-	    JButton ok = new JButton("OK");
+	    turnText.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+	    turnText.setBounds(20, 50, 200, 30);
+	    turnText.setForeground(new Color(255,225,168));
+	    
+	    JLabel turnText1 = new JLabel(msgString1);
+	    turnText1.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+	    turnText1.setBounds(20, 70, 200, 30);
+	    turnText1.setForeground(new Color(255,225,168));
+	    
+	    turn.add(turnText);
+	    turn.add(turnText1);
+	    
+	    JButton ok = new JButton();
+	    ok.setIcon(new ImageIcon("images/ok.png"));
+	    ok.setBounds(205, 115, ok.getIcon().getIconWidth(), ok.getIcon().getIconHeight());
 	    ok.addActionListener(e -> turn.dispose());
-	    turn.add(ok, BorderLayout.SOUTH);
+	    turn.add(ok);
 	    
 	    turn.setLocationRelativeTo(turnText);
 	    turn.setVisible(true);

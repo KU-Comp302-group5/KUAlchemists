@@ -16,6 +16,7 @@ public class GameState implements Serializable  {
 	private int numPlayers;
 	private int currentPlayerNo;
 	private int turnCounter;
+	private int round;
 	
 	// From IngredientDeck
 	private List<Ingredient> ingrDeck;
@@ -46,6 +47,7 @@ public class GameState implements Serializable  {
 		this.numPlayers = KUAlchemistsGame.getNumPlayers();
 		this.currentPlayerNo = KUAlchemistsGame.getCurrentPlayerNo();
 		this.turnCounter = KUAlchemistsGame.getTurnCounter();
+		this.round = KUAlchemistsGame.getRound();
 		
 		// From IngredientDeck
 		this.ingrDeck = IngredientDeck.getInstance().getIngredients();
@@ -77,6 +79,7 @@ public class GameState implements Serializable  {
 			KUAlchemistsGame.setNumPlayers(numPlayers);
 			KUAlchemistsGame.setCurrentPlayerNo(currentPlayerNo);
 			KUAlchemistsGame.setTurnCounter(turnCounter);
+			KUAlchemistsGame.setRound(round);
 			
 			// IngredientDeck related
 			IngredientDeck.getInstance().setIngredients(ingrDeck);

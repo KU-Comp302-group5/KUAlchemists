@@ -10,13 +10,8 @@ public class JoinWaitPage extends JFrame {
 
 	public JoinWaitPage() {
 		super("Join Page");
-		panel = new JPanel();
+		panel = new BackgroundPanel("images/joinwaitpage.png");
 		panel.setLayout(null);
-		
-		JLabel label = new JLabel("Waiting for host to start game.");
-		label.setBounds(200, 200, 200, 30);
-		
-		panel.add(label);
 	}
 	
 	public JPanel getPanel() {

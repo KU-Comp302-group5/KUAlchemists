@@ -689,7 +689,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
     			}
     			else {
     				player_art.addActionListener(e -> {
-                    	System.out.println("This artifact cannot be used now!");
                     	JOptionPane.showMessageDialog(this.parentWindow,"This artifact cannot be used now!");  
                     });
     			}    			
@@ -1282,9 +1281,10 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
     	List<JRadioButton> ingrButtons;
     	List<JRadioButton> markerButtons;
     	JLabel aspectLbl;
+		private Window parentWindow;
     	
     	public void updatePublicationArea() {
-    		
+    		this.parentWindow = SwingUtilities.getWindowAncestor(this);
     		this.removeAll();
     		
     		JLabel marker_text = new JLabel();
@@ -1448,10 +1448,18 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
                 }
             	
             	HandlerFactory.getInstance().getPublicationHandler().makePublication(ingrName, markerName, KUAlchemistsGame.getInstance().getCurrentPlayerNo());
+            	
+            	// if the player has Printing Press card
+            	if (KUAlchemistsGame.getInstance().getCurrentPlayer().getArtifacts().contains(new ArtifactCard("Printing Press", 1, false))){
+            		PrintingPressDialog dialog = new PrintingPressDialog((Frame) this.parentWindow);
+					dialog.add(dialog.getPanelArtifact());
+					dialog.setSize(600,600);
+					dialog.setVisible(true);
+            	}
+            	
             	updateGoldUI();
             	updateReputationUI();
             	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made a publication.");
-                //KUAlchemistsGame.getInstance().switchTurns();
             });
             
             debunkBtn = new JButton();

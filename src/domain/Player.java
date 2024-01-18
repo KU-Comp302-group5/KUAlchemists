@@ -73,12 +73,7 @@ public class Player implements Serializable {
 		}
 	}
 
-	public void getArtFromDeck() {
-		
-		if(ArtifactDeck.getInstance().getCardNum()==0) {
-			ArtifactDeck.getInstance().populateArtifactDeck();
-		}
-		
+	public void getArtFromDeck() {		
 		ArtifactCard boughtCard = ArtifactDeck.getInstance().getTopCard();
 		
 		if (boughtCard != null) {

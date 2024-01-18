@@ -28,5 +28,4 @@ public class MakeExperimentHandler {
 		player.discardIngredients(ingr1, ingr2); // change to implement magic mortar
 		player.addPotion(potion);
     }
-    
 }

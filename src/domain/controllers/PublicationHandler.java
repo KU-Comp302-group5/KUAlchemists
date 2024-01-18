@@ -47,6 +47,9 @@ public class PublicationHandler {
 			KUAlchemistsGame.getInstance().getPlayer(debunkingPlayerNo).increaseReputation(2);
 			KUAlchemistsGame.getInstance().getPlayer(debunkedPlayerNo).increaseReputation(-1);
 			
+			KUAlchemistsGame.getInstance().addRecentlyDebunkedPlayer(
+					KUAlchemistsGame.getInstance().getPlayer(debunkedPlayerNo).getUsername());
+			
 			PublicationTrack.getInstance().removeTheory(theory); //removes the published theory since its debunked 
 		}
 		
@@ -54,6 +57,5 @@ public class PublicationHandler {
 		if (result==-1) {
 			KUAlchemistsGame.getInstance().getPlayer(debunkingPlayerNo).increaseReputation(-1);
 		}
-		
 	}
 }

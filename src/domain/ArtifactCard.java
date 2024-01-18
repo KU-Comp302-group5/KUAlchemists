@@ -26,7 +26,6 @@ public class ArtifactCard implements Serializable {
 			this.image="images/wisdomidolartf.png";
 			break;
 		}
-    	
     }
 
 	public String getImage() {

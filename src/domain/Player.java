@@ -74,14 +74,23 @@ public class Player implements Serializable {
 	}
 
 	public void getArtFromDeck() {
+		
+		if(ArtifactDeck.getInstance().getCardNum()==0) {
+			ArtifactDeck.getInstance().populateArtifactDeck();
+		}
+		
 		ArtifactCard boughtCard = ArtifactDeck.getInstance().getTopCard();
+		
 		if (boughtCard != null) {
 			this.artifacts.add(boughtCard);
 			System.out.println("\n"+ this.getUsername()+" bought artifact card: "+ boughtCard.getName());
 			this.decreaseGold(3);
 		}
+		
 		KUAlchemistsGame.getInstance().publishArtEvent();
+	
 	}
+	
 	
 	public void removeArtifactCard(ArtifactCard artifactCard) {
 		if (this.artifacts.contains(artifactCard)) {

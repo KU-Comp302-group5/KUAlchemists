@@ -29,6 +29,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -571,51 +572,99 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 	    }
 
 	    private void initializeDialog() {
-	        setLayout(new GridBagLayout());
-	        setSize(400, 200);
+	        setLayout(null);
+	        setSize(400, 400);
+	        getContentPane().setBackground(new Color(71, 45, 48));
 
-	        JPanel contentPanel = new JPanel(new GridBagLayout());
+	        JPanel contentPanel = new JPanel();
+	        contentPanel.setLayout(null);
 	        contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	        contentPanel.setBounds(20, 20, 300, 300);
+	        contentPanel.setBackground(new Color(71, 45, 48));
+	        //contentPanel.setOpaque(false);
 
 	        // Label and list for each player
 	        for (int i = 0; i < playerNames.length; i++) {
 	            JLabel playerLabel = new JLabel(playerNames[i] + ": ");
-	            GridBagConstraints playerLabelConstraints = new GridBagConstraints();
+	            playerLabel.setFont(new Font("Bahnschrift", Font.BOLD, 19));
+	            playerLabel.setForeground(new Color(255,225,168));
+	            playerLabel.setOpaque(false);
+	            
+	            /*GridBagConstraints playerLabelConstraints = new GridBagConstraints();
 	            playerLabelConstraints.gridx = 0;
-	            playerLabelConstraints.gridy = i;
-	            contentPanel.add(playerLabel, playerLabelConstraints);
+	            playerLabelConstraints.gridy = i;*/
+	            
+	            playerLabel.setBounds(120, 45 + i * 25, 150, 20);
+	            contentPanel.add(playerLabel);
 
 	            JLabel scoreLabel = new JLabel(Integer.toString(playerScores.get(i)));
-	            GridBagConstraints scoreLabelConstraints = new GridBagConstraints();
-	            scoreLabelConstraints.gridx = 1;
-	            scoreLabelConstraints.gridy = i;
-	            contentPanel.add(scoreLabel, scoreLabelConstraints);
+	            //GridBagConstraints scoreLabelConstraints = new GridBagConstraints();
+	            scoreLabel.setFont(new Font("Bahnschrift", Font.BOLD, 19));
+	            scoreLabel.setForeground(new Color(255,225,168));
+	            scoreLabel.setOpaque(false);
+	            
+	            /*scoreLabelConstraints.gridx = 1;
+	            scoreLabelConstraints.gridy = i;*/
+	            scoreLabel.setBounds(205, 45 + i*25, 50, 20);
+	            contentPanel.add(scoreLabel);
 	        }
 
-	        // Play again button
-//	        JButton playAgainButton = new JButton("Play Again");
-//	        playAgainButton.addActionListener(e -> {
-//	            // Implement action for playing again
-//	            this.dispose();
-//	        });
-//
-//	        GridBagConstraints playAgainButtonConstraints = new GridBagConstraints();
-//	        playAgainButtonConstraints.gridx = 0;
-//	        playAgainButtonConstraints.gridy = playerNames.length;
-//	        playAgainButtonConstraints.gridwidth = 2;
-//	        contentPanel.add(playAgainButton, playAgainButtonConstraints);
+
+	        int max = Collections.max(playerScores);
+	        int maxIndex = playerScores.indexOf(max);
+	        
+	        String winner = playerNames[maxIndex];
+	        
+	        JLabel winnerLabel = new JLabel("The winner is:  " + winner);
+            //GridBagConstraints winnerLabelConstraints = new GridBagConstraints();
+            winnerLabel.setFont(new Font("Bahnschrift", Font.BOLD, 19));
+            winnerLabel.setForeground(new Color(255,225,168));
+            //winnerLabelConstraints.gridx = 0;
+            //winnerLabelConstraints.gridy = playerNames.length+1;
+            
+            winnerLabel.setBounds(80, 140, 250, 30);
+            contentPanel.add(winnerLabel);
+	        
+	        
+	        //Play again button
+	        JButton playAgainButton = new JButton();
+	        playAgainButton.setIcon(new ImageIcon("images/newgame.png"));
+	        playAgainButton.setBackground(new Color(255, 225, 168));
+	        
+	        playAgainButton.addActionListener(e -> {
+	            // Implement action for playing again
+	            this.dispose();
+	            
+	            for (Frame frame: BoardPage.getFrames()) {
+	            	frame.dispose();
+	            }
+	            
+	            HandlerFactory.getInstance().getRestartHandler().restart();
+	        });
+
+	        /*GridBagConstraints playAgainButtonConstraints = new GridBagConstraints();
+	        playAgainButtonConstraints.gridx = 0;
+	        playAgainButtonConstraints.gridy = playerNames.length+2;
+	        playAgainButtonConstraints.gridwidth = 2;*/
+	        
+	        playAgainButton.setBounds(35, 210, playAgainButton.getIcon().getIconWidth(), playAgainButton.getIcon().getIconHeight());
+	        
+	        contentPanel.add(playAgainButton);
 
 	        // Exit button
-	        JButton exitButton = new JButton("Exit");
+	        JButton exitButton = new JButton(new ImageIcon("images/exit.png"));
+	        exitButton.setBackground(new Color(255,225,168));
 	        exitButton.addActionListener(e -> {
 	            System.exit(0);
 	        });
-
-	        GridBagConstraints exitButtonConstraints = new GridBagConstraints();
-	        exitButtonConstraints.gridx = 0;
-	        exitButtonConstraints.gridy = playerNames.length + 1;
-	        exitButtonConstraints.gridwidth = 2;
-	        contentPanel.add(exitButton, exitButtonConstraints);
+	        
+	        /*GridBagConstraints exitButtonConstraints = new GridBagConstraints();
+	        exitButtonConstraints.gridx = 2;
+	        exitButtonConstraints.gridy = playerNames.length + 2;
+	        exitButtonConstraints.gridwidth = 2;*/
+	        
+	        exitButton.setBounds(180, 210, exitButton.getIcon().getIconWidth(), exitButton.getIcon().getIconHeight());
+	        contentPanel.add(exitButton);
 
 	        add(contentPanel);
 
@@ -924,7 +973,7 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             		HandlerFactory.getInstance().getUseArtifactHandler().useArtifact(new ArtifactCard("Magic Mortar", 2, false));
             		MagicMortarDialog dialog = new MagicMortarDialog((Frame) this.parentWindow);
 					dialog.add(dialog.getPanelArtifact());
-					dialog.setSize(600,600);
+					dialog.setSize(600,350);
 					dialog.setVisible(true);
             	}
             	

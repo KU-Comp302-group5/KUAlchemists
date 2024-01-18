@@ -1,10 +1,12 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -48,29 +50,37 @@ public class MagicMortarDialog extends JDialog{
 		setPanelArtifact(new JPanel());
 		getPanelArtifact().setLayout(null);
 		
+		getPanelArtifact().setBackground(new Color(255,225,168));
+		
 		// get the ingredient objects from potionmaker
 		Ingredient ingr1 = PotionMaker.getInstance().getIngr1();
 		Ingredient ingr2 = PotionMaker.getInstance().getIngr2();
 		
 		// initialize potion maker
-		JLabel labelDescription = new JLabel("Click the card to NOT discard");
-		labelDescription.setBounds(100, 100, 400, 20);
-		getPanelArtifact().add(labelDescription);
+		JLabel labelDescription = new JLabel("Click on the ingredient to keep");
+		labelDescription.setBounds(145, 70, 400, 20);
+		labelDescription.setFont(new Font("Bahnschrift", Font.BOLD, 19));
+		labelDescription.setForeground(new Color(71, 45, 48));
 		
+		getPanelArtifact().add(labelDescription);
+				
 		// initialize ingredient buttons and submit button
-		JButton ingrButton1 = new JButton(ingr1.getName());
-		JButton ingrButton2 = new JButton(ingr2.getName());
+		JButton ingrButton1 = new JButton(new ImageIcon(ingr1.getImage()));
+		JButton ingrButton2 = new JButton(new ImageIcon(ingr2.getImage()));
+		
 		JButton submitButton = new JButton("Submit Choice");
 		
-		ingrButton1.setBounds(70, 170, 100, 60);
-		ingrButton1.setForeground(Color.BLACK);
-		ingrButton1.setBackground(Color.WHITE);
+		ingrButton1.setBounds(170, 140, 80, 50);
+		ingrButton1.setBackground(new Color(201,203,163));
 		
-		ingrButton2.setBounds(190, 170, 100, 60);
-		ingrButton2.setForeground(Color.BLACK);
-		ingrButton2.setBackground(Color.WHITE);
+		ingrButton2.setBounds(290, 140, 80, 50);
+		ingrButton2.setBackground(new Color(201,203,163));
 		
-		submitButton.setBounds(190, 300, 100, 60);
+		submitButton.setBounds(192, 220, 156, 40);
+		submitButton.setBackground(new Color(71,45,48));
+		submitButton.setForeground(new Color(201,203,163));
+		submitButton.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+		
 		submitButton.setVisible(false);
 		
 		submitButton.addActionListener(new ActionListener() {

@@ -21,6 +21,7 @@ public class HandlerFactory {
 	private GameModeHandler gameModeHandler;
 	private HostHandler hostHandler;
 	private JoinHandler joinHandler;
+	private RestartHandler restartHandler;
 	
 	public static HandlerFactory getInstance() {
 		if (instance == null) {
@@ -43,8 +44,17 @@ public class HandlerFactory {
 		this.hostHandler = new HostHandler();
 		this.joinHandler = new JoinHandler();
 		this.gameModeHandler = new GameModeHandler();
+		this.restartHandler = new RestartHandler();
 	}
 	
+	public RestartHandler getRestartHandler() {
+		return restartHandler;
+	}
+
+	public void setRestartHandler(RestartHandler restartHandler) {
+		this.restartHandler = restartHandler;
+	}
+
 	public PublicationHandler getPublicationHandler() {
 		return publicationHandler;
 	}

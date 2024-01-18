@@ -26,13 +26,21 @@ public class ArtifactDeck {
 		List<ArtifactCard> artifacts = new ArrayList<ArtifactCard>();
 		artifacts.add(new ArtifactCard("Elixir of Insight", 0, true));
 		artifacts.add(new ArtifactCard("Printing Press", 1, false));
-		//wisdom idol -> id = 3
-		//printing press -> id = 1
 		artifacts.add(new ArtifactCard("Magic Mortar", 2, false));
 		artifacts.add(new ArtifactCard("Wisdom Idol", 3, false));
 		Collections.shuffle(artifacts);
 		this.artifacts = artifacts ;
 	}
+    
+    public void populateArtifactDeck() {
+    	this.cardNum = 4;
+		this.artifacts.add(new ArtifactCard("Elixir of Insight", 0, true));
+		this.artifacts.add(new ArtifactCard("Printing Press", 1, false));
+		this.artifacts.add(new ArtifactCard("Magic Mortar", 2, false));
+		this.artifacts.add(new ArtifactCard("Wisdom Idol", 3, false));
+		
+		Collections.shuffle(this.artifacts);
+    }
 
 	public ArtifactCard getTopCard() {
 		if (cardNum > 0) {

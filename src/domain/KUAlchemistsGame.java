@@ -2,6 +2,7 @@ package domain;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -34,7 +35,7 @@ public class KUAlchemistsGame {
 	private static int round;
 	private static List<TurnListener> turnListeners;
 	private static List<EndListener> endListeners;
-	private static List<Ingredient> ingredients; //to deliver 2 ingrs at the beginning 
+	private static List<Ingredient> ingredients ; //to deliver 2 ingrs at the beginning 
 	private static List<playerNumListener> playerNumListeners;
 	private static List<GameStateListener> stateListeners;
 	
@@ -54,8 +55,23 @@ public class KUAlchemistsGame {
 		this.turnListeners = new ArrayList<TurnListener>(); 
 		this.endListeners = new ArrayList<EndListener>();
 		
-		IngredientDeck.getInstance().initializeIngredientDeck();
-		this.ingredients = IngredientDeck.getInstance().getIngredients();
+		this.ingredients = new ArrayList<Ingredient>();
+		
+		Aspect as1 = new Aspect(true, true);
+		Aspect as2 = new Aspect(true, false);
+		Aspect as3 = new Aspect(false, false);
+		Aspect as4 = new Aspect(false, true);
+		
+		ingredients.add(new Ingredient("rat", 1, as3, as1, as4));
+		ingredients.add(new Ingredient("bird", 2, as1, as1, as1));
+		ingredients.add(new Ingredient("garlic", 3, as3, as4, as2));
+		ingredients.add(new Ingredient("clover", 4, as2, as2, as2));
+		ingredients.add(new Ingredient("aloevera", 5, as1, as4, as3));
+		ingredients.add(new Ingredient("mushroom", 6, as4, as2, as3));
+		ingredients.add(new Ingredient("flower", 7, as4, as3, as1));
+		ingredients.add(new Ingredient("bluelotus", 8, as2, as3, as4));
+		
+		Collections.shuffle(ingredients);
 
 		this.playerNumListeners = new ArrayList<playerNumListener>();
 		this.stateListeners = new ArrayList<GameStateListener>();
@@ -82,7 +98,7 @@ public class KUAlchemistsGame {
 	/**
      * init method to do assignments and checks.
      */
-    private void init() {
+    public void init() {
     	PublicationTrack.getInstance().populateTrack();
     	IngredientDeck.getInstance().initializeIngredientDeck();
     }

@@ -1,12 +1,14 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -34,28 +36,36 @@ public class ElixirOfInsightDialog extends JDialog{
 		setPanelArtifact(new JPanel());
 		getPanelArtifact().setLayout(null);
 		
+		getPanelArtifact().setBackground(new Color(255,225,168));
+		
 		List<Ingredient> topThreeIngredientsList = IngredientDeck.getInstance().getTopThreeCards();
 		clickedIngredientOrder = new ArrayList<>();
 		
+		labelDescription = new JLabel("Click on the ingredients in the order from bottom to top");
+		labelDescription.setFont(new Font("Bahnschrift", Font.BOLD, 19));
+		labelDescription.setForeground(new Color(71, 45, 48));
 		
-		labelDescription = new JLabel("Click the Ingredients in the order from bottom to top");
-		firstTop = new JButton(topThreeIngredientsList.get(0).getName());
-		secondTop = new JButton(topThreeIngredientsList.get(1).getName());
-		thirdTop = new JButton(topThreeIngredientsList.get(2).getName());
 		
-		firstTop.setBounds(70, 170, 100, 60);
-		firstTop.setForeground(Color.BLACK);
-		firstTop.setBackground(Color.WHITE);
+		firstTop = new JButton(new ImageIcon(topThreeIngredientsList.get(0).getImage()));
+		secondTop = new JButton(new ImageIcon(topThreeIngredientsList.get(1).getImage()));
+		thirdTop = new JButton(new ImageIcon(topThreeIngredientsList.get(2).getImage()));
 		
-		secondTop.setBounds(190, 170, 100, 60);
-		secondTop.setForeground(Color.BLACK);
-		secondTop.setBackground(Color.WHITE);
+		firstTop.setBounds(110, 170, 100, 50);
+		firstTop.setBackground(new Color(201,203,163));
+		//firstTop.setForeground(Color.BLACK);
+		//firstTop.setBackground(Color.WHITE);
 		
-		thirdTop.setBounds(310, 170, 100, 60);
-		thirdTop.setForeground(Color.BLACK);
-		thirdTop.setBackground(Color.WHITE);
+		secondTop.setBounds(230, 170, 100, 50);
+		secondTop.setBackground(new Color(201,203,163));
+		//secondTop.setForeground(Color.BLACK);
+		//secondTop.setBackground(Color.WHITE);
 		
-		labelDescription.setBounds(100, 100, 400, 20);
+		thirdTop.setBounds(350, 170, 100, 50);
+		thirdTop.setBackground(new Color(201,203,163));
+		//thirdTop.setForeground(Color.BLACK);
+		//thirdTop.setBackground(Color.WHITE);
+		
+		labelDescription.setBounds(50, 100, 600, 20);
 		getPanelArtifact().add(labelDescription);
 		
 		// ActionListener to handle button clicks and update the order list

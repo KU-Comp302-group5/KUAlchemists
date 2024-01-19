@@ -841,7 +841,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
                 player_ing.addActionListener(e -> {
                 	System.out.println("Ingredient is transmuted.");
                 	HandlerFactory.getInstance().getTransmuteIngHandler().transmuteIngredient(KUAlchemistsGame.getInstance().getPlayer(playerNum));
-                    gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(playerNum).getGold());
+                    updateGoldUI();
                     showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " transmuted an ingredient.");
                     //KUAlchemistsGame.getInstance().switchTurns();
                 });

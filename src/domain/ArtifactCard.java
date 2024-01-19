@@ -61,7 +61,7 @@ public class ArtifactCard implements Serializable {
 	@Override
    public boolean equals(Object obj) { // implemented for the "contains" functionality of Lists
       ArtifactCard ac = (ArtifactCard)obj;
-      return this.ID == ac.ID && this.name.equalsIgnoreCase(ac.name) && this.hasPanel == ac.hasPanel;
+      return this.ID == ac.ID;
    }
 
 	public Boolean getHasPanel() {

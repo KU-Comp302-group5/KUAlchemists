@@ -98,6 +98,10 @@ public class KUAlchemistsGame {
         return game;
 	}
 	
+	public static void zeroGame() {
+		game = new KUAlchemistsGame();
+	}
+	
 	/**
      * init method to do assignments and checks.
      */

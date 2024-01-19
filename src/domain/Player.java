@@ -199,5 +199,6 @@ public class Player implements Serializable {
 
 	public void increaseReputation(int i) {
 		reputation += i;
+		System.out.println("reputation increased");
 	}
 }

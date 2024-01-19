@@ -22,18 +22,19 @@ public class ArtifactDeck {
     
     public ArtifactDeck() {
 		super();
-		this.cardNum = 40;
-		
-		List<ArtifactCard> artifacts = new ArrayList<ArtifactCard>();
-		for (int i = 0; i < 10; i++) {
-			artifacts.add(new ArtifactCard("Elixir of Insight", 0, true));
-			artifacts.add(new ArtifactCard("Printing Press", 1, false));
-			artifacts.add(new ArtifactCard("Magic Mortar", 2, false));
-			artifacts.add(new ArtifactCard("Wisdom Idol", 3, false));
-		}
-		Collections.shuffle(artifacts);
-		this.artifacts = artifacts ;
+		artifacts = new ArrayList<ArtifactCard>();
+		populateArtifactDeck();
 	}
+    
+    public void populateArtifactDeck() {
+    	this.cardNum = 4;
+    	artifacts.add(new ArtifactCard("Elixir of Insight", 0, true));
+		artifacts.add(new ArtifactCard("Printing Press", 1, false));
+		artifacts.add(new ArtifactCard("Magic Mortar", 2, false));
+		artifacts.add(new ArtifactCard("Wisdom Idol", 3, false));
+		
+		Collections.shuffle(artifacts);
+    }
 
 	public ArtifactCard getTopCard() {
 		if (cardNum > 0) {
@@ -43,8 +44,8 @@ public class ArtifactDeck {
 	    	return card;
 		}
 		else {
-			System.out.println("No cards to draw in the artifact cards deck");
-			return null;
+			populateArtifactDeck();
+			return getTopCard();
 		}
     }
 

@@ -71,8 +71,6 @@ public class IngredientDeck {
 			putCard(bluelotus);
 			
 		}
-		
-		
 		Collections.shuffle(this.ingredients);
     }
 

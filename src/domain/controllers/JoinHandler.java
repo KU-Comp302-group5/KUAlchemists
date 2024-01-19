@@ -43,7 +43,6 @@ public class JoinHandler {
 		joinPage = new JoinWaitPage();
 		joinPage.setVisible(true);
 		joinPage.add(joinPage.getPanel());
-		//joinPage.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		joinPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		joinPage.setSize(600, 600);
 		

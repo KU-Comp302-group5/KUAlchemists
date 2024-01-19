@@ -19,17 +19,10 @@ public class BackgroundPanel extends JPanel{
 	public BackgroundPanel(Image image) {
 		super();
 		this.image = image;
-		/*Dimension size = new Dimension(image.getWidth(this), image.getHeight(this));
-	    //setPreferredSize(size);
-	    //setMinimumSize(size);
-	    this.setMaximumSize(size);
-	    //setSize(size);
-	    setLayout(null);*/
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
 	}

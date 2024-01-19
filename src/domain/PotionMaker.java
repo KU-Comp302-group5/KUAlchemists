@@ -5,7 +5,6 @@ public class PotionMaker {
 	Ingredient ingr1;
 	Ingredient ingr2;
     private Potion potion;
-    //private int ID;
 
     
     public PotionMaker() {
@@ -16,8 +15,6 @@ public class PotionMaker {
         return pm;
 	}
 
-		
-		//Ingredient ingr1 = this.ingr1;
 	public Potion mixIngredients() {
 		boolean ingr1redsize = ingr1.getRedAspect().isCircleSize();
 		boolean ingr1redsign = ingr1.getRedAspect().isSign();
@@ -26,7 +23,6 @@ public class PotionMaker {
 		boolean ingr1bluesize = ingr1.getBlueAspect().isCircleSize();
 		boolean ingr1bluesign = ingr1.getBlueAspect().isSign();
 		
-		//Ingredient ingr2 = this.ingr2;
 		boolean ingr2redsize = ingr2.getRedAspect().isCircleSize();
 		boolean ingr2redsign = ingr2.getRedAspect().isSign();
 		boolean ingr2greensize = ingr2.getGreenAspect().isCircleSize();

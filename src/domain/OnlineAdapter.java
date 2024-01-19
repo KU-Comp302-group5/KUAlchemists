@@ -23,7 +23,6 @@ public class OnlineAdapter implements IGameAdapter{
 
 	@Override
 	public void switchTurn() {
-		// TODO Auto-generated method stub
 		HandlerFactory.getInstance().getJoinHandler().broadcastGameState(false, false, false);
 	}
 	

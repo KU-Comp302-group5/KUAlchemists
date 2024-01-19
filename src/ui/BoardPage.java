@@ -48,8 +48,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 				   sickness, sickness2, sickness3, sickness4,
 				   reputation,reputation2, reputation3, reputation4,
 				   name, avatar, name2, avatar2, name3, avatar3, name4, avatar4;
-				   //p1a_text, p2a_text, p3a_text, p4a_text,
-				   //p1i_text, p2i_text, p3i_text, p4i_text
 	
 	public BoardPage() {
 		super("KUAlchemists");
@@ -102,7 +100,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		artifactDeckButton.setForeground(Color.BLUE);
 		artifactDeckButton.addActionListener(e -> {
         	System.out.println("artifactDeckButton clicked");
-        	//again gold UI update without observer
         	if (KUAlchemistsGame.getInstance().getCurrentPlayer().getGold()<3) {
         		showMessage("NOT ENOUGH GOLD!");
         	}
@@ -115,8 +112,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         	}
         });
         getPanelBoard().add(artifactDeckButton);
-		
-        //help.setFont(new Font("Arial", Font.PLAIN, 9));
+        
         help.setMargin(new Insets(0, 0, 0, 0));
         help.setIcon(new ImageIcon("images/helpbtn.png"));
         help.setFocusPainted(false);
@@ -143,7 +139,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         KUAlchemistsGame.getInstance().addTurnListener(potionBrewing);
         KUAlchemistsGame.getInstance().addTurnListener(sellPotionPanel);
         publicationArea = new PublicationArea(new ImageIcon("images/panelbg.png").getImage());
-        //publicationTrack = new JButton("Publication Track");
         deductionBoard = new JButton("Deduction Board");
 
         int buttonWidth = 200;
@@ -182,7 +177,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         deductionBoard.addActionListener(e -> {
         	System.out.println("Deduction Board button clicked");
         });
-        //getPanelBoard().add(deductionBoard);
         
         
         name = new JLabel("Player I: " + KUAlchemistsGame.getInstance().getPlayer(1).getUsername());
@@ -196,20 +190,14 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         avatar.setBounds(240, 40, 60, 60);
         getPanelBoard().add(avatar);
         
-        /**
-         * Observer pattern should be implemented for updating gold.
-         *
-         */
+        
         gold = new JLabel("Gold: " + KUAlchemistsGame.getInstance().getPlayer(1).getGold());
         gold.setFont(new Font("Bahnschrift", Font.BOLD, 15));
         gold.setForeground(new Color(255,225,168));
         gold.setBounds(58, 95, 60, 30);
         getPanelBoard().add(gold);
 
-        /**
-         * Observer pattern should be implemented for updating sickness.
-         *
-         */
+        
         sickness = new JLabel("Sickness: " + KUAlchemistsGame.getInstance().getPlayer(1).getSickness());
         sickness.setFont(new Font("Bahnschrift", Font.BOLD, 15));
         sickness.setForeground(new Color(255,225,168));
@@ -230,7 +218,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		((PlayerArts) player1_arts).updateArts();
 		
 		KUAlchemistsGame.getInstance().addArtListener((PlayerArts) player1_arts);
-		//KUAlchemistsGame.getInstance().addTurnListener((PlayerArts) player1_arts);
 		
 		player1_ingr = new PlayerIngs(1, new ImageIcon("images/panelbg.png").getImage());
 		player1_ingr.setLayout(null);
@@ -240,7 +227,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		((PlayerIngs) player1_ingr).updateIngs();
 		
 		KUAlchemistsGame.getInstance().addIngListener((PlayerIngs) player1_ingr);
-		//KUAlchemistsGame.getInstance().addTurnListener((PlayerIngs) player1_ingr);
 		
 		player1_pot = new PlayerPot(1, new ImageIcon("images/panelbg.png").getImage());
 		player1_pot.setLayout(null);
@@ -291,7 +277,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		((PlayerArts) player2_arts).updateArts();
 
 		KUAlchemistsGame.getInstance().addArtListener((PlayerArts) player2_arts);
-		//KUAlchemistsGame.getInstance().addTurnListener((PlayerArts) player2_arts);
 		
 		player2_ingr = new PlayerIngs(2, new ImageIcon("images/panelbg.png").getImage());
 		player2_ingr.setLayout(null);
@@ -302,7 +287,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		((PlayerIngs) player2_ingr).updateIngs();
 
 		KUAlchemistsGame.getInstance().addIngListener((PlayerIngs) player2_ingr);
-		//KUAlchemistsGame.getInstance().addTurnListener((PlayerIngs) player2_ingr);
 		
 		player2_pot = new PlayerPot(2, new ImageIcon("images/panelbg.png").getImage());
 		player2_pot.setLayout(null);
@@ -352,58 +336,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         getPanelBoard().add(dBoardButton);
 		
 		
-	}
-	
-	//public showCurrentPlayerArtifacts() {
-		
-	//}
-	
-	public class RoundPanel extends JPanel implements TurnListener{
-
-		JLabel round;
-		JLabel turn;
-		String[] rounds = new String[]{"images/round1.png","images/round2 .png", "images/round3.png"};
-		String[] turns = new String[]{"images/turn3.png", "images/turn1.png","images/turn2.png"};
-		
-		
-		public RoundPanel() {
-			super();			
-			this.round = new JLabel();
-			this.turn = new JLabel();
-			round.setIcon(new ImageIcon("images/round1.png"));
-			round.setBounds(0, 0, WIDTH, HEIGHT);
-			//round.setFont(new Font("Bahnschrift", Font.BOLD, 20));
-			//round.setForeground(new Color(201, 203,163));
-			//round.setText("Round 1");
-			turn.setIcon(new ImageIcon("images/turn1.png"));
-			turn.setBounds(0, 30, WIDTH, HEIGHT);
-			this.add(round);
-			this.add(turn);
-		}
-
-
-		@Override
-		public void onTurnChange() {
-			// TODO Auto-generated method stub
-			//round.setText("Round " + Integer.toString(KUAlchemistsGame.getInstance().getRound()));
-			
-			if (KUAlchemistsGame.getInstance().getRound() < 4) {
-				round.setIcon(new ImageIcon(rounds[KUAlchemistsGame.getInstance().getRound()-1]));
-				turn.setIcon(new ImageIcon(turns[KUAlchemistsGame.getInstance().getTurnCounter()%3]));
-			}
-		}
-	}
-	
-	@Override
-	public void onEndChange() {
-		String[] playerNames = KUAlchemistsGame.getInstance().getPlayerNames();
-		List<Integer> playerScores = KUAlchemistsGame.getInstance().getScores();
-
-		EndgameDialog dialog = new EndgameDialog(null, "Game Over!", playerNames, playerScores);
-		dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		dialog.setLocationRelativeTo(null);
-	}
-	
+	}	
 	
 	private void updateGoldUI() {
 		gold.setText("Gold: " + KUAlchemistsGame.getInstance().getPlayer(1).getGold());
@@ -479,7 +412,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		((PlayerArts) player3_arts).updateArts();
 		
 		KUAlchemistsGame.getInstance().addArtListener((PlayerArts) player3_arts);
-		//KUAlchemistsGame.getInstance().addTurnListener((PlayerArts) player3_arts);
 		
 		player3_ingr = new PlayerIngs(3, new ImageIcon("images/panelbg.png").getImage());
 		player3_ingr.setLayout(null);
@@ -490,7 +422,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		((PlayerIngs) player3_ingr).updateIngs();
 		
 		KUAlchemistsGame.getInstance().addIngListener((PlayerIngs) player3_ingr);
-		//KUAlchemistsGame.getInstance().addTurnListener((PlayerIngs) player3_ingr);
 		
 		player3_pot = new PlayerPot(3, new ImageIcon("images/panelbg.png").getImage());
 		player3_pot.setLayout(null);
@@ -507,7 +438,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
         name4 = new JLabel("Player IV: " + KUAlchemistsGame.getInstance().getPlayer(4).getUsername());
         name4.setFont(new Font("Bahnschrift", Font.BOLD, 19));
         name4.setForeground(new Color(255,225,168));
-        //name4.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         name4.setBounds(958, 60, 200, 25);
         getPanelBoard().add(name4);
         
@@ -545,7 +475,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		((PlayerArts) player4_arts).updateArts();
 		
 		KUAlchemistsGame.getInstance().addArtListener((PlayerArts) player4_arts);
-		//KUAlchemistsGame.getInstance().addTurnListener((PlayerArts) player4_arts);
 		
 		player4_ingr = new PlayerIngs(4, new ImageIcon("images/panelbg.png").getImage());
 		player4_ingr.setLayout(null);
@@ -556,7 +485,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		((PlayerIngs) player4_ingr).updateIngs();
 		
 		KUAlchemistsGame.getInstance().addIngListener((PlayerIngs) player4_ingr);
-		//KUAlchemistsGame.getInstance().addTurnListener((PlayerIngs) player4_ingr);
 		
 		player4_pot = new PlayerPot(4, new ImageIcon("images/panelbg.png").getImage());
 		player4_pot.setLayout(null);
@@ -566,6 +494,37 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 		((PlayerPot) player4_pot).updatePot();
 		
 		KUAlchemistsGame.getInstance().addPotListener((PlayerPot) player4_pot);
+	}
+	
+	public class RoundPanel extends JPanel implements TurnListener{
+
+		JLabel round;
+		JLabel turn;
+		String[] rounds = new String[]{"images/round1.png","images/round2 .png", "images/round3.png"};
+		String[] turns = new String[]{"images/turn3.png", "images/turn1.png","images/turn2.png"};
+		
+		
+		public RoundPanel() {
+			super();			
+			this.round = new JLabel();
+			this.turn = new JLabel();
+			round.setIcon(new ImageIcon("images/round1.png"));
+			round.setBounds(0, 0, WIDTH, HEIGHT);
+			turn.setIcon(new ImageIcon("images/turn1.png"));
+			turn.setBounds(0, 30, WIDTH, HEIGHT);
+			this.add(round);
+			this.add(turn);
+		}
+
+
+		@Override
+		public void onTurnChange() {
+			
+			if (KUAlchemistsGame.getInstance().getRound() < 4) {
+				round.setIcon(new ImageIcon(rounds[KUAlchemistsGame.getInstance().getRound()-1]));
+				turn.setIcon(new ImageIcon(turns[KUAlchemistsGame.getInstance().getTurnCounter()%3]));
+			}
+		}
 	}
 	
 	
@@ -593,7 +552,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 	        contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 	        contentPanel.setBounds(20, 20, 300, 300);
 	        contentPanel.setBackground(new Color(71, 45, 48));
-	        //contentPanel.setOpaque(false);
 
 	        // Label and list for each player
 	        for (int i = 0; i < playerNames.length; i++) {
@@ -602,21 +560,14 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 	            playerLabel.setForeground(new Color(255,225,168));
 	            playerLabel.setOpaque(false);
 	            
-	            /*GridBagConstraints playerLabelConstraints = new GridBagConstraints();
-	            playerLabelConstraints.gridx = 0;
-	            playerLabelConstraints.gridy = i;*/
-	            
 	            playerLabel.setBounds(120, 45 + i * 25, 150, 20);
 	            contentPanel.add(playerLabel);
 
 	            JLabel scoreLabel = new JLabel(Integer.toString(playerScores.get(i)));
-	            //GridBagConstraints scoreLabelConstraints = new GridBagConstraints();
 	            scoreLabel.setFont(new Font("Bahnschrift", Font.BOLD, 19));
 	            scoreLabel.setForeground(new Color(255,225,168));
 	            scoreLabel.setOpaque(false);
 	            
-	            /*scoreLabelConstraints.gridx = 1;
-	            scoreLabelConstraints.gridy = i;*/
 	            scoreLabel.setBounds(205, 45 + i*25, 50, 20);
 	            contentPanel.add(scoreLabel);
 	        }
@@ -628,11 +579,8 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 	        String winner = playerNames[maxIndex];
 	        
 	        JLabel winnerLabel = new JLabel("The winner is:  " + winner);
-            //GridBagConstraints winnerLabelConstraints = new GridBagConstraints();
             winnerLabel.setFont(new Font("Bahnschrift", Font.BOLD, 19));
             winnerLabel.setForeground(new Color(255,225,168));
-            //winnerLabelConstraints.gridx = 0;
-            //winnerLabelConstraints.gridy = playerNames.length+1;
             
             winnerLabel.setBounds(80, 140, 250, 30);
             contentPanel.add(winnerLabel);
@@ -653,11 +601,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 	            
 	            HandlerFactory.getInstance().getRestartHandler().restart();
 	        });
-
-	        /*GridBagConstraints playAgainButtonConstraints = new GridBagConstraints();
-	        playAgainButtonConstraints.gridx = 0;
-	        playAgainButtonConstraints.gridy = playerNames.length+2;
-	        playAgainButtonConstraints.gridwidth = 2;*/
 	        
 	        playAgainButton.setBounds(35, 210, playAgainButton.getIcon().getIconWidth(), playAgainButton.getIcon().getIconHeight());
 	        
@@ -669,11 +612,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 	        exitButton.addActionListener(e -> {
 	            System.exit(0);
 	        });
-	        
-	        /*GridBagConstraints exitButtonConstraints = new GridBagConstraints();
-	        exitButtonConstraints.gridx = 2;
-	        exitButtonConstraints.gridy = playerNames.length + 2;
-	        exitButtonConstraints.gridwidth = 2;*/
 	        
 	        exitButton.setBounds(180, 210, exitButton.getIcon().getIconWidth(), exitButton.getIcon().getIconHeight());
 	        contentPanel.add(exitButton);
@@ -705,7 +643,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
     	
     	@Override
     	protected void paintComponent(Graphics g) {
-    		// TODO Auto-generated method stub
     		super.paintComponent(g);
     		g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
     	}
@@ -719,7 +656,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
             this.add(pa_text);
             
             for (int i=0; i<KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().size(); i++) {
-    			//KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(i).toString()
     			JButton player_art = new JButton();
     			player_art.setIcon(new ImageIcon(KUAlchemistsGame.getInstance().getPlayer(playerNum).getArtifacts().get(i).getImage()));
     			player_art.setBounds(110 + (player_art.getIcon().getIconWidth() + 5)*i, 5, player_art.getIcon().getIconWidth(), player_art.getIcon().getIconHeight()); // should change
@@ -742,10 +678,8 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
 	    					
 	    					dialog.setVisible(true);
 	    					
-	    					//panel.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	    					showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " used an artifact.");
-	    					//KUAlchemistsGame.getInstance().switchTurns();
-    					});
+	      					});
     				}
     			}
     			else {
@@ -815,7 +749,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
     	
     	@Override
     	protected void paintComponent(Graphics g) {
-    		// TODO Auto-generated method stub
     		super.paintComponent(g);
     		g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
     	}
@@ -830,7 +763,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
             this.add(pi_text);
             
             for (int i = 0; i < KUAlchemistsGame.getInstance().getPlayer(playerNum).getIngredients().size(); i++) {
-            	//KUAlchemistsGame.getInstance().getPlayer(playerNum).getIngredients().get(i).toString()
                 JButton player_ing = new JButton();
                 player_ing.setIcon(new ImageIcon(KUAlchemistsGame.getInstance().getPlayer(playerNum).getIngredients().get(i).getImage()));
                 player_ing.setOpaque(false);
@@ -843,8 +775,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
                 	HandlerFactory.getInstance().getTransmuteIngHandler().transmuteIngredient(KUAlchemistsGame.getInstance().getPlayer(playerNum));
                     updateGoldUI();
                     showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " transmuted an ingredient.");
-                    //KUAlchemistsGame.getInstance().switchTurns();
-                });
+                    });
             }
             this.revalidate();  //need to revise
             this.repaint();  //need to revise
@@ -875,7 +806,6 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
     	
     	@Override
     	protected void paintComponent(Graphics g) {
-    		// TODO Auto-generated method stub
     		super.paintComponent(g);
     		g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
     	}
@@ -889,21 +819,7 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
             ppot_text.setBounds(5, 14, ppot_text.getIcon().getIconWidth(), ppot_text.getIcon().getIconHeight());
             this.add(ppot_text);
             
-            for (int i = 0; i < KUAlchemistsGame.getInstance().getPlayer(playerNum).getPotions().size(); i++) {
-            	
-            	/*String str = null;
-            	switch (KUAlchemistsGame.getInstance().getPlayer(playerNum).getPotions().get(i).getQuality()) {
-            	case 1: 
-            		str="positive";
-            		break;
-            	case -1:
-            		str="negative";
-            		break;
-            	case 0:
-            		str="neutral";
-            		break;
-            	}*/
-            	
+            for (int i = 0; i < KUAlchemistsGame.getInstance().getPlayer(playerNum).getPotions().size(); i++) {            	
                 JLabel player_pot = new JLabel();
                 player_pot.setIcon(new ImageIcon(KUAlchemistsGame.getInstance().getPlayer(playerNum).getPotions().get(i).getImage()));
                 player_pot.setBounds(98 + (player_pot.getIcon().getIconWidth() + 7)*i, 9, player_pot.getIcon().getIconWidth(), player_pot.getIcon().getIconHeight());
@@ -921,201 +837,195 @@ public class BoardPage extends JFrame implements TurnListener, ActionListener, E
     
 //    
 
-//<<<<<<< HEAD
-private class PotionBrew extends JPanel implements  IngListener, TurnListener, ItemListener {
-	
-	private Image image;
-	
-	public PotionBrew(Image image) {
-		super();
-		this.image = image;
-	}
-	
-	@Override
-	protected void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
-		super.paintComponent(g);
-		g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
-	}
-    	
-    	ArrayList<JCheckBox> checkboxes;
-    	ArrayList<JCheckBox> clickedcheckboxes;
-    	ArrayList<Integer> ingrindex;
-    	JButton makeExpBtn;
-    	JRadioButton testBtn1;
-    	JRadioButton testBtn2;
-    	JLabel test;
-    	private Window parentWindow; //  = SwingUtilities.getWindowAncestor(this);
-        
-    	public void updatePotionBrew() {
-    		this.parentWindow = SwingUtilities.getWindowAncestor(this);
-    		this.removeAll();
-    		
-    		JLabel pa_text = new JLabel();
-    		pa_text.setIcon(new ImageIcon("images/makeexplbl.png"));
-    		pa_text.setBounds(8, 8, pa_text.getIcon().getIconWidth(), pa_text.getIcon().getIconHeight());
-            this.add(pa_text);
-            
-            test = new JLabel();
-            test.setIcon(new ImageIcon("images/testonlbl.png"));
-    		test.setBounds(85, 60, test.getIcon().getIconWidth(), test.getIcon().getIconHeight());
-            this.add(test);
-            test.setVisible(false);
-            
-        	testBtn1= new JRadioButton();
-        	testBtn1.setIcon(new ImageIcon("images/yourself.png"));
-        	testBtn1.setOpaque(false);
-        	testBtn1.setContentAreaFilled(false);
-        	testBtn1.setBounds(90, 90, testBtn1.getIcon().getIconWidth()+10, testBtn1.getIcon().getIconHeight());
-        	testBtn1.addItemListener(this);
-        	this.add(testBtn1);
-        	testBtn1.setVisible(false);
-        	
-        	testBtn2= new JRadioButton();
-        	testBtn2.setIcon(new ImageIcon("images/student.png"));
-        	testBtn2.setOpaque(false);
-        	testBtn2.setContentAreaFilled(false);
-        	testBtn2.setBounds(90, 115, testBtn2.getIcon().getIconWidth()+10, testBtn2.getIcon().getIconHeight());
-        	testBtn2.addItemListener(this);
-        	this.add(testBtn2);
-        	testBtn2.setVisible(false);
-        	
-        	ButtonGroup testgroup = new ButtonGroup();
-        	
-        	testgroup.add(testBtn1);
-        	testgroup.add(testBtn2);
-        	
-            makeExpBtn = new JButton();
-            makeExpBtn.setIcon(new ImageIcon("images/makeexpbtn.png"));
-            makeExpBtn.setMargin(new Insets(0,0,0,0));
-            makeExpBtn.setBounds(20, 205, makeExpBtn.getIcon().getIconWidth(), makeExpBtn.getIcon().getIconHeight());
-            this.add(makeExpBtn);
-            makeExpBtn.setVisible(false);
-            makeExpBtn.addActionListener(e -> {
-            	System.out.println("Experiment button in UI");
-            	String str = null;
-            	if (testBtn1.isSelected()) {
-            		str = "yourself";
-            	}
-            	if(testBtn2.isSelected()) {
-            		str = "student";
-            	}
-            	HandlerFactory.getInstance().getMakeExperimentHandler().makeExperiment(
-            			KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(ingrindex.get(0)),
-            			KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(ingrindex.get(1)),
-            			str, KUAlchemistsGame.getInstance().getCurrentPlayer());
-            	
-            	int magicMortarFlag=0;
-            	
-            	for (ArtifactCard artf : KUAlchemistsGame.getInstance().getCurrentPlayer().getArtifacts()) {
-            		if (artf.getID()==2) magicMortarFlag=1;
-            	}
-            	
-            	// if the player has magic mortar card
-            	if (magicMortarFlag==1){
-            		// TO DO
-            		// show MagicMortarDialog to take input from user
-            		// MagicMortarDialog takes which ingredient the user wants to be not discarded
-            		System.out.println("magic mortar used");
-            		HandlerFactory.getInstance().getUseArtifactHandler().useArtifact(new ArtifactCard("Magic Mortar", 2, false));
-            		MagicMortarDialog dialog = new MagicMortarDialog((Frame) this.parentWindow);
-					dialog.add(dialog.getPanelArtifact());
-					dialog.setSize(600,350);
-					dialog.setVisible(true);
-            	}
-            	
-            	updateGoldUI();
-            	updateSicknessUI();
-            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made an experiment.");
-                //KUAlchemistsGame.getInstance().switchTurns();
-            });
-            
-            checkboxes = new ArrayList<JCheckBox>();
-            clickedcheckboxes = new ArrayList<JCheckBox>();
-            ingrindex = new ArrayList<Integer>();
-            
-            for (int i=0; i<KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().size(); i++) {
-            	//KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).toString()
-    			JCheckBox player_ing = new JCheckBox();
-    			player_ing.setIcon(new ImageIcon(KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).getImage()));
-    			player_ing.setBounds(20, 55 + 37 * i, 40, 30); // should change
-    			player_ing.setOpaque(false);
-    			checkboxes.add(player_ing);
-    			this.add(player_ing);
-                player_ing.addItemListener(this);
-                
-    		}
-            revalidate();
-            repaint();
-    	
-    	}
-    	
-		@Override
-		public void onTurnChange() {
-			updatePotionBrew();
+	private class PotionBrew extends JPanel implements  IngListener, TurnListener, ItemListener {
+		
+		private Image image;
+		
+		public PotionBrew(Image image) {
+			super();
+			this.image = image;
 		}
 		
 		@Override
-		public void onIngChange() {
-			updatePotionBrew();
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
 		}
-
-
-		@Override
-		public void itemStateChanged(ItemEvent e) {
-			// TODO Auto-generated method stub
-			if(checkboxes.contains(e.getSource())) {
-				if (e.getStateChange() == 1) {
-					System.out.println(ingrindex.toString());
-					System.out.println(checkboxes.size());
-					
-					if (ingrindex.size()==2){
-						JCheckBox temp = clickedcheckboxes.get(0);
-						clickedcheckboxes.remove(0);
-						ingrindex.remove(0);
-						temp.setSelected(false);
-						temp.setBorderPainted(false);						
+	    	
+	    	ArrayList<JCheckBox> checkboxes;
+	    	ArrayList<JCheckBox> clickedcheckboxes;
+	    	ArrayList<Integer> ingrindex;
+	    	JButton makeExpBtn;
+	    	JRadioButton testBtn1;
+	    	JRadioButton testBtn2;
+	    	JLabel test;
+	    	private Window parentWindow; //  = SwingUtilities.getWindowAncestor(this);
+	        
+	    	public void updatePotionBrew() {
+	    		this.parentWindow = SwingUtilities.getWindowAncestor(this);
+	    		this.removeAll();
+	    		
+	    		JLabel pa_text = new JLabel();
+	    		pa_text.setIcon(new ImageIcon("images/makeexplbl.png"));
+	    		pa_text.setBounds(8, 8, pa_text.getIcon().getIconWidth(), pa_text.getIcon().getIconHeight());
+	            this.add(pa_text);
+	            
+	            test = new JLabel();
+	            test.setIcon(new ImageIcon("images/testonlbl.png"));
+	    		test.setBounds(85, 60, test.getIcon().getIconWidth(), test.getIcon().getIconHeight());
+	            this.add(test);
+	            test.setVisible(false);
+	            
+	        	testBtn1= new JRadioButton();
+	        	testBtn1.setIcon(new ImageIcon("images/yourself.png"));
+	        	testBtn1.setOpaque(false);
+	        	testBtn1.setContentAreaFilled(false);
+	        	testBtn1.setBounds(90, 90, testBtn1.getIcon().getIconWidth()+10, testBtn1.getIcon().getIconHeight());
+	        	testBtn1.addItemListener(this);
+	        	this.add(testBtn1);
+	        	testBtn1.setVisible(false);
+	        	
+	        	testBtn2= new JRadioButton();
+	        	testBtn2.setIcon(new ImageIcon("images/student.png"));
+	        	testBtn2.setOpaque(false);
+	        	testBtn2.setContentAreaFilled(false);
+	        	testBtn2.setBounds(90, 115, testBtn2.getIcon().getIconWidth()+10, testBtn2.getIcon().getIconHeight());
+	        	testBtn2.addItemListener(this);
+	        	this.add(testBtn2);
+	        	testBtn2.setVisible(false);
+	        	
+	        	ButtonGroup testgroup = new ButtonGroup();
+	        	
+	        	testgroup.add(testBtn1);
+	        	testgroup.add(testBtn2);
+	        	
+	            makeExpBtn = new JButton();
+	            makeExpBtn.setIcon(new ImageIcon("images/makeexpbtn.png"));
+	            makeExpBtn.setMargin(new Insets(0,0,0,0));
+	            makeExpBtn.setBounds(20, 205, makeExpBtn.getIcon().getIconWidth(), makeExpBtn.getIcon().getIconHeight());
+	            this.add(makeExpBtn);
+	            makeExpBtn.setVisible(false);
+	            makeExpBtn.addActionListener(e -> {
+	            	System.out.println("Experiment button in UI");
+	            	String str = null;
+	            	if (testBtn1.isSelected()) {
+	            		str = "yourself";
+	            	}
+	            	if(testBtn2.isSelected()) {
+	            		str = "student";
+	            	}
+	            	HandlerFactory.getInstance().getMakeExperimentHandler().makeExperiment(
+	            			KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(ingrindex.get(0)),
+	            			KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(ingrindex.get(1)),
+	            			str, KUAlchemistsGame.getInstance().getCurrentPlayer());
+	            	
+	            	int magicMortarFlag=0;
+	            	
+	            	for (ArtifactCard artf : KUAlchemistsGame.getInstance().getCurrentPlayer().getArtifacts()) {
+	            		if (artf.getID()==2) magicMortarFlag=1;
+	            	}
+	            	
+	            	// if the player has magic mortar card
+	            	if (magicMortarFlag==1){
+	            		// MagicMortarDialog takes which ingredient the user wants to be not discarded
+	            		System.out.println("magic mortar used");
+	            		HandlerFactory.getInstance().getUseArtifactHandler().useArtifact(new ArtifactCard("Magic Mortar", 2, false));
+	            		MagicMortarDialog dialog = new MagicMortarDialog((Frame) this.parentWindow);
+						dialog.add(dialog.getPanelArtifact());
+						dialog.setSize(600,350);
+						dialog.setVisible(true);
+	            	}
+	            	
+	            	updateGoldUI();
+	            	updateSicknessUI();
+	            	showTurnMessage(KUAlchemistsGame.getInstance().getCurrentPlayer().getUsername() + " made an experiment.");
+	                
+	            });
+	            
+	            checkboxes = new ArrayList<JCheckBox>();
+	            clickedcheckboxes = new ArrayList<JCheckBox>();
+	            ingrindex = new ArrayList<Integer>();
+	            
+	            for (int i=0; i<KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().size(); i++) {
+	    			JCheckBox player_ing = new JCheckBox();
+	    			player_ing.setIcon(new ImageIcon(KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).getImage()));
+	    			player_ing.setBounds(20, 55 + 37 * i, 40, 30); 
+	    			player_ing.setOpaque(false);
+	    			checkboxes.add(player_ing);
+	    			this.add(player_ing);
+	                player_ing.addItemListener(this);
+	                
+	    		}
+	            revalidate();
+	            repaint();
+	    	
+	    	}
+	    	
+			@Override
+			public void onTurnChange() {
+				updatePotionBrew();
+			}
+			
+			@Override
+			public void onIngChange() {
+				updatePotionBrew();
+			}
+	
+	
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(checkboxes.contains(e.getSource())) {
+					if (e.getStateChange() == 1) {
+						System.out.println(ingrindex.toString());
+						System.out.println(checkboxes.size());
+						
+						if (ingrindex.size()==2){
+							JCheckBox temp = clickedcheckboxes.get(0);
+							clickedcheckboxes.remove(0);
+							ingrindex.remove(0);
+							temp.setSelected(false);
+							temp.setBorderPainted(false);						
+						}
+						
+						ingrindex.add(checkboxes.indexOf(e.getSource()));
+						clickedcheckboxes.add((JCheckBox) e.getSource());
+						((JCheckBox) e.getSource()).setBorderPainted(true);
+						
+						if(ingrindex.size()==2) {
+							testBtn1.setVisible(true);
+							testBtn2.setVisible(true);
+							test.setVisible(true);
+						}
 					}
-					
-					ingrindex.add(checkboxes.indexOf(e.getSource()));
-					clickedcheckboxes.add((JCheckBox) e.getSource());
-					((JCheckBox) e.getSource()).setBorderPainted(true);
-					
-					if(ingrindex.size()==2) {
-						testBtn1.setVisible(true);
-						testBtn2.setVisible(true);
-						test.setVisible(true);
-					}
-				}
-				else {
-					System.out.println(ingrindex.toString());
-					if(clickedcheckboxes.contains(e.getSource())) {
-						ingrindex.remove(clickedcheckboxes.indexOf(e.getSource()));
-						clickedcheckboxes.remove(e.getSource());
-						if(ingrindex.size()!=2) {
-							testBtn1.setVisible(false);
-							testBtn2.setVisible(false);
-							test.setVisible(false);
-							makeExpBtn.setVisible(false);
+					else {
+						System.out.println(ingrindex.toString());
+						if(clickedcheckboxes.contains(e.getSource())) {
+							ingrindex.remove(clickedcheckboxes.indexOf(e.getSource()));
+							clickedcheckboxes.remove(e.getSource());
+							if(ingrindex.size()!=2) {
+								testBtn1.setVisible(false);
+								testBtn2.setVisible(false);
+								test.setVisible(false);
+								makeExpBtn.setVisible(false);
+							}
 						}
 					}
 				}
+				if (e.getSource()== testBtn1 || e.getSource()==testBtn2) {
+					if (ingrindex.size()==2) {
+						makeExpBtn.setVisible(true);
+					}
+					if (e.getStateChange()==1) {
+						((JRadioButton) e.getSource()).setBorderPainted(true);
+					}
+					else {
+						((JRadioButton) e.getSource()).setBorderPainted(false);
+					}
+				}
+				
 			}
-			if (e.getSource()== testBtn1 || e.getSource()==testBtn2) {
-				if (ingrindex.size()==2) {
-					makeExpBtn.setVisible(true);
-				}
-				if (e.getStateChange()==1) {
-					((JRadioButton) e.getSource()).setBorderPainted(true);
-				}
-				else {
-					((JRadioButton) e.getSource()).setBorderPainted(false);
-				}
-			}
-			
-		}
-    
-    }
+	    
+	    }
     
     private class SellPotionPanel extends JPanel implements ItemListener, TurnListener, IngListener {
     	
@@ -1124,17 +1034,10 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
     	public SellPotionPanel(Image image) {
     		super();
     		this.image = image;
-    		/*Dimension size = new Dimension(image.getWidth(this), image.getHeight(this));
-    	    //setPreferredSize(size);
-    	    //setMinimumSize(size);
-    	    this.setMaximumSize(size);
-    	    //setSize(size);
-    	    setLayout(null);*/
     	}
     	
     	@Override
     	protected void paintComponent(Graphics g) {
-    		// TODO Auto-generated method stub
     		super.paintComponent(g);
     		g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
     	}
@@ -1257,10 +1160,9 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             ingrindex = new ArrayList<Integer>(); //keeps the indices of the chosen ingredients in the player's ingredient list
             
             for (int i=0; i<KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().size(); i++) {
-    			//KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).toString()
     			JCheckBox player_ing = new JCheckBox();
     			player_ing.setIcon(new ImageIcon(KUAlchemistsGame.getInstance().getCurrentPlayer().getIngredients().get(i).getImage()));
-    			player_ing.setBounds(20, 55 + 37 * i, 40, 30); // should change
+    			player_ing.setBounds(20, 55 + 37 * i, 40, 30); 
     			player_ing.setOpaque(false);
     			checkboxes.add(player_ing);
     			this.add(player_ing);
@@ -1285,7 +1187,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			// TODO Auto-generated method stub
 			if(checkboxes.contains(e.getSource())) { //source of change is one of the checkboxes
 				if (e.getStateChange() == 1) { //the checkbox is selected
 					
@@ -1374,7 +1275,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 
 		@Override
     	protected void paintComponent(Graphics g) {
-    		// TODO Auto-generated method stub
     		super.paintComponent(g);
     		g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
     	}
@@ -1416,7 +1316,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             List<Ingredient> ingrs = HandlerFactory.getInstance().getPublicationHandler().getAvailableIngredients();
             
             for (int i=0; i<ingrs.size(); i++) {
-            	//ingrs.get(i).getName()
             	JRadioButton ingrBtn= new JRadioButton();
             	ingrButtons.add(ingrBtn);
             	ingrBtn.setIcon(new ImageIcon(ingrs.get(i).getImage()));
@@ -1431,7 +1330,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             List<AlchemyMarker> markers = HandlerFactory.getInstance().getPublicationHandler().getAvailableAlchemies();
             
             for (int i=0; i<markers.size(); i++) {
-            	//Integer.toString(markers.get(i).getID())
             	JRadioButton markerBtn= new JRadioButton();
             	markerButtons.add(markerBtn);
             	markerBtn.setIcon(new ImageIcon(markers.get(i).getImage()));
@@ -1449,7 +1347,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             theoryButtons = new ArrayList<JRadioButton>();
             		
             for (int i=0; i<theories.size(); i++) {
-            	//theories.get(i).getIngredient().getName() + " --> " + Integer.toString(theories.get(i).getMarker().getID())
             	JLabel ingrlbl = new JLabel();
             	ingrlbl.setIcon(new ImageIcon(theories.get(i).getIngredient().getImage()));
             	ingrlbl.setBounds(310, 30 + 60*i, 45, 55);
@@ -1640,8 +1537,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             		}
             	}
             	
-            	//theoryButtons.get(theoryIndex).setText(theoryButtons.get(theoryIndex).getText() + " " + aspect +
-            			//aspectSign);
             	
             	String image = theories.get(theoryIndex).getIngredient().getImage();
             	int debunkedPlayerNo = theories.get(theoryIndex).getPlayerNo();
@@ -1657,7 +1552,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             				" made an unsuccessful debunk") , 
             			image, 
             			"'s" + " " + aspect + aspectSign);
-                //KUAlchemistsGame.getInstance().switchTurns();
             });
     		
     		revalidate();
@@ -1861,10 +1755,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 	    helpText.setIcon(new ImageIcon("images/help.png"));
 	    helpText.setBounds(0, 0, 400, 400);
 	    help.add(helpText);
-	    //help.add(helpText, BorderLayout.CENTER);
-	    /*JButton ok = new JButton("OK");
-	    ok.addActionListener(e -> help.dispose());
-	    help.add(ok, BorderLayout.SOUTH);*/
 	    
 	    help.setLocationRelativeTo(helpText);
 	    help.setVisible(true);
@@ -1895,7 +1785,6 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	public static JPanel getPanelBoard() {
@@ -1912,15 +1801,16 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 		String playerName = KUAlchemistsGame.getInstance().getDevicePlayer();
 		if (! playerName.equals(currentName)) {
 			getPanelBoard().setVisible(false);
-			//this.setLayout(new GridBagLayout());
 			waitPanel.setVisible(true);
 			
 		} else {
 			waitPanel.setVisible(false);
-			//this.setLayout(null);
-			getPanelBoard().setVisible(true); // should be changed to show a wait yout turn message
+			getPanelBoard().setVisible(true); 
+			potionBrewing.onTurnChange();
+			sellPotionPanel.onTurnChange();
 			roundpnl.onTurnChange();
 			publicationArea.onPubChange();
+			updateReputationUI();
 			onTurnChange();
 			updateGoldUI();
 	    	updateSicknessUI();
@@ -2016,6 +1906,8 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
 		
 		}
 		
+		
+		
 		int wisdomIdolFlag = 0;
     	for (ArtifactCard artf : KUAlchemistsGame.getCurrentPlayer().getArtifacts()) {
     		if (artf.getID()==3) wisdomIdolFlag=1;
@@ -2034,8 +1926,20 @@ private class PotionBrew extends JPanel implements  IngListener, TurnListener, I
             	}
 			}
 		}
+		
 		KUAlchemistsGame.getInstance().removeRecentlyDebunkedPlayer(KUAlchemistsGame.getCurrentPlayer().getUsername());
 		updateReputationUI();
+		
+	}
+	
+	@Override
+	public void onEndChange() {
+		String[] playerNames = KUAlchemistsGame.getInstance().getPlayerNames();
+		List<Integer> playerScores = KUAlchemistsGame.getInstance().getScores();
+
+		EndgameDialog dialog = new EndgameDialog(null, "Game Over!", playerNames, playerScores);
+		dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		dialog.setLocationRelativeTo(null);
 	}
 
 }

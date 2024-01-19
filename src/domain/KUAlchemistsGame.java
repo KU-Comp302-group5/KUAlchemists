@@ -100,6 +100,11 @@ public class KUAlchemistsGame {
 	
 	public static void zeroGame() {
 		game = new KUAlchemistsGame();
+		players = new ArrayList<Player>();
+		scores = new ArrayList<Integer>();
+		recentlyDebunkedPlayers = new ArrayList<String>();
+		PublicationTrack.getInstance().setPublishedTheories(new ArrayList<Theory>());
+		
 	}
 	
 	/**

@@ -71,20 +71,6 @@ public class ArtifactCard implements Serializable {
 	public void setHasPanel(Boolean hasPanel) {
 		this.hasPanel = hasPanel;
 	}
-	
-	// now in UseArtifactHandler
-	/*
-	public void obtainAbility() {
-		if(this.ID == 0) {
-			// UI : IngredientDeckUI.showTopThreeCards()
-			// and IngredientDeckUI.rearrange() --> IngredientDeck.rearrange()
-		}
-		if (this.ID == 1) {
-			// UI : DeductionBoardUI.swap() --> DeductionBoard.swap(alchemyMarker1, alchemyMarker2)
-			// buradan emin olamad�m, bu sadece UI funvtionality de olabilir.
-		}
-	}
-    */
     
     
     
